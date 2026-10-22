@@ -78,6 +78,7 @@ Platform, mimari, verinin nerede tutulacağı ve kimlik doğrulama gibi teknik k
 |---|---|
 | `docs/GEREKSINIM_ENVANTERI.md` | Tüm gereksinimler: kimlik, kaynak belge ve bölüm, açıklama, etkilenen form, tür, güven, uygulama etkisi, açık sorular |
 | `docs/ACIK_SORULAR.md` | Onayınızı bekleyen sorular ve kararlar (engelleyiciler, belge çelişkileri, öneriler) |
+| `docs/promptlar/` | Geliştirme promptları, her form için ayrı: formun nasıl olacağını anlatan sade tarif ve netleşmemiş konular |
 | `docs/QA_RAPORU.md` | Test raporu |
 
 Envanter ve açık sorular dosyaları uygulamayla aynı veriden üretilir: `npm run docs`.

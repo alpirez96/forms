@@ -54,14 +54,18 @@ export function emptyFormState(formId) {
 export function defaultState() {
   const forms = {};
   for (const id of FORM_IDS) forms[id] = emptyFormState(id);
-  return { schemaVersion: SCHEMA_VERSION, activeForm: 'cari', forms, shared: { reqStatus: {} } };
+  return { schemaVersion: SCHEMA_VERSION, activeForm: 'cari', forms, shared: { reqStatus: {} }, finalizedAt: null };
 }
 
 // Eksik anahtarları tamamlayarak eski/eksik durumları güvenle yükler.
 export function normalizeState(raw) {
   const base = defaultState();
   if (!raw || typeof raw !== 'object') return base;
-  const out = { ...base, activeForm: FORM_IDS.includes(raw.activeForm) ? raw.activeForm : 'cari' };
+  const out = {
+    ...base,
+    activeForm: FORM_IDS.includes(raw.activeForm) ? raw.activeForm : 'cari',
+    finalizedAt: typeof raw.finalizedAt === 'string' ? raw.finalizedAt : null,
+  };
   const fromVersion = typeof raw.schemaVersion === 'number' ? raw.schemaVersion : 1;
   for (const id of FORM_IDS) {
     const src = (raw.forms && raw.forms[id]) || {};

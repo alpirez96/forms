@@ -11,23 +11,28 @@ Uygulamada iki formu test eder, notlar alır, kararlarınızı kaydedersiniz. İ
 
 ---
 
-## Kurulum ve çalıştırma
+## Hızlı başlangıç
 
-**Gereken:** [Node.js](https://nodejs.org) 18 veya üzeri. Uygulamanın çalışması için başka bağımlılık yoktur.
+### En kolay yol: tek dosya (kurulum yok)
+
+1. **`dist/muhasebe-form-prototipi.html`** dosyasını indirin. GitHub'da dosyayı açıp "Download raw file" düğmesini kullanabilirsiniz.
+2. Dosyaya **çift tıklayın**; tarayıcıda açılır. İsterseniz herhangi bir localhost sunucusundan da açabilirsiniz.
+3. Formu test edin, gördüklerinizi **Not** düğmesiyle kaydedin, bitince sağ üstteki **Final: promptları oluştur** düğmesine basın.
+4. İki form için ayrı geliştirme promptu oluşur. **Kopyala** ile panoya alın veya **.txt** olarak indirin.
+
+### localhost üzerinden (Node.js 18+ ile)
 
 ```bash
 npm start
 ```
 
-Ardından tarayıcıda **http://127.0.0.1:8080** adresini açın. Farklı bir port için: `node scripts/serve.js 3000`.
+Tarayıcı kendiliğinden **http://localhost:8080** adresinde açılır. 8080 doluysa sıradaki boş port (8081, 8082…) kullanılır ve adres ekrana yazılır. Tarayıcının açılmasını istemezseniz: `node scripts/serve.js --no-open`. Durdurmak için `Ctrl+C`.
 
-Node yoksa Python ile de açılabilir:
+Node yoksa, proje klasöründe Python ile de açılabilir: `python3 -m http.server 8080` → http://localhost:8080
 
-```bash
-python3 -m http.server 8080
-```
-
-> `index.html` dosyasına çift tıklayarak açmak çalışmaz (tarayıcılar `file://` üzerinden modül yüklemez). Mutlaka yukarıdaki komutlardan biriyle açın.
+> Notlarınız tarayıcıda saklanır. Çift tıklanan dosya ile localhost sürümü tarayıcıda **ayrı** kayıt tutar; birinden diğerine geçerken "JSON dışa aktar / içe aktar" kullanın.
+>
+> Kaynak `index.html` dosyası çift tıklamayla açılmaz (tarayıcılar modülleri `file://` üzerinden yüklemez); çift tıklamak için `dist/` altındaki tek dosyayı kullanın.
 
 ---
 
@@ -51,8 +56,12 @@ python3 -m http.server 8080
    - Açık soruların cevabını **"Cevap / karar notu"** alanına yazıp durumu *Testte benim onayım* yapın. Not prompta aynen girer.
    - Önerileri (ör. e-posta/IBAN format kontrolleri) onaylarsanız prototipte engelleyici hataya dönüşür; reddederseniz kapanır. Öneri durumundayken yalnızca "Öneri" uyarısı gösterilir.
 6. **Kararları kaydedin.** Bir notu uygulamaya karar verdiğinizde **Karara dönüştür** deyin. Geri bildirim, siz karar vermeden gereksinim sayılmaz. Karar bir alanı değiştirebilir (etiket, açıklama, zorunluluk, seçenekler, kaldırma) veya yeni alan ekleyebilir. Değişiklik prototipe **hemen** uygulanır ve "Kararla değişti" rozetiyle gösterilir. Cari Form'da karar yalnızca bir branşa da uygulanabilir.
-7. **Deneyimi onaylayın.** "Prompt hazırlığı" sekmesinde **Deneyimi final olarak onaylıyorum** düğmesi, prototipin uyguladığı ama belgede olmayan davranışları (gözden geçir adımı, yön değişince kategori temizleme, boşluk kuralı, hata sunumu) onaylı hâle getirir. Böylece prompt, test ettiğiniz deneyimi birebir tanımlar. Onay geri alınabilir.
-8. **Promptu üretin.** *Cari Form Geliştirme Promptunu Oluştur* veya *Yeni Talent Form Geliştirme Promptunu Oluştur*. Prompt düzenlenebilir, **Kopyala** ile panoya alınabilir, **.txt** olarak indirilebilir. Bir formun promptu diğerini etkilemez.
+7. **Final.** Sağ üstteki **Final: promptları oluştur** düğmesi iki işi birlikte yapar:
+   - İki form için test ettiğiniz deneyimi onaylar. Prototipin uyguladığı ama belgede olmayan davranışlar (gözden geçir adımı, yön değişince kategori temizleme, boşluk kuralı, hata sunumu) onaylı hâle gelir; reddettikleriniz değişmez.
+   - İki ayrı geliştirme promptu oluşturur.
+
+   Promptları sonuç ekranından kopyalayabilir veya .txt olarak indirebilirsiniz. Testi sürdürüp tekrar Final'e basarsanız promptlar güncel verilerle yeniden oluşur.
+8. **İsteğe bağlı: form form ilerlemek.** "Prompt hazırlığı" sekmesinde aynı işlemler her form için ayrı ayrı yapılabilir: deneyim onayı ve *Cari Form / Yeni Talent Form Geliştirme Promptunu Oluştur*. Prompt burada elle de düzenlenebilir. Bir formun promptu diğerini etkilemez.
 
 ### Hazırlık durumu
 
@@ -121,15 +130,19 @@ Belge metinleri ve notları uygulamadaki "Belge talimatları" sekmesine birebir 
 npm test             # birim testleri (bağımlılık gerektirmez)
 npm install          # bir kez: Playwright (yalnızca uçtan uca testler için)
 npx playwright install chromium   # bir kez, tarayıcı yoksa
-npm run test:e2e     # gerçek tarayıcıda uçtan uca testler
+npm run test:e2e     # gerçek tarayıcıda uçtan uca testler (localhost sürümü)
+E2E_TARGET=tek-dosya npm run test:e2e   # aynı testler, çift tıklanan tek dosyaya karşı
 ```
+
+Kaynakta (`src/`, `assets/`, `index.html`) değişiklik yaptıktan sonra tek dosyayı yeniden üretin: `npm run build`. Birim testleri, depodaki tek dosya kaynakla aynı değilse uyarır.
 
 ---
 
 ## Proje yapısı
 
 ```
-index.html               Giriş sayfası
+dist/muhasebe-form-prototipi.html   Çift tıklanarak açılan tek dosya (npm run build ile üretilir)
+index.html               Giriş sayfası (kaynak sürüm; npm start ile açılır)
 assets/styles.css        Stil
 src/data/                Kaynak belgelerden çıkarılan veriler (tek doğruluk kaynağı)
   enums.js               Kaynak belgeler, durumlar, kategoriler
@@ -144,7 +157,7 @@ src/core/                Arayüzden bağımsız mantık (Node'da test edilir)
   readiness.js           Hazırlık durumu
   prompt.js              Deterministik prompt üretici
 src/ui/                  Ekranlar (test, talimatlar, geri bildirim, gereksinimler, kararlar, prompt)
-scripts/                 Yerel sunucu, belge üretici, komut satırı prompt üretici
+scripts/                 Yerel sunucu, tek dosya paketleyici, belge üretici, komut satırı prompt üretici
 tests/                   Birim ve uçtan uca testler
 ```
 

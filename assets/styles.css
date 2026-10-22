@@ -269,6 +269,9 @@ textarea { resize: vertical; }
 .error-text { color: var(--danger); font-weight: 600; }
 .warn-text { color: var(--warn); font-weight: 600; }
 .warn-list { max-height: 200px; overflow: auto; font-size: 0.85rem; }
+.final-list { display: flex; flex-direction: column; gap: 12px; }
+.final-item { border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
+.final-item h3 { margin: 0; font-size: 1rem; }
 .prompt-text { width: 100%; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.82rem; line-height: 1.45; border: 1px solid var(--border-strong); border-radius: 6px; padding: 12px; margin-top: 8px; background: #fcfcfd; }
 
 /* Diyalog */

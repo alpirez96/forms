@@ -9,7 +9,7 @@ import { renderInstructionsView } from './ui/instructionsView.js';
 import { renderFeedbackView } from './ui/feedbackView.js';
 import { renderRequirementsView } from './ui/requirementsView.js';
 import { renderDecisionsView } from './ui/decisionsView.js';
-import { renderPromptView } from './ui/promptView.js';
+import { renderPromptView, runFinal } from './ui/promptView.js';
 
 const TABS = [
   { id: 'test', label: 'Formu test et' },
@@ -273,8 +273,11 @@ function importReview(file) {
   reader.readAsText(file);
 }
 
+app.exportReview = exportReview;
+
 function showHelp() {
   const steps = [
+    'Kısaca: formu test edin, gördüklerinizi "Not" düğmesiyle kaydedin, bitince sağ üstteki "Final" düğmesine basın. İki form için ayrı geliştirme promptu oluşur; kopyalayabilir veya .txt olarak indirebilirsiniz.',
     'Üstten formu seçin: Cari Form veya Yeni Talent Form. İki formun yanıtları, geri bildirimleri ve kararları birbirinden ayrı tutulur.',
     '"Formu test et" sekmesinde formu doldurun. Cari Form ilk adımda fatura yönünü sorar; seçim kategori seçeneklerini değiştirir.',
     'Sağdaki test notları belgedeki kaynağı, koşulları ve açık soruları gösterir. "Test notlarını göster" ile gizleyip formu sade hâliyle görebilirsiniz.',
@@ -306,13 +309,14 @@ function init() {
     h(
       'header',
       { class: 'topbar' },
-      h('div', { class: 'brand' }, h('h1', {}, 'Muhasebe Formları · Gereksinim Prototipi'), h('p', {}, 'Test et, not al, karar ver, geliştirme promptunu üret. Gerçek işlem yapılmaz.')),
+      h('div', { class: 'brand' }, h('h1', {}, 'Muhasebe Formları · Gereksinim Prototipi'), h('p', {}, '1) Formu test edin · 2) "Not" ile kaydedin · 3) Bitince "Final"e basın: iki ayrı prompt oluşur. Gerçek işlem yapılmaz.')),
       h(
         'div',
         { class: 'topbar-actions' },
         button('Nasıl kullanılır?', showHelp, { id: 'btn-help' }),
         button('JSON dışa aktar', exportReview, { id: 'btn-export' }),
         button('JSON içe aktar', () => fileInput.click(), { id: 'btn-import' }),
+        button('Final: promptları oluştur', () => runFinal(app), { variant: 'primary', id: 'btn-final' }),
         fileInput,
       ),
     ),

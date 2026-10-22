@@ -6,8 +6,9 @@
 
 | Paket | Komut | Sonuç |
 |---|---|---|
-| Birim testleri (envanter ve yönlendirme tutarlılığı, şema, doğrulama, içe/dışa aktarma ve sürüm geçişi, prompt, hazırlık) | `npm test` | **40 / 40 geçti** |
-| Uçtan uca testler (gerçek tarayıcı) | `npm run test:e2e` | **19 / 19 geçti** (art arda iki çalıştırmada) |
+| Birim testleri (envanter ve yönlendirme tutarlılığı, şema, doğrulama, içe/dışa aktarma ve sürüm geçişi, prompt, hazırlık, tek dosya paketi, yerel sunucu) | `npm test` | **43 / 43 geçti** |
+| Uçtan uca testler, yerel sunucu üzerinden (gerçek tarayıcı) | `npm run test:e2e` | **20 / 20 geçti** |
+| Uçtan uca testler, tek dosya `file://` ile açılmış | `E2E_TARGET=tek-dosya npm run test:e2e` | **20 / 20 geçti** |
 | Tarayıcı konsol hatası | tüm uçtan uca testlerde denetlendi | **Yok** |
 
 ## Brif kontrol listesi (Aşama 7)
@@ -27,7 +28,9 @@
 | Onaylı kararlar doğru prompta giriyor | E2E: K-C-001 Cari promptunda var, Talent promptunda yok; alan envanteri branşa göre güncelleniyor | Geçti |
 | Açık sorular promptta görünüyor | Birim + E2E: "12.1 Engelleyici sorular", kimlikler ve "cevap uydurma" talimatı; engelleyici cevaplanınca taslak uyarısı kalkıyor | Geçti |
 | İki prompt bağımsız | Birim: Cari promptunda Talent'a özgü alan yok, Talent promptunda Cari'ye özgü alan yok (iki formda ortak geçen belge türleri hariç); 18 bölüm her ikisinde | Geçti |
-| Yerel çalıştırma | `npm start` ve `python3 -m http.server`; `file://` ile açılırsa yönlendirme mesajı | Geçti |
+| Yerel çalıştırma | Tek dosya (`dist/muhasebe-form-prototipi.html`) çift tıklamayla açılır ve tüm E2E akışları bu dosyada da geçer. `npm start` tarayıcıyı kendisi açar; port doluysa sıradaki boş porta geçer (birim testi). Kaynak `index.html` `file://` ile açılırsa tek dosyaya yönlendiren mesaj gösterir | Geçti |
+| Tek dosya güncelliği | Birim: paket tüm `src` modüllerini içerir, `import`/`export` kalmaz, sözdizimi geçerli; depodaki dosya kaynaktan yeniden üretilenle birebir aynı | Geçti |
+| Final akışı | E2E: "Final: promptları oluştur" onay ister; iki formun deneyim onayını verir; iki ayrı prompt üretir; her biri kopyalanabilir ve .txt indirilebilir | Geçti |
 | Çalışma zamanı hatası / kırık etkileşim | Tüm E2E akışlarında konsol ve sayfa hatası denetimi | Yok |
 
 ## Canlı form tanımının (DOC-D) etkisi
@@ -60,6 +63,7 @@ Kaydedilmiş Google Forms sayfasındaki gömülü form tanımı okundu. Ekranda 
 4. Promptta onaylanmamış prototip davranışları test senaryolarında zorunlu gibi yazılıyordu. Senaryolar artık her davranışın onay durumuna göre üretiliyor; birim testine eklendi.
 5. Türkçe büyük harf dönüşümü ("ENGELLEYICI") düzeltildi (`tr-TR`).
 6. Prompt, üst bilgi bloğunun her adımda göründüğünü yazıyordu. Prototipte yalnızca ilk adımda tam görünür. Metin düzeltildi.
+7. `npm start`, port doluyken hem dolu portu hem yeni portu "çalışıyor" diye yazıyordu. Tarayıcıyı da yanlış adrese açabilirdi. Neden: başarısız denemenin dinleyicisi sonraki portta tetikleniyordu. Her deneme artık kendi dinleyicilerini temizliyor; birim testine eklendi.
 
 ## Açık kalanlar (uygulama dışı, iş kararı gerektiren)
 

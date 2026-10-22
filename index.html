@@ -11,15 +11,17 @@
     <a class="skip-link" href="#main">İçeriğe geç</a>
     <div id="app" class="app"></div>
     <noscript>Bu prototip JavaScript gerektirir.</noscript>
+    <!-- dosya-uyarisi:baslangic -->
     <script>
-      // Dosyaya çift tıklanarak (file://) açıldığında ES modülleri yüklenmez; kullanıcıyı bilgilendir.
+      // Kaynak sürüm dosyaya çift tıklanarak (file://) açılamaz: tarayıcılar ES modüllerini bu şekilde yüklemez.
       if (location.protocol === 'file:') {
         document.getElementById('app').innerHTML =
           '<div class="banner banner-warn" role="alert" style="margin-top:24px">' +
-          '<strong>Prototip bu şekilde açılamaz.</strong> Lütfen proje klasöründe <code>npm start</code> komutunu çalıştırıp ' +
-          'tarayıcıda <code>http://127.0.0.1:8080</code> adresini açın (ayrıntılar README.md dosyasında).</div>';
+          '<strong>Bu dosya bu şekilde açılamaz.</strong> Çift tıklayarak açmak için <code>dist/muhasebe-form-prototipi.html</code> dosyasını kullanın ' +
+          'ya da proje klasöründe <code>npm start</code> komutunu çalıştırın (ayrıntılar README.md dosyasında).</div>';
       }
     </script>
+    <!-- dosya-uyarisi:bitis -->
     <script type="module" src="src/app.js"></script>
   </body>
 </html>

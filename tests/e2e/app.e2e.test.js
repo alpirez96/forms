@@ -4,7 +4,8 @@ import test, { before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { chromium } from 'playwright';
 
 const root = fileURLToPath(new URL('../..', import.meta.url));
@@ -18,18 +19,20 @@ let base;
 
 before(async () => {
   const port = 18000 + Math.floor(Math.random() * 1000);
-  server = spawn(process.execPath, ['scripts/serve.js', String(port)], { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] });
-  await new Promise((resolve, reject) => {
+  server = spawn(process.execPath, ['scripts/serve.js', String(port), '--no-open'], { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] });
+  // Port doluysa sunucu sıradakine geçer; gerçek portu çıktısından oku.
+  const actualPort = await new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('sunucu başlamadı')), 8000);
     server.stdout.on('data', (d) => {
-      if (String(d).includes('çalışıyor')) {
+      const m = String(d).match(/çalışıyor: http:\/\/localhost:(\d+)/);
+      if (m) {
         clearTimeout(timer);
-        resolve();
+        resolve(m[1]);
       }
     });
     server.on('exit', (code) => reject(new Error(`sunucu kapandı: ${code}`)));
   });
-  base = `http://127.0.0.1:${port}/`;
+  base = process.env.E2E_TARGET === 'tek-dosya' ? pathToFileURL(join(root, 'dist', 'muhasebe-form-prototipi.html')).href : `http://127.0.0.1:${actualPort}/`;
   browser = await chromium.launch();
 });
 
@@ -397,6 +400,34 @@ test('gereksinim durumu, deneyim onayı ve reddedilen öneri prototipi ve prompt
   await page.click('#btn-generate');
   text = await page.inputValue('#prompt-text-cari');
   assert.ok(text.includes('UYGULANMAYACAK (C-P07'));
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+test('Final: iki form için deneyim onaylanır ve iki ayrı prompt üretilir', async () => {
+  const { context, page, errors } = await open();
+  await page.click('#btn-final');
+  assert.match(await page.textContent('dialog[open]'), /Final: promptlar oluşturulsun mu\?/);
+  await page.click('#confirm-final');
+  await page.waitForSelector('#final-cari');
+  assert.match(await page.textContent('#final-cari'), /Cari Form geliştirme promptu/);
+  assert.match(await page.textContent('#final-talent'), /Yeni Talent Form geliştirme promptu/);
+  await shot(page, 'final-dialog');
+  const [d1] = await Promise.all([page.waitForEvent('download'), page.click('#final-download-cari')]);
+  assert.equal(d1.suggestedFilename(), 'cari-form-gelistirme-promptu.txt');
+  const cari = await readFile(await d1.path(), 'utf8');
+  const [d2] = await Promise.all([page.waitForEvent('download'), page.click('#final-download-talent')]);
+  assert.equal(d2.suggestedFilename(), 'yeni-talent-form-gelistirme-promptu.txt');
+  const talent = await readFile(await d2.path(), 'utf8');
+  assert.ok(cari.startsWith('# Cari Hesap Açılış Talep Formu') && cari.includes('Prototip deneyimi final onayı: VERİLDİ'));
+  assert.ok(talent.startsWith('# Yeni Talent Formu') && talent.includes('Prototip deneyimi final onayı: VERİLDİ'));
+  assert.ok(!talent.includes('IBAN') && !cari.includes('Twitch Link'), 'iki prompt bağımsız');
+  await page.click('#final-view-talent');
+  assert.equal(await page.inputValue('#prompt-text-talent'), talent);
+  await page.reload();
+  await page.waitForSelector('#prompt-text-talent');
+  assert.equal(await page.inputValue('#prompt-text-talent'), talent, 'final promptlar yenilemede korunur');
+  assert.match(await page.textContent('main'), /Son final:/);
   assert.deepEqual(errors, []);
   await context.close();
 });

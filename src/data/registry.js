@@ -16,7 +16,7 @@ export function isSharedReq(reqId) {
   return reqId.startsWith('S-');
 }
 
-// Bir formun prompt/inceleme kapsamındaki tüm gereksinimleri: kendi maddeleri + ortak maddeler.
+// Bir formun inceleme kapsamındaki tüm gereksinimleri: kendi maddeleri + ortak maddeler.
 export function requirementsFor(formId) {
   const own = getForm(formId).requirements.map((r) => ({ ...r, form: formId }));
   const common = SHARED_REQUIREMENTS.map(({ implicationsByForm, openQuestionsByForm, ...r }) => ({

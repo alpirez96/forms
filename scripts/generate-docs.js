@@ -1,13 +1,11 @@
-// Gereksinim envanterini, açık soru listesini ve başlangıç taslak promptlarını
-// uygulamanın kullandığı aynı veriden Markdown/metin olarak üretir.
+// Gereksinim envanterini ve açık soru listesini uygulamanın kullandığı aynı veriden
+// Markdown olarak üretir.
 // Kullanım: npm run docs
 
-import { writeFile, mkdir } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { FORMS, FORM_IDS, SHARED_REQUIREMENTS, requirementsFor } from '../src/data/registry.js';
 import { SOURCES, STATUS, CONFIDENCE, REQ_TYPES, FORM_LABELS } from '../src/data/enums.js';
-import { defaultState } from '../src/core/state.js';
-import { generatePrompt, promptFileName } from '../src/core/prompt.js';
 
 const docs = fileURLToPath(new URL('../docs/', import.meta.url));
 const cell = (s) => String(s || '—').replace(/\|/g, '\\|').replace(/\n/g, ' ');
@@ -73,7 +71,7 @@ function questionsDoc() {
   L.push('> `npm run docs` ile otomatik üretilir. Bu liste inceleme öncesi durumu gösterir; cevaplarınızı uygulamada ilgili maddenin "Cevap / karar notu" alanına yazın.', '');
   const all = [...formReqs('cari'), ...formReqs('talent'), ...SHARED_REQUIREMENTS];
   const groups = [
-    ['1. Engelleyici sorular (cevaplanmadan güvenilir final prompt üretilemez)', (r) => r.blocker && r.defaultStatus === 'acik-soru'],
+    ['1. Engelleyici sorular', (r) => r.blocker && r.defaultStatus === 'acik-soru'],
     ['2. Belge çelişkileri', (r) => r.conflict],
     ['3. Diğer açık sorular', (r) => !r.blocker && !r.conflict && r.defaultStatus === 'acik-soru'],
     ['4. Onayınızı bekleyen öneriler (belgede yok veya belge "olabilir" diyor)', (r) => r.defaultStatus === 'oneri'],
@@ -97,12 +95,7 @@ function questionsDoc() {
   return `${L.join('\n')}\n`;
 }
 
-await mkdir(`${docs}baslangic-promptlari`, { recursive: true });
 await writeFile(`${docs}GEREKSINIM_ENVANTERI.md`, inventoryDoc());
 await writeFile(`${docs}ACIK_SORULAR.md`, questionsDoc());
-const state = defaultState();
-for (const formId of FORM_IDS) {
-  await writeFile(`${docs}baslangic-promptlari/${promptFileName(formId).replace('.txt', '.taslak.txt')}`, generatePrompt(formId, state));
-}
-console.log('Üretildi: docs/GEREKSINIM_ENVANTERI.md, docs/ACIK_SORULAR.md, docs/baslangic-promptlari/*.taslak.txt');
+console.log('Üretildi: docs/GEREKSINIM_ENVANTERI.md, docs/ACIK_SORULAR.md');
 console.log(`Formlar: ${FORM_IDS.map((id) => FORMS[id].title).join(', ')}`);

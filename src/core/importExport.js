@@ -3,7 +3,7 @@
 
 import { FORM_IDS, knownReqIds, sharedReqIds } from '../data/registry.js';
 import { STATUS, FEEDBACK_CATEGORIES, FEEDBACK_STATUS, PRIORITIES, BRANCH_SCOPES, FIELD_TYPES } from '../data/enums.js';
-import { SCHEMA_VERSION, emptyFormState, migrateSectionRefs } from './state.js';
+import { SCHEMA_VERSION, migrateSectionRefs } from './state.js';
 
 export const EXPORT_KIND = 'muhasebe-form-inceleme';
 const MAX_TEXT = 20000;
@@ -18,8 +18,6 @@ export function buildExport(state, exportedAt) {
       decisions: f.decisions,
       reqStatus: f.reqStatus,
       sectionReviewed: f.sectionReviewed,
-      experienceConfirmed: f.experienceConfirmed,
-      prompt: f.prompt,
       counters: f.counters,
     };
   }
@@ -170,15 +168,12 @@ export function validateImport(text) {
     const reqStatus = cleanReqStatus(f.reqStatus, knownReqIds(id), `${id} gereksinim durumu`, warnings);
     const sectionReviewed = {};
     if (isObj(f.sectionReviewed)) for (const [k, v] of Object.entries(f.sectionReviewed)) if (v === true) sectionReviewed[str(k, 80)] = true;
-    const prompt = isObj(f.prompt)
-      ? { text: str(f.prompt.text, 400000), dataHash: str(f.prompt.dataHash, 40), edited: Boolean(f.prompt.edited) }
-      : emptyFormState(id).prompt;
     const maxNo = (list) => list.reduce((m, x) => Math.max(m, Number((x.id.match(/(\d+)$/) || [])[1]) || 0), 0);
     const counters = {
       feedback: Math.max(Number(f.counters && f.counters.feedback) || 0, maxNo(feedback)),
       decision: Math.max(Number(f.counters && f.counters.decision) || 0, maxNo(decisions)),
     };
-    data.forms[id] = migrateSectionRefs(id, { feedback, decisions, reqStatus, sectionReviewed, prompt, counters, experienceConfirmed: Boolean(f.experienceConfirmed) }, raw.schemaVersion);
+    data.forms[id] = migrateSectionRefs(id, { feedback, decisions, reqStatus, sectionReviewed, counters }, raw.schemaVersion);
     summary[id] = { feedback: feedback.length, decisions: decisions.length, reqStatus: Object.keys(reqStatus).length };
   }
   data.shared.reqStatus = cleanReqStatus(raw.shared && raw.shared.reqStatus, sharedReqIds(), 'ortak gereksinim durumu', warnings);

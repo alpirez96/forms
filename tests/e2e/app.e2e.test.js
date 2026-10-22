@@ -257,7 +257,7 @@ test('formlar arasında veri ve geri bildirim karışmaz; sayfa yenilenince koru
   await context.close();
 });
 
-test('geri bildirim → karar: alan değişikliği prototipe ve yalnızca kendi promptuna yansır', async () => {
+test('geri bildirim → karar: alan değişikliği prototipe yansır, diğer forma geçmez', async () => {
   const { context, page, errors } = await open();
   await page.click('#tab-feedback');
   await page.click('#btn-new-feedback');
@@ -291,46 +291,9 @@ test('geri bildirim → karar: alan değişikliği prototipe ve yalnızca kendi 
   await page.click('#btn-next');
   assert.equal(await page.locator('#fld-ibanTry .req').count(), 1);
 
-  await page.click('#tab-prompt');
-  await page.click('#btn-generate');
-  const cariPrompt = await page.inputValue('#prompt-text-cari');
-  assert.ok(cariPrompt.includes('[K-C-001]'));
-  assert.ok(cariPrompt.includes('Fatura keseceğim → Zorunlu · Bana fatura kesilecek → İsteğe bağlı'));
-  await shot(page, 'prompt-cari');
   await page.click('#formtab-talent');
-  await page.click('#tab-prompt');
-  assert.equal(await page.inputValue('#prompt-text-talent'), '');
-  await page.click('#btn-generate');
-  const talentPrompt = await page.inputValue('#prompt-text-talent');
-  assert.ok(!talentPrompt.includes('K-C-001'));
-  assert.ok(!talentPrompt.includes('IBAN'));
-  await page.click('#formtab-cari');
-  assert.equal(await page.inputValue('#prompt-text-cari'), cariPrompt, 'diğer formun promptu üzerine yazılmaz');
-  assert.deepEqual(errors, []);
-  await context.close();
-});
-
-test('prompt: açık sorular görünür, düzenleme korunur, yeniden oluşturma onay ister, .txt indirilir', async () => {
-  const { context, page, errors } = await open();
-  await page.click('#tab-prompt');
-  await page.click('#btn-generate');
-  const text = await page.inputValue('#prompt-text-cari');
-  assert.ok(text.includes('### 12.1 Engelleyici sorular'));
-  assert.ok(text.includes('[C-Q01]'));
-  await page.click('#prompt-text-cari');
-  await page.keyboard.press('Control+End');
-  await page.keyboard.type('\nEK NOT');
-  assert.match(await page.textContent('#prompt-meta'), /elle düzenlendi/);
-  await page.reload();
-  await page.waitForSelector('#prompt-text-cari');
-  assert.ok((await page.inputValue('#prompt-text-cari')).endsWith('EK NOT'));
-  await page.click('#btn-generate');
-  await confirmModal(page, 'Vazgeç');
-  assert.ok((await page.inputValue('#prompt-text-cari')).endsWith('EK NOT'));
-  const [download] = await Promise.all([page.waitForEvent('download'), page.click('#btn-download')]);
-  assert.equal(download.suggestedFilename(), 'cari-form-gelistirme-promptu.txt');
-  const content = await readFile(await download.path(), 'utf8');
-  assert.equal(content, await page.inputValue('#prompt-text-cari'));
+  await page.click('#tab-decisions');
+  assert.ok(!(await page.textContent('main')).includes('K-C-001'), 'karar diğer forma geçmez');
   assert.deepEqual(errors, []);
   await context.close();
 });
@@ -370,64 +333,52 @@ test('JSON dışa aktarma, içe aktarma ve bozuk dosya', async () => {
   await second.context.close();
 });
 
-test('gereksinim durumu, deneyim onayı ve reddedilen öneri prototipi ve promptu günceller', async () => {
+test('gereksinim durumu: cevap notu kaydedilir, reddedilen öneri prototipten kalkar', async () => {
   const { context, page, errors } = await open();
   await page.click('#tab-requirements');
   await page.fill('#rf-search', 'C-Q09');
   await page.selectOption('#req-status-C-Q09', 'test-onayli');
-  await page.fill('#req-note-C-Q09', 'ÖRNEK KARAR: yanıtlar şirket içi tabloya yazılacak');
+  await page.fill('#req-note-C-Q09', 'ÖRNEK KARAR: talepler muhasebe ekibine iletilecek');
   await page.locator('#req-note-C-Q09').blur();
   await shot(page, 'requirements');
-  await page.click('#tab-prompt');
-  assert.match(await page.textContent('#ready-cari'), /Engelleyici açık soru\s*0/);
-  await page.click('#btn-confirm-experience');
-  await confirmModal(page, 'Onaylıyorum');
-  await page.click('#btn-generate');
-  let text = await page.inputValue('#prompt-text-cari');
-  assert.ok(text.includes('Prototip deneyimi final onayı: VERİLDİ'));
-  assert.ok(text.includes('(C-P07 — onaylı, ZORUNLU)'));
-  assert.ok(text.includes('karar (C-Q09): ÖRNEK KARAR: yanıtlar şirket içi tabloya yazılacak'));
-  assert.ok(!text.includes('> UYARI: Bu bir TASLAK prompttur'), 'engelleyici kalmayınca taslak uyarısı yok');
-  await shot(page, 'prompt-ready');
-
-  await page.click('#tab-requirements');
+  await page.reload();
+  await page.waitForSelector('#req-note-C-Q09');
+  assert.equal(await page.inputValue('#req-note-C-Q09'), 'ÖRNEK KARAR: talepler muhasebe ekibine iletilecek', 'not yenilemede korunur');
   await page.fill('#rf-search', 'C-P07');
   await page.selectOption('#req-status-C-P07', 'reddedildi');
   await page.click('#tab-test');
   assert.ok(!(await page.textContent('.stepper')).includes('Gözden geçir'));
-  await page.click('#tab-prompt');
-  assert.match(await page.textContent('#prompt-meta'), /değişti/);
-  await page.click('#btn-generate');
-  text = await page.inputValue('#prompt-text-cari');
-  assert.ok(text.includes('UYGULANMAYACAK (C-P07'));
   assert.deepEqual(errors, []);
   await context.close();
 });
 
-test('Final: iki form için deneyim onaylanır ve iki ayrı prompt üretilir', async () => {
+test('"Notları indir (JSON)": notlar ve kararlar iki form için tek dosyada, test yanıtları olmadan', async () => {
   const { context, page, errors } = await open();
-  await page.click('#btn-final');
-  assert.match(await page.textContent('dialog[open]'), /Final: promptlar oluşturulsun mu\?/);
-  await page.click('#confirm-final');
-  await page.waitForSelector('#final-cari');
-  assert.match(await page.textContent('#final-cari'), /Cari Form geliştirme promptu/);
-  assert.match(await page.textContent('#final-talent'), /Yeni Talent Form geliştirme promptu/);
-  await shot(page, 'final-dialog');
-  const [d1] = await Promise.all([page.waitForEvent('download'), page.click('#final-download-cari')]);
-  assert.equal(d1.suggestedFilename(), 'cari-form-gelistirme-promptu.txt');
-  const cari = await readFile(await d1.path(), 'utf8');
-  const [d2] = await Promise.all([page.waitForEvent('download'), page.click('#final-download-talent')]);
-  assert.equal(d2.suggestedFilename(), 'yeni-talent-form-gelistirme-promptu.txt');
-  const talent = await readFile(await d2.path(), 'utf8');
-  assert.ok(cari.startsWith('# Cari Hesap Açılış Talep Formu') && cari.includes('Prototip deneyimi final onayı: VERİLDİ'));
-  assert.ok(talent.startsWith('# Yeni Talent Formu') && talent.includes('Prototip deneyimi final onayı: VERİLDİ'));
-  assert.ok(!talent.includes('IBAN') && !cari.includes('Twitch Link'), 'iki prompt bağımsız');
-  await page.click('#final-view-talent');
-  assert.equal(await page.inputValue('#prompt-text-talent'), talent);
-  await page.reload();
-  await page.waitForSelector('#prompt-text-talent');
-  assert.equal(await page.inputValue('#prompt-text-talent'), talent, 'final promptlar yenilemede korunur');
-  assert.match(await page.textContent('main'), /Son final:/);
+  await chooseBranch(page, 'issue');
+  await page.click('#btn-next');
+  await page.fill('#in-cariHesapAdi', 'GİZLİ TEST YANITI');
+  await page.click('#tab-feedback');
+  await page.click('#btn-new-feedback');
+  await page.selectOption('#fb-category', 'eksik-alan');
+  await page.fill('#fb-description', 'Cari formu için örnek not');
+  await page.click('#fb-save');
+  await page.click('#formtab-talent');
+  await page.click('#tab-feedback');
+  await page.click('#btn-new-feedback');
+  await page.selectOption('#fb-category', 'eksik-alan');
+  await page.fill('#fb-description', 'Talent formu için örnek not');
+  await page.click('#fb-save');
+  assert.match(await page.getAttribute('#btn-export', 'class'), /primary/, 'JSON indirme ana eylemdir');
+  const [download] = await Promise.all([page.waitForEvent('download'), page.click('#btn-export')]);
+  assert.match(download.suggestedFilename(), /^form-inceleme-\d{4}-\d{2}-\d{2}\.json$/);
+  const json = await readFile(await download.path(), 'utf8');
+  const data = JSON.parse(json);
+  assert.equal(data.forms.cari.feedback[0].description, 'Cari formu için örnek not');
+  assert.equal(data.forms.talent.feedback[0].description, 'Talent formu için örnek not');
+  assert.ok(!json.includes('GİZLİ TEST YANITI'), 'test yanıtları dışa aktarılmaz');
+  assert.ok(!('prompt' in data.forms.cari), 'prompt alanı yok');
+  assert.equal(await page.locator('#btn-final').count(), 0, 'Final düğmesi yok');
+  assert.equal(await page.locator('#tab-prompt').count(), 0, 'prompt sekmesi yok');
   assert.deepEqual(errors, []);
   await context.close();
 });
@@ -448,7 +399,7 @@ test('erişilebilirlik: her form denetiminin erişilebilir bir etiketi var', asy
   assert.deepEqual(await unlabeled(), [], 'Cari sayfa 1');
   await page.click('#formtab-talent');
   assert.deepEqual(await unlabeled(), [], 'Talent');
-  for (const tab of ['feedback', 'requirements', 'prompt']) {
+  for (const tab of ['feedback', 'requirements', 'decisions']) {
     await page.click(`#tab-${tab}`);
     assert.deepEqual(await unlabeled(), [], tab);
   }
@@ -464,7 +415,7 @@ test('mobil genişlikte yatay kaydırma yok', async () => {
   const overflow = () => page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   for (const form of ['cari', 'talent']) {
     await page.click(`#formtab-${form}`);
-    for (const tab of ['test', 'instructions', 'feedback', 'requirements', 'decisions', 'prompt']) {
+    for (const tab of ['test', 'instructions', 'feedback', 'requirements', 'decisions']) {
       await page.click(`#tab-${tab}`);
       assert.ok((await overflow()) <= 1, `${form}/${tab} taşıyor`);
     }

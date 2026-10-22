@@ -1,4 +1,4 @@
-// Onaylı kararlar. Kararlar geri bildirimden ayrıdır; yalnızca kararlar prompta "onaylı değişiklik" olarak girer.
+// Onaylı kararlar. Kararlar geri bildirimden ayrıdır; açık geri bildirim onaylı değişiklik sayılmaz.
 // Alan değişikliği içeren kararlar prototipe hemen uygulanır.
 
 import { FORMS, findRequirement, requirementsFor } from '../data/registry.js';
@@ -133,7 +133,7 @@ export function openDecisionDialog(app, { fromFeedback = null, existing = null, 
     errorBox,
     fb ? h('p', { class: 'note note-blue' }, `Kaynak geri bildirim: ${fb.id} — ${fb.description}`) : null,
     labeled('Karar başlığı', title),
-    labeled('Karar', text, { required: true, hint: 'Ne uygulanacak? Bu metin prompta "onaylı değişiklik" olarak girer.' }),
+    labeled('Karar', text, { required: true, hint: 'Ne uygulanacak? Bu metin onaylı değişiklik olarak kaydedilir.' }),
     labeled('Etkisi / uygulama notu', impl),
     h('div', { class: 'grid-2' }, form.hasBranches ? labeled('Branş kapsamı', branchSel, { hint: 'Branşa özel kararlar yalnızca o yönde uygulanır.' }) : h('div', {}), labeled('İlgili gereksinimler (isteğe bağlı)', reqs)),
     labeled('Hedef bölüm/alan', targetSel),
@@ -216,7 +216,7 @@ export function renderDecisionsView(app, main) {
     h(
       'div',
       { class: 'view-head' },
-      h('div', {}, h('h2', {}, `Kararlar — ${FORM_LABELS[formId]}`), h('p', { class: 'muted' }, 'Onayladığınız değişiklikler. Bunlar prompta "onaylı değişiklik" olarak girer ve belgedeki tanımın yerine geçer. Açık geri bildirimler buraya girmez.')),
+      h('div', {}, h('h2', {}, `Kararlar — ${FORM_LABELS[formId]}`), h('p', { class: 'muted' }, 'Onayladığınız değişiklikler. Bunlar belgedeki tanımın yerine geçer. Açık geri bildirimler buraya girmez.')),
       button('Yeni karar', () => openDecisionDialog(app), { variant: 'primary', id: 'btn-new-decision' }),
     ),
   );

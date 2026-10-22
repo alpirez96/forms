@@ -1,7 +1,7 @@
 // Belgeden gelen temel şemayı, onaylanmış kararlar ve gereksinim durumlarıyla birleştirip
-// "etkin" form şemasını üretir. Prototip ekranı ve prompt üretici aynı fonksiyonu kullanır.
+// prototip ekranının kullandığı "etkin" form şemasını üretir.
 
-import { getForm, findRequirement, isSharedReq } from '../data/registry.js';
+import { getForm, findRequirement, isSharedReq, requirementsFor } from '../data/registry.js';
 import { DEFAULT_PLACEHOLDER, SELECT_PLACEHOLDER, MANDATORY_STATUSES } from '../data/enums.js';
 
 // --- Gereksinim durumu -------------------------------------------------------
@@ -21,6 +21,12 @@ export function noteLookup(state, formId) {
     const store = isSharedReq(reqId) ? state.shared.reqStatus : state.forms[formId].reqStatus;
     return (store[reqId] && store[reqId].note) || '';
   };
+}
+
+export function requirementsWithStatus(formId, state) {
+  const statusOf = statusLookup(state, formId);
+  const noteOf = noteLookup(state, formId);
+  return requirementsFor(formId).map((r) => ({ ...r, status: statusOf(r.id), note: noteOf(r.id) }));
 }
 
 export const isMandatoryStatus = (status) => MANDATORY_STATUSES.includes(status);

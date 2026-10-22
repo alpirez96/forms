@@ -1,15 +1,13 @@
 import { FORMS, FORM_IDS } from './data/registry.js';
 import { loadState, saveState, defaultState } from './core/state.js';
 import { buildExport, validateImport, applyImport } from './core/importExport.js';
-import { readiness } from './core/readiness.js';
-import { routeAnswersFor, sectionTitle } from './core/schema.js';
+import { routeAnswersFor, sectionTitle, requirementsWithStatus } from './core/schema.js';
 import { h, clear, button, toast, openDialog, downloadText } from './ui/dom.js';
 import { renderTestView, stepForField, stepsFor } from './ui/testView.js';
 import { renderInstructionsView } from './ui/instructionsView.js';
 import { renderFeedbackView } from './ui/feedbackView.js';
 import { renderRequirementsView } from './ui/requirementsView.js';
 import { renderDecisionsView } from './ui/decisionsView.js';
-import { renderPromptView, runFinal } from './ui/promptView.js';
 
 const TABS = [
   { id: 'test', label: 'Formu test et' },
@@ -17,7 +15,6 @@ const TABS = [
   { id: 'feedback', label: 'Geri bildirim' },
   { id: 'requirements', label: 'Gereksinimler ve açık sorular' },
   { id: 'decisions', label: 'Kararlar' },
-  { id: 'prompt', label: 'Prompt hazırlığı' },
 ];
 
 const storage = (() => {
@@ -163,8 +160,7 @@ function tabCount(tabId, formId) {
     return open ? `${open} açık` : null;
   }
   if (tabId === 'requirements') {
-    const r = readiness(formId, app.state);
-    const n = r.blockers.length + r.openQuestions.length;
+    const n = requirementsWithStatus(formId, app.state).filter((r) => r.status === 'acik-soru').length;
     return n ? `${n} açık soru` : null;
   }
   if (tabId === 'decisions') return fs.decisions.length ? String(fs.decisions.length) : null;
@@ -176,7 +172,6 @@ function renderShell() {
   const formSwitch = clear(document.getElementById('form-switch'));
   for (const id of FORM_IDS) {
     const f = FORMS[id];
-    const r = readiness(id, app.state);
     const isActive = app.formId === id;
     formSwitch.append(
       h(
@@ -190,7 +185,6 @@ function renderShell() {
         },
         h('span', { class: 'form-tab-title' }, f.shortTitle),
         h('span', { class: 'form-tab-sub' }, f.title),
-        h('span', { class: `dot dot-${r.tone}`, title: `Hazırlık: ${r.label}` }),
       ),
     );
   }
@@ -217,7 +211,6 @@ function renderShell() {
     feedback: renderFeedbackView,
     requirements: renderRequirementsView,
     decisions: renderDecisionsView,
-    prompt: renderPromptView,
   }[app.fs.activeTab] || renderTestView;
   view(app, main);
 }
@@ -228,7 +221,7 @@ function exportReview() {
   const data = buildExport(app.state, new Date().toISOString());
   const date = new Date().toISOString().slice(0, 10);
   downloadText(`form-inceleme-${date}.json`, `${JSON.stringify(data, null, 2)}\n`, 'application/json');
-  toast('İnceleme verisi JSON olarak indirildi (test yanıtları dahil edilmedi).', 'success');
+  toast('Notlarınız JSON olarak indirildi (test yanıtları dahil edilmedi).', 'success');
 }
 
 function importReview(file) {
@@ -244,7 +237,7 @@ function importReview(file) {
     }
     const s = result.summary;
     body.append(
-      h('p', {}, 'Dosya doğrulandı. İçe aktarılırsa mevcut inceleme verisinin (geri bildirimler, kararlar, gereksinim durumları, promptlar) yerini alır. Test yanıtlarınız korunur.'),
+      h('p', {}, 'Dosya doğrulandı. İçe aktarılırsa mevcut inceleme verisinin (geri bildirimler, kararlar, gereksinim durumları) yerini alır. Test yanıtlarınız korunur.'),
       h(
         'ul',
         {},
@@ -273,19 +266,16 @@ function importReview(file) {
   reader.readAsText(file);
 }
 
-app.exportReview = exportReview;
-
 function showHelp() {
   const steps = [
-    'Kısaca: formu test edin, gördüklerinizi "Not" düğmesiyle kaydedin, bitince sağ üstteki "Final" düğmesine basın. İki form için ayrı geliştirme promptu oluşur; kopyalayabilir veya .txt olarak indirebilirsiniz.',
+    'Kısaca: formu test edin, gördüklerinizi "Not" düğmesiyle kaydedin, bitince sağ üstteki "Notları indir (JSON)" düğmesiyle dosyayı indirip iletin. Geliştirme promptu bu dosyadan hazırlanır.',
     'Üstten formu seçin: Cari Form veya Yeni Talent Form. İki formun yanıtları, geri bildirimleri ve kararları birbirinden ayrı tutulur.',
     '"Formu test et" sekmesinde formu doldurun. Cari Form ilk adımda fatura yönünü sorar; seçim kategori seçeneklerini değiştirir.',
     'Sağdaki test notları belgedeki kaynağı, koşulları ve açık soruları gösterir. "Test notlarını göster" ile gizleyip formu sade hâliyle görebilirsiniz.',
     'Her alanın yanındaki "Not" düğmesiyle o alana bağlı geri bildirim kaydedin. Bölüm notu ve "Bu bölümü inceledim" işareti sağ paneldedir.',
     '"Gereksinimler" sekmesinde her maddenin kaynağını görün; durumunu (ör. onayladım, reddedildi, ertelendi) ve karar notunuzu girin. Açık soruları burada cevaplayın.',
     'Bir geri bildirimi uygulamaya karar verdiğinizde "Karara dönüştür" deyin. Geri bildirimler, siz onaylamadan gereksinim sayılmaz. Alan değişikliği içeren kararlar prototipe hemen yansır.',
-    '"Prompt hazırlığı" sekmesinde hazırlık durumunu görün, deneyimi final olarak onaylayın ve her form için ayrı promptu oluşturun. Promptu düzenleyebilir, kopyalayabilir veya .txt olarak indirebilirsiniz.',
-    'Çalışmanız tarayıcıda otomatik saklanır. Yedek veya paylaşım için "JSON dışa aktar" kullanın; devam etmek için "JSON içe aktar" ile geri yükleyin.',
+    'Çalışmanız tarayıcıda otomatik saklanır. "Notları indir (JSON)" notlarınızı, kararlarınızı ve gereksinim durumlarını tek dosyada indirir; başka bir tarayıcıda devam etmek için "JSON içe aktar" ile geri yükleyin.',
     'Gerçek kişisel, banka veya vergi verisi girmeyin; "Örnek veri doldur" açıkça işaretli sahte veri kullanır.',
   ];
   openDialog({
@@ -309,14 +299,13 @@ function init() {
     h(
       'header',
       { class: 'topbar' },
-      h('div', { class: 'brand' }, h('h1', {}, 'Muhasebe Formları · Gereksinim Prototipi'), h('p', {}, '1) Formu test edin · 2) "Not" ile kaydedin · 3) Bitince "Final"e basın: iki ayrı prompt oluşur. Gerçek işlem yapılmaz.')),
+      h('div', { class: 'brand' }, h('h1', {}, 'Muhasebe Formları · Gereksinim Prototipi'), h('p', {}, '1) Formu test edin · 2) "Not" ile kaydedin · 3) Bitince "Notları indir (JSON)" ile dosyayı indirip iletin. Gerçek işlem yapılmaz.')),
       h(
         'div',
         { class: 'topbar-actions' },
         button('Nasıl kullanılır?', showHelp, { id: 'btn-help' }),
-        button('JSON dışa aktar', exportReview, { id: 'btn-export' }),
         button('JSON içe aktar', () => fileInput.click(), { id: 'btn-import' }),
-        button('Final: promptları oluştur', () => runFinal(app), { variant: 'primary', id: 'btn-final' }),
+        button('Notları indir (JSON)', exportReview, { variant: 'primary', id: 'btn-export' }),
         fileInput,
       ),
     ),

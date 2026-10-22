@@ -830,7 +830,7 @@ function notesForStep(app, step) {
 
   if (step.kind === 'review') {
     const reqId = formId === 'cari' ? 'C-P07' : 'T-P04';
-    panel.append(box('Gözden geçir adımı', h('p', {}, 'Bu adım belgelerde yok; analist önerisidir.'), h('p', {}, h('button', { type: 'button', class: 'req-link', onclick: () => app.goToRequirement(reqId) }, reqId), ` durumu: ${statusOf(reqId)}`), noteBox(app, formId === 'cari' ? 'C-Q09' : 'T-Q06', 'Gönderim sonrası ne olacağı ve verilerin nereye gideceği belgelerde yok.')));
+    panel.append(box('Gözden geçir adımı', h('p', {}, 'Bu adım belgelerde yok; analist önerisidir.'), h('p', {}, h('button', { type: 'button', class: 'req-link', onclick: () => app.goToRequirement(reqId) }, reqId), ` durumu: ${statusOf(reqId)}`), noteBox(app, formId === 'cari' ? 'C-Q09' : 'T-Q06', 'Gönderilen talebin kime ulaşacağı ve kimlerin bilgilendirileceği belgelerde yok.')));
   }
 
   // Bu adımla ilgili açık geri bildirimler

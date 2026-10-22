@@ -2,19 +2,7 @@
 
 > `npm run docs` ile otomatik üretilir. Bu liste inceleme öncesi durumu gösterir; cevaplarınızı uygulamada ilgili maddenin "Cevap / karar notu" alanına yazın.
 
-## 1. Engelleyici sorular (cevaplanmadan güvenilir final prompt üretilemez) — 2
-
-### Cari Form
-
-- **C-Q09** — Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve yüklenen dosyalar nereye kaydedilir/iletilir (tablo, e-posta, muhasebe yazılımı)? Kime bildirim gider? Google Forms'ta mı kalınacak, özel bir uygulama mı yapılacak?
-  - Kaynak: DOC-A, DOC-D — DOC-A Sayfa 6/6 "Gönder"; DOC-D (gönderim hedefi tanımda görünmüyor)
-  - Etki / geçici davranış: Bu bilinmeden gerçek gönderim, depolama veya entegrasyon uygulanamaz. Kullanıcıya gösterilecek onay mesajı biliniyor (C-044).
-
-### Yeni Talent Form
-
-- **T-Q06** — Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve fotoğraf nereye kaydedilir/iletilir? Kime bildirim gider? Kullanıcıya hangi onay mesajı gösterilir? Google Forms'ta mı kalınacak, özel bir uygulama mı yapılacak?
-  - Kaynak: DOC-B — "Gönder" (gönderim sonrası belgelenmemiş)
-  - Etki / geçici davranış: Bu bilinmeden gerçek gönderim, depolama veya entegrasyon uygulanamaz.
+## 1. Engelleyici sorular — 0
 
 ## 2. Belge çelişkileri — 2
 
@@ -28,7 +16,7 @@
   - Kaynak: DOC-A, DOC-D — DOC-A PDF s.5 ("Vergi Dairesi" — Sayfa 6/6) ↔ DOC-D (Vergi Dairesi Bölüm 4, Bölüm 6 boş "Submit")
   - Etki / geçici davranış: Prototip ve prompt daha yeni olan DOC-D yapısını kullanır; sayfa numaraları yeni uygulamada zaten değişecektir.
 
-## 3. Diğer açık sorular — 15
+## 3. Diğer açık sorular — 16
 
 ### Cari Form
 
@@ -41,10 +29,10 @@
   - Etki / geçici davranış: Karar verilene kadar iki branş, kategori listesi dışında aynı alanları ve aynı yönlendirmeyi kullanır; farklar uydurulmaz.
 - **C-Q07** — Gizlilik politikası bağlantısı nasıl düzeltilecek? Canlı formdaki adres https://dome.istanbul/privacy-policy; DOCX'e göre bu bağlantı boş sayfa açıyor. Doğru adres başka mı, yoksa bu adresteki sayfa mı düzeltilecek?
   - Kaynak: DOC-C, DOC-D — DOC-C P002; adres DOC-D
-  - Etki / geçici davranış: Karar verilene kadar adres yapılandırılabilir olmalı; mevcut adres varsayılan değer olarak kullanılabilir ama doğrulanmış sayılmaz.
-- **C-Q08** — Mevcut form Google Forms'ta, DOME alanında ve oturum açmış Google hesabıyla çalışıyor ("Dosyaları yükleyip bu formu gönderdiğinizde Google hesabınızla ilişkilendirilen ad, e-posta adresi ve fotoğraf kaydedilir"). Yeni uygulamada kimlik doğrulama gerekecek mi?
-  - Kaynak: DOC-A, DOC-D — DOC-A tüm sayfalar (oturum açık hesap, "Bu form DOME alanında oluşturuldu"); DOC-D alan bilgisi "DOME"
-  - Etki / geçici davranış: C-Q06 ile bağlantılı. Karar verilmeden kimlik doğrulama eklenmemeli/kaldırılmamalı.
+  - Etki / geçici davranış: Karar verilene kadar canlı formdaki adres kullanılır; bu adresin doğru olduğu teyit edilmedi.
+- **C-Q09** — Gönderilen talepler (yanıtlar ve yüklenen dosyalar) kime ulaşmalı ve kimler bilgilendirilmeli? Verinin nasıl saklanıp iletileceği geliştiricinin kararıdır (C-Q08).
+  - Kaynak: DOC-A, DOC-D — DOC-A Sayfa 6/6 "Gönder"; DOC-D (gönderim hedefi tanımda görünmüyor)
+  - Etki / geçici davranış: Karar verilene kadar alıcı ve bildirim tanımlanmaz. Kullanıcıya gösterilecek onay mesajı biliniyor (C-044).
 - **C-Q10** — DOCX'te "Vergi Numarası / TC Kimlik No" (Sayfa 2/6) ve "Vergi Dairesi" (Sayfa 6/6) ekran görüntüleri not olmadan yer alıyor. Bir değişiklik mi isteniyor (ör. iki vergi alanının aynı sayfada birleştirilmesi)?
   - Kaynak: DOC-C — DOC-C görsel 4 ve 5 (P015–P016)
   - Etki / geçici davranış: Değişiklik varsayılmaz; mevcut sayfa yapısı korunur. DOC-D'ye göre bu iki sayfa Limited / Anonim Şirketi ve Şahıs Firması yolunda art arda gelir.
@@ -63,18 +51,21 @@
 - **T-Q02** — Kategori "Other" seçildiğinde açıklama alanı istenmeli mi?
   - Kaynak: DOC-B — Alan 6
   - Etki / geçici davranış: Karar verilene kadar ek alan eklenmez.
-- **T-Q03** — "Cari Adı" serbest metin mi kalacak, yoksa kayıtlı cariler listesinden mi seçilecek? Carinin "sistemde kayıtlı" olup olmadığı nasıl kontrol edilecek? Formda Cari Hesap Açılış Talep Formu'na bağlantı verilecek mi (adresi nedir)?
+- **T-Q03** — "Cari Adı" serbest metin mi kalacak, yoksa kayıtlı cariler listesinden mi seçilecek? Carinin "sistemde kayıtlı" olup olmadığı kontrol edilecek mi? Formda Cari Hesap Açılış Talep Formu'na bağlantı verilecek mi (adresi nedir)?
   - Kaynak: DOC-B — Alan 7
   - Etki / geçici davranış: Karar verilene kadar serbest metin ve açıklama metni olarak kalır; otomatik kontrol uydurulmaz.
 - **T-Q04** — Sosyal medya linklerinden en az birinin doldurulması zorunlu mu?
   - Kaynak: DOC-B — Alan 9–12
   - Etki / geçici davranış: Karar verilene kadar dördü de tamamen isteğe bağlıdır.
-- **T-Q05** — Fotoğraf için hangi görsel biçimleri kabul edilecek (JPG, PNG, HEIC, WEBP…)? Fotoğraf nerede saklanacak ve ne için kullanılacak?
+- **T-Q05** — Fotoğraf için hangi görsel biçimleri kabul edilecek (JPG, PNG, HEIC, WEBP…)? Fotoğraf ne için kullanılacak?
   - Kaynak: DOC-B — Alan 4
   - Etki / geçici davranış: Karar verilene kadar "image/*" kabul edilir.
-- **T-Q07** — Mevcut form DOME alanında, oturum açmış Google hesabıyla çalışıyor ve ayrıca "Talebi Gönderen Kişi Mail" soruluyor. Formu yalnızca DOME personeli mi dolduracak? Yeni uygulamada kimlik doğrulama gerekecek mi; e-posta oturumdan otomatik alınabilir mi?
+- **T-Q06** — Gönderilen talepler (yanıtlar ve fotoğraf) kime ulaşmalı ve kimler bilgilendirilmeli? Gönderimden sonra kullanıcıya hangi mesaj gösterilmeli? Verinin nasıl saklanıp iletileceği, platform ve kimlik doğrulama geliştiricinin kararıdır (kullanıcı talimatı).
+  - Kaynak: DOC-B — "Gönder" (gönderim sonrası belgelenmemiş)
+  - Etki / geçici davranış: Karar verilene kadar alıcı, bildirim ve gönderim sonrası mesaj tanımlanmaz.
+- **T-Q07** — Mevcut form DOME alanında, oturum açmış Google hesabıyla çalışıyor ve ayrıca "Talebi Gönderen Kişi Mail" soruluyor. Formu yalnızca DOME personeli mi dolduracak? (Kimlik doğrulama gerekip gerekmediği ve nasıl yapılacağı geliştiricinin kararıdır.)
   - Kaynak: DOC-B — Üst kısım (oturum açık hesap, "Bu form DOME alanında oluşturuldu")
-  - Etki / geçici davranış: Karar verilene kadar e-posta alanı elle doldurulur; kimlik doğrulama eklenmez.
+  - Etki / geçici davranış: Karar verilene kadar "Talebi Gönderen Kişi Mail" sorusu formda kalır.
 
 ### Her iki form (ortak)
 

@@ -2,15 +2,14 @@
   "name": "muhasebe-form-prototipi",
   "version": "1.0.0",
   "private": true,
-  "description": "Cari Form ve Yeni Talent Form için gereksinim doğrulama prototipi ve geliştirme promptu üretici",
+  "description": "Cari Form ve Yeni Talent Form için gereksinim doğrulama prototipi (test, not alma, JSON dışa aktarma)",
   "type": "module",
   "scripts": {
     "start": "node scripts/serve.js",
     "build": "node scripts/build-single.js",
     "test": "node --test \"tests/unit/*.test.js\"",
     "test:e2e": "node --test --test-concurrency=1 \"tests/e2e/*.test.js\"",
-    "docs": "node scripts/generate-docs.js",
-    "prompt": "node scripts/prompt-from-export.js"
+    "docs": "node scripts/generate-docs.js"
   },
   "engines": {
     "node": ">=18"

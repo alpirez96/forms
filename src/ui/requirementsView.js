@@ -2,7 +2,7 @@
 
 import { FORMS, isSharedReq } from '../data/registry.js';
 import { STATUS, CONFIDENCE, REQ_TYPES, SOURCES, FORM_LABELS } from '../data/enums.js';
-import { requirementsWithStatus } from '../core/readiness.js';
+import { requirementsWithStatus } from '../core/schema.js';
 import { nowIso } from '../core/state.js';
 import { h, button, badge, select, labeled } from './dom.js';
 import { openFeedbackDialog } from './feedbackView.js';
@@ -84,7 +84,7 @@ function reqCard(app, r) {
   const statusId = `req-status-${r.id}`;
   const noteId = `req-note-${r.id}`;
   const fields = r.fields || [];
-  const note = h('textarea', { id: noteId, rows: 2, placeholder: r.type === 'unresolved' || r.status === 'acik-soru' ? 'Cevabınız / kararınız (prompta girer)' : 'Karar notu (isteğe bağlı)' });
+  const note = h('textarea', { id: noteId, rows: 2, placeholder: r.type === 'unresolved' || r.status === 'acik-soru' ? 'Cevabınız / kararınız' : 'Karar notu (isteğe bağlı)' });
   note.value = r.note || '';
   note.addEventListener('change', () => setReqStatus(app, r.id, { note: note.value.trim() }));
   const statusSel = select(Object.entries(STATUS).map(([value, s]) => ({ value, label: s.label })), r.status, { id: statusId, onchange: (e) => setReqStatus(app, r.id, { status: e.target.value, note: note.value.trim() }) });

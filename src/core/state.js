@@ -45,8 +45,6 @@ export function emptyFormState(formId) {
     feedback: [],
     decisions: [],
     reqStatus: {},
-    experienceConfirmed: false,
-    prompt: { text: '', dataHash: '', edited: false },
     counters: { feedback: 0, decision: 0 },
   };
 }
@@ -54,21 +52,18 @@ export function emptyFormState(formId) {
 export function defaultState() {
   const forms = {};
   for (const id of FORM_IDS) forms[id] = emptyFormState(id);
-  return { schemaVersion: SCHEMA_VERSION, activeForm: 'cari', forms, shared: { reqStatus: {} }, finalizedAt: null };
+  return { schemaVersion: SCHEMA_VERSION, activeForm: 'cari', forms, shared: { reqStatus: {} } };
 }
 
 // Eksik anahtarları tamamlayarak eski/eksik durumları güvenle yükler.
 export function normalizeState(raw) {
   const base = defaultState();
   if (!raw || typeof raw !== 'object') return base;
-  const out = {
-    ...base,
-    activeForm: FORM_IDS.includes(raw.activeForm) ? raw.activeForm : 'cari',
-    finalizedAt: typeof raw.finalizedAt === 'string' ? raw.finalizedAt : null,
-  };
+  const out = { ...base, activeForm: FORM_IDS.includes(raw.activeForm) ? raw.activeForm : 'cari' };
   const fromVersion = typeof raw.schemaVersion === 'number' ? raw.schemaVersion : 1;
   for (const id of FORM_IDS) {
-    const src = (raw.forms && raw.forms[id]) || {};
+    // Önceki sürümlerdeki prompt alanları artık kullanılmıyor.
+    const { prompt, experienceConfirmed, ...src } = (raw.forms && raw.forms[id]) || {};
     const def = base.forms[id];
     // Sürüm 1'deki "simulate" anahtarı artık kullanılmıyor.
     const srcUi = { ...(src.ui || {}) };
@@ -76,6 +71,7 @@ export function normalizeState(raw) {
     out.forms[id] = migrateSectionRefs(id, {
       ...def,
       ...src,
+      activeTab: src.activeTab === 'prompt' ? 'test' : src.activeTab || def.activeTab,
       answers: {
         ...def.answers,
         ...(src.answers || {}),
@@ -83,7 +79,6 @@ export function normalizeState(raw) {
         files: { ...((src.answers && src.answers.files) || {}) },
       },
       ui: { ...def.ui, ...srcUi },
-      prompt: { ...def.prompt, ...(src.prompt || {}) },
       counters: { ...def.counters, ...(src.counters || {}) },
       feedback: Array.isArray(src.feedback) ? src.feedback : [],
       decisions: Array.isArray(src.decisions) ? src.decisions : [],

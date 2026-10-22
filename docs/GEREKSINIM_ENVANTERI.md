@@ -64,8 +64,8 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 | C-Q05 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-C, DOC-A, DOC-D | İki branş arasında kategori listesi dışında başka fark var mı? Özellikle: (a) "Bana fatura kesilecek" branşında IBAN (TRY) zorunlu mu? (b… |
 | C-Q06 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A, DOC-C | Belge çelişkisi: Formu kim dolduruyor? Giriş metni ve DOCX kategori notları karşı tarafa (tedarikçi/müşteri) hitap ediyor; "Talebi Gönder… |
 | C-Q07 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-C, DOC-D | Gizlilik politikası bağlantısı nasıl düzeltilecek? Canlı formdaki adres https://dome.istanbul/privacy-policy; DOCX'e göre bu bağlantı boş… |
-| C-Q08 | Teknik | Belirsiz | Açık soru | DOC-A, DOC-D | Mevcut form Google Forms'ta, DOME alanında ve oturum açmış Google hesabıyla çalışıyor ("Dosyaları yükleyip bu formu gönderdiğinizde Googl… |
-| C-Q09 ⛔ | Teknik | Belirsiz | Açık soru | DOC-A, DOC-D | Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve yüklenen dosyalar nereye kaydedilir/iletilir (tablo, e-… |
+| C-Q08 | Teknik | Açıkça belgelenmiş | Kaynakla doğrulandı | BRIEF, DOC-A, DOC-D | Cevaplandı (kullanıcı talimatı): Kimlik doğrulama ve diğer teknik kararlar (platform, mimari, verinin nerede tutulacağı) geliştiriciye bı… |
+| C-Q09 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A, DOC-D | Gönderilen talepler (yanıtlar ve yüklenen dosyalar) kime ulaşmalı ve kimler bilgilendirilmeli? Verinin nasıl saklanıp iletileceği gelişti… |
 | C-Q10 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-C | DOCX'te "Vergi Numarası / TC Kimlik No" (Sayfa 2/6) ve "Vergi Dairesi" (Sayfa 6/6) ekran görüntüleri not olmadan yer alıyor. Bir değişikl… |
 | C-Q11 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A, DOC-C, DOC-D | Fatura yönüne göre değişen kategori sorusu (Cari Türü) zorunlu mu olacak? Mevcut formda zorunlu değil. |
 | C-Q12 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A, DOC-D | "İstisna Belgesi" için desteklenen dosya türleri nelerdir? Belgede "Desteklenen 1 dosya" deniyor ancak türler listelenmiyor. |
@@ -628,31 +628,31 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 - **Tür:** Çözümsüz / açık
 - **Güven:** Belirsiz
 - **Başlangıç durumu:** Açık soru
-- **Uygulama etkisi:** Karar verilene kadar adres yapılandırılabilir olmalı; mevcut adres varsayılan değer olarak kullanılabilir ama doğrulanmış sayılmaz.
+- **Uygulama etkisi:** Karar verilene kadar canlı formdaki adres kullanılır; bu adresin doğru olduğu teyit edilmedi.
 - **Açık sorular:** —
 
 #### C-Q08
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
-- **Kaynak bölüm/referans:** DOC-A tüm sayfalar (oturum açık hesap, "Bu form DOME alanında oluşturuldu"); DOC-D alan bilgisi "DOME"
-- **Açıklama:** Mevcut form Google Forms'ta, DOME alanında ve oturum açmış Google hesabıyla çalışıyor ("Dosyaları yükleyip bu formu gönderdiğinizde Google hesabınızla ilişkilendirilen ad, e-posta adresi ve fotoğraf kaydedilir"). Yeni uygulamada kimlik doğrulama gerekecek mi?
+- **Kaynak belge:** BRIEF (Proje brifi (kullanıcı talimatı)), DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** Kullanıcı talimatı (inceleme sırasında): teknik kararlar geliştiricinindir; DOC-A tüm sayfalar (oturum açık hesap, "Bu form DOME alanında oluşturuldu"); DOC-D alan bilgisi "DOME"
+- **Açıklama:** Cevaplandı (kullanıcı talimatı): Kimlik doğrulama ve diğer teknik kararlar (platform, mimari, verinin nerede tutulacağı) geliştiriciye bırakıldı; prompt bu konularda karar içermez. Bilgi: mevcut form Google Forms'ta, DOME alanında ve oturum açmış Google hesabıyla çalışıyor ("Dosyaları yükleyip bu formu gönderdiğinizde Google hesabınızla ilişkilendirilen ad, e-posta adresi ve fotoğraf kaydedilir").
 - **Etkilenen form:** Cari Form
 - **Tür:** Teknik
-- **Güven:** Belirsiz
-- **Başlangıç durumu:** Açık soru
-- **Uygulama etkisi:** C-Q06 ile bağlantılı. Karar verilmeden kimlik doğrulama eklenmemeli/kaldırılmamalı.
+- **Güven:** Açıkça belgelenmiş
+- **Başlangıç durumu:** Kaynakla doğrulandı
+- **Uygulama etkisi:** Prompt kimlik doğrulama, platform veya mimari belirlemez. Formu kimin dolduracağı iş sorusu olarak açık kalır (C-Q06).
 - **Açık sorular:** —
 
-#### C-Q09 · ENGELLEYİCİ
+#### C-Q09
 
 - **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
 - **Kaynak bölüm/referans:** DOC-A Sayfa 6/6 "Gönder"; DOC-D (gönderim hedefi tanımda görünmüyor)
-- **Açıklama:** Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve yüklenen dosyalar nereye kaydedilir/iletilir (tablo, e-posta, muhasebe yazılımı)? Kime bildirim gider? Google Forms'ta mı kalınacak, özel bir uygulama mı yapılacak?
+- **Açıklama:** Gönderilen talepler (yanıtlar ve yüklenen dosyalar) kime ulaşmalı ve kimler bilgilendirilmeli? Verinin nasıl saklanıp iletileceği geliştiricinin kararıdır (C-Q08).
 - **Etkilenen form:** Cari Form
-- **Tür:** Teknik
+- **Tür:** Çözümsüz / açık
 - **Güven:** Belirsiz
 - **Başlangıç durumu:** Açık soru
-- **Uygulama etkisi:** Bu bilinmeden gerçek gönderim, depolama veya entegrasyon uygulanamaz. Kullanıcıya gösterilecek onay mesajı biliniyor (C-044).
+- **Uygulama etkisi:** Karar verilene kadar alıcı ve bildirim tanımlanmaz. Kullanıcıya gösterilecek onay mesajı biliniyor (C-044).
 - **Açık sorular:** —
 
 #### C-Q10
@@ -852,11 +852,11 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 | T-018 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-B | "Instagram Link", "YouTube Link", "TikTok Link", "Twitch Link" — dördü de isteğe bağlı kısa metin (yıldız yok); yer tutucu "Yanıtınız". |
 | T-Q01 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-B | "Bir ajansa bağlı mı?" sorusunda "Evet, Diğer." seçildiğinde ajans adı sorulmalı mı? |
 | T-Q02 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-B | Kategori "Other" seçildiğinde açıklama alanı istenmeli mi? |
-| T-Q03 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-B | "Cari Adı" serbest metin mi kalacak, yoksa kayıtlı cariler listesinden mi seçilecek? Carinin "sistemde kayıtlı" olup olmadığı nasıl kontr… |
+| T-Q03 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-B | "Cari Adı" serbest metin mi kalacak, yoksa kayıtlı cariler listesinden mi seçilecek? Carinin "sistemde kayıtlı" olup olmadığı kontrol edi… |
 | T-Q04 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-B | Sosyal medya linklerinden en az birinin doldurulması zorunlu mu? |
-| T-Q05 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-B | Fotoğraf için hangi görsel biçimleri kabul edilecek (JPG, PNG, HEIC, WEBP…)? Fotoğraf nerede saklanacak ve ne için kullanılacak? |
-| T-Q06 ⛔ | Teknik | Belirsiz | Açık soru | DOC-B | Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve fotoğraf nereye kaydedilir/iletilir? Kime bildirim gide… |
-| T-Q07 | Teknik | Belirsiz | Açık soru | DOC-B | Mevcut form DOME alanında, oturum açmış Google hesabıyla çalışıyor ve ayrıca "Talebi Gönderen Kişi Mail" soruluyor. Formu yalnızca DOME p… |
+| T-Q05 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-B | Fotoğraf için hangi görsel biçimleri kabul edilecek (JPG, PNG, HEIC, WEBP…)? Fotoğraf ne için kullanılacak? |
+| T-Q06 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-B | Gönderilen talepler (yanıtlar ve fotoğraf) kime ulaşmalı ve kimler bilgilendirilmeli? Gönderimden sonra kullanıcıya hangi mesaj gösterilm… |
+| T-Q07 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-B | Mevcut form DOME alanında, oturum açmış Google hesabıyla çalışıyor ve ayrıca "Talebi Gönderen Kişi Mail" soruluyor. Formu yalnızca DOME p… |
 | T-P01 | Doğrulama | Belirsiz | Önerilen iyileştirme | ANALIZ | E-posta format doğrulaması: "Talebi Gönderen Kişi Mail" geçerli e-posta biçiminde olmalı. |
 | T-P02 | Doğrulama | Belirsiz | Önerilen iyileştirme | ANALIZ | Link alanları doluysa "http://" veya "https://" ile başlayan geçerli bir URL olmalı. |
 | T-P03 | Doğrulama | Belirsiz | Önerilen iyileştirme | ANALIZ | Yalnızca boşluk karakterlerinden oluşan yanıtlar boş sayılır (zorunlu alan kontrolünde). |
@@ -1048,7 +1048,7 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 
 - **Kaynak belge:** DOC-B (`Yeni_Talent_Formu_MERGED.pdf`)
 - **Kaynak bölüm/referans:** Alan 7
-- **Açıklama:** "Cari Adı" serbest metin mi kalacak, yoksa kayıtlı cariler listesinden mi seçilecek? Carinin "sistemde kayıtlı" olup olmadığı nasıl kontrol edilecek? Formda Cari Hesap Açılış Talep Formu'na bağlantı verilecek mi (adresi nedir)?
+- **Açıklama:** "Cari Adı" serbest metin mi kalacak, yoksa kayıtlı cariler listesinden mi seçilecek? Carinin "sistemde kayıtlı" olup olmadığı kontrol edilecek mi? Formda Cari Hesap Açılış Talep Formu'na bağlantı verilecek mi (adresi nedir)?
 - **Etkilenen form:** Yeni Talent Form
 - **Tür:** Çözümsüz / açık
 - **Güven:** Belirsiz
@@ -1074,7 +1074,7 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 
 - **Kaynak belge:** DOC-B (`Yeni_Talent_Formu_MERGED.pdf`)
 - **Kaynak bölüm/referans:** Alan 4
-- **Açıklama:** Fotoğraf için hangi görsel biçimleri kabul edilecek (JPG, PNG, HEIC, WEBP…)? Fotoğraf nerede saklanacak ve ne için kullanılacak?
+- **Açıklama:** Fotoğraf için hangi görsel biçimleri kabul edilecek (JPG, PNG, HEIC, WEBP…)? Fotoğraf ne için kullanılacak?
 - **Etkilenen form:** Yeni Talent Form
 - **Tür:** Çözümsüz / açık
 - **Güven:** Belirsiz
@@ -1083,28 +1083,28 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 - **Açık sorular:** —
 - **İlgili alanlar:** `fotograf`
 
-#### T-Q06 · ENGELLEYİCİ
+#### T-Q06
 
 - **Kaynak belge:** DOC-B (`Yeni_Talent_Formu_MERGED.pdf`)
 - **Kaynak bölüm/referans:** "Gönder" (gönderim sonrası belgelenmemiş)
-- **Açıklama:** Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve fotoğraf nereye kaydedilir/iletilir? Kime bildirim gider? Kullanıcıya hangi onay mesajı gösterilir? Google Forms'ta mı kalınacak, özel bir uygulama mı yapılacak?
+- **Açıklama:** Gönderilen talepler (yanıtlar ve fotoğraf) kime ulaşmalı ve kimler bilgilendirilmeli? Gönderimden sonra kullanıcıya hangi mesaj gösterilmeli? Verinin nasıl saklanıp iletileceği, platform ve kimlik doğrulama geliştiricinin kararıdır (kullanıcı talimatı).
 - **Etkilenen form:** Yeni Talent Form
-- **Tür:** Teknik
+- **Tür:** Çözümsüz / açık
 - **Güven:** Belirsiz
 - **Başlangıç durumu:** Açık soru
-- **Uygulama etkisi:** Bu bilinmeden gerçek gönderim, depolama veya entegrasyon uygulanamaz.
+- **Uygulama etkisi:** Karar verilene kadar alıcı, bildirim ve gönderim sonrası mesaj tanımlanmaz.
 - **Açık sorular:** —
 
 #### T-Q07
 
 - **Kaynak belge:** DOC-B (`Yeni_Talent_Formu_MERGED.pdf`)
 - **Kaynak bölüm/referans:** Üst kısım (oturum açık hesap, "Bu form DOME alanında oluşturuldu")
-- **Açıklama:** Mevcut form DOME alanında, oturum açmış Google hesabıyla çalışıyor ve ayrıca "Talebi Gönderen Kişi Mail" soruluyor. Formu yalnızca DOME personeli mi dolduracak? Yeni uygulamada kimlik doğrulama gerekecek mi; e-posta oturumdan otomatik alınabilir mi?
+- **Açıklama:** Mevcut form DOME alanında, oturum açmış Google hesabıyla çalışıyor ve ayrıca "Talebi Gönderen Kişi Mail" soruluyor. Formu yalnızca DOME personeli mi dolduracak? (Kimlik doğrulama gerekip gerekmediği ve nasıl yapılacağı geliştiricinin kararıdır.)
 - **Etkilenen form:** Yeni Talent Form
-- **Tür:** Teknik
+- **Tür:** Çözümsüz / açık
 - **Güven:** Belirsiz
 - **Başlangıç durumu:** Açık soru
-- **Uygulama etkisi:** Karar verilene kadar e-posta alanı elle doldurulur; kimlik doğrulama eklenmez.
+- **Uygulama etkisi:** Karar verilene kadar "Talebi Gönderen Kişi Mail" sorusu formda kalır.
 - **Açık sorular:** —
 - **İlgili alanlar:** `talepEdenMail`
 

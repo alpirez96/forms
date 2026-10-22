@@ -5,7 +5,7 @@ Muhasebe ekibinin iki formu için hazırlanmış yerel bir test ve karar aracı:
 1. **Cari Form** — "Cari Hesap Açılış Talep Formu". Form, *"Fatura mı keseceğim, bana fatura mı kesilecek?"* sorusuyla başlar ve yanıt sonraki deneyimi belirler.
 2. **Yeni Talent Form** — "Yeni Talent Formu".
 
-Uygulamada iki formu test eder, notlar alır, kararlarınızı kaydedersiniz. İnceleme bitince her form için **ayrı ve kendi başına yeterli** bir geliştirme promptu üretirsiniz. Bu promptu Claude Code gibi bir kodlama ajanına verebilirsiniz.
+Uygulamada iki formu test eder, notlar alır, kararlarınızı kaydedersiniz. Bitince notlarınızı **tek bir JSON dosyası** olarak indirip iletirsiniz; geliştirme promptları bu dosyadan hazırlanır. Teknoloji ve mimari kararları geliştiriciye aittir.
 
 > Bu bir prototiptir. Fatura kesmez, e-posta göndermez, hiçbir sisteme veri iletmez. "Gönder" düğmesi yalnızca gönderimi simüle eder.
 
@@ -17,8 +17,8 @@ Uygulamada iki formu test eder, notlar alır, kararlarınızı kaydedersiniz. İ
 
 1. **`dist/muhasebe-form-prototipi.html`** dosyasını indirin. GitHub'da dosyayı açıp "Download raw file" düğmesini kullanabilirsiniz.
 2. Dosyaya **çift tıklayın**; tarayıcıda açılır. İsterseniz herhangi bir localhost sunucusundan da açabilirsiniz.
-3. Formu test edin, gördüklerinizi **Not** düğmesiyle kaydedin, bitince sağ üstteki **Final: promptları oluştur** düğmesine basın.
-4. İki form için ayrı geliştirme promptu oluşur. **Kopyala** ile panoya alın veya **.txt** olarak indirin.
+3. Formu test edin ve gördüklerinizi **Not** düğmesiyle kaydedin.
+4. Bitince sağ üstteki **Notları indir (JSON)** düğmesine basın ve inen dosyayı iletin.
 
 ### localhost üzerinden (Node.js 18+ ile)
 
@@ -30,7 +30,7 @@ Tarayıcı kendiliğinden **http://localhost:8080** adresinde açılır. 8080 do
 
 Node yoksa, proje klasöründe Python ile de açılabilir: `python3 -m http.server 8080` → http://localhost:8080
 
-> Notlarınız tarayıcıda saklanır. Çift tıklanan dosya ile localhost sürümü tarayıcıda **ayrı** kayıt tutar; birinden diğerine geçerken "JSON dışa aktar / içe aktar" kullanın.
+> Notlarınız tarayıcıda saklanır. Çift tıklanan dosya ile localhost sürümü tarayıcıda **ayrı** kayıt tutar; birinden diğerine geçerken "Notları indir (JSON)" ve "JSON içe aktar" kullanın.
 >
 > Kaynak `index.html` dosyası çift tıklamayla açılmaz (tarayıcılar modülleri `file://` üzerinden yüklemez); çift tıklamak için `dist/` altındaki tek dosyayı kullanın.
 
@@ -38,7 +38,7 @@ Node yoksa, proje klasöründe Python ile de açılabilir: `python3 -m http.serv
 
 ## Kullanım: önerilen inceleme süreci
 
-1. **Formu seçin.** Üstteki iki karttan *Cari Form* veya *Yeni Talent Form*. İki formun yanıtları, notları, kararları ve promptları tamamen ayrı tutulur.
+1. **Formu seçin.** Üstteki iki karttan *Cari Form* veya *Yeni Talent Form*. İki formun yanıtları, notları ve kararları tamamen ayrı tutulur.
 2. **"Formu test et" sekmesinde formu doldurun.**
    - Cari Form'da ilk adım fatura yönüdür. Bu soru yanıtlanmadan diğer adımlar kilitlidir. Yön, "Cari Türü" kategorilerini değiştirir:
      - **Fatura keseceğim:** Genel Tedarikçi, Satıcı (Ajans), Yurtdışı Satıcı (Ajans), Talent / Influencer
@@ -50,51 +50,25 @@ Node yoksa, proje klasöründe Python ile de açılabilir: `python3 -m http.serv
      - Serbest Meslek Makbuzu, Gider Pusulası → TC Kimlik No
      - İstisna Belgesi → İstisna Belgesi → TC Kimlik No
 3. **Not alın.** Her alanın yanındaki **Not** düğmesi, o alana ve branşa bağlı bir geri bildirim açar. Kategori, açıklama, beklenen davranış, durum (Açık / Çözüldü / Ertelendi) ve öncelik girilir. Bölüm için "Bu adım için not ekle"yi kullanın.
-4. **İnceledim işareti.** Sağ panelde her bölüm için (Cari'de her iki yön için ayrı) "Bu bölümü inceledim" işaretleyin. Hazırlık durumunda sayılır.
+4. **İnceledim işareti.** Sağ panelde her bölüm için (Cari'de her iki yön için ayrı) "Bu bölümü inceledim" işaretleyin. İşaretler JSON dosyasına girer.
 5. **Gereksinimleri gözden geçirin.** "Gereksinimler ve açık sorular" sekmesinde her maddenin kaynak belgesi ve referansı vardır. Durumlar:
    - *Kaynakla doğrulandı* · *Testte benim onayım* · *Önerilen iyileştirme* · *Açık soru* · *Ertelenen karar* · *Reddedildi / kapsam dışı*
-   - Açık soruların cevabını **"Cevap / karar notu"** alanına yazıp durumu *Testte benim onayım* yapın. Not prompta aynen girer.
+   - Açık soruların cevabını **"Cevap / karar notu"** alanına yazıp durumu *Testte benim onayım* yapın. Not JSON dosyasına aynen girer.
    - Önerileri (ör. e-posta/IBAN format kontrolleri) onaylarsanız prototipte engelleyici hataya dönüşür; reddederseniz kapanır. Öneri durumundayken yalnızca "Öneri" uyarısı gösterilir.
 6. **Kararları kaydedin.** Bir notu uygulamaya karar verdiğinizde **Karara dönüştür** deyin. Geri bildirim, siz karar vermeden gereksinim sayılmaz. Karar bir alanı değiştirebilir (etiket, açıklama, zorunluluk, seçenekler, kaldırma) veya yeni alan ekleyebilir. Değişiklik prototipe **hemen** uygulanır ve "Kararla değişti" rozetiyle gösterilir. Cari Form'da karar yalnızca bir branşa da uygulanabilir.
-7. **Final.** Sağ üstteki **Final: promptları oluştur** düğmesi iki işi birlikte yapar:
-   - İki form için test ettiğiniz deneyimi onaylar. Prototipin uyguladığı ama belgede olmayan davranışlar (gözden geçir adımı, yön değişince kategori temizleme, boşluk kuralı, hata sunumu) onaylı hâle gelir; reddettikleriniz değişmez.
-   - İki ayrı geliştirme promptu oluşturur.
+7. **Notları indirin.** Sağ üstteki **Notları indir (JSON)** düğmesi iki formun notlarını, kararlarını, gereksinim durumlarını ve "inceledim" işaretlerini tek dosyaya indirir. Bu dosyayı iletin; geliştirme promptları buradan hazırlanır.
 
-   Promptları sonuç ekranından kopyalayabilir veya .txt olarak indirebilirsiniz. Testi sürdürüp tekrar Final'e basarsanız promptlar güncel verilerle yeniden oluşur.
-8. **İsteğe bağlı: form form ilerlemek.** "Prompt hazırlığı" sekmesinde aynı işlemler her form için ayrı ayrı yapılabilir: deneyim onayı ve *Cari Form / Yeni Talent Form Geliştirme Promptunu Oluştur*. Prompt burada elle de düzenlenebilir. Bir formun promptu diğerini etkilemez.
-
-### Hazırlık durumu
-
-| Durum | Anlamı |
-|---|---|
-| **Engelleyici açık soru var** | Taslak prompt üretilebilir. Engellenen kısımlar ayrı bölümde listelenir ve geliştiriciye cevap uydurmaması söylenir. |
-| **Taslak** | Açık soru, onay bekleyen öneri, açık not, incelenmemiş bölüm var veya deneyim onaylanmadı. |
-| **Hazır** | Açık madde kalmadı. |
-
-### Üretilen promptun içeriği
-
-Her prompt şu bölümleri içerir: amaç ve kapsam · kaynak belgeler ve hedef kitleleri · izlenebilir gereksinimler (zorunlu / opsiyonel / ertelenen / reddedilen) · tam alan envanteri (etiket, açıklama, yer tutucu, seçenekler) · birebir metinler · zorunlu/isteğe bağlı matrisi · koşullu mantık · doğrulama · test edilen deneyim akışı · UX ve erişilebilirlik · onaylı kararlar · açık sorular ve sınırlar · teknik gereksinimler · kabul kriterleri · pozitif/negatif test senaryoları · uç durumlar ve regresyon · mevcut projeyi inceleme talimatı · teslim raporu.
-
-Üretim deterministiktir: aynı inceleme verisi her zaman aynı metni verir. Yapay zekâ servisi veya API anahtarı kullanılmaz.
+Platform, mimari, verinin nerede tutulacağı ve kimlik doğrulama gibi teknik kararlar geliştiriciye aittir; uygulama bu konularda karar sormaz.
 
 ---
 
 ## Verileriniz
 
 - Tüm çalışma tarayıcının yerel deposunda (localStorage) **otomatik** saklanır. Sayfayı yenilemek veya kapatıp açmak veriyi silmez.
-- **JSON dışa aktar:** notlar, kararlar, gereksinim durumları ve promptlar tek dosyaya indirilir. **Test yanıtları dosyaya dahil edilmez.**
+- **Notları indir (JSON):** notlar, kararlar, gereksinim durumları ve "inceledim" işaretleri tek dosyaya indirilir. **Test yanıtları dosyaya dahil edilmez.**
 - **JSON içe aktar:** önceki dosyayı yükler. Dosya doğrulanır, geçersiz kayıtlar atlanıp listelenir, bozuk dosya reddedilir. İçe aktarma mevcut inceleme verisinin yerini alır; test yanıtlarınız korunur.
 - Tarayıcı verisi temizlenirse yerel kayıt silinir. Düzenli olarak JSON yedeği alın.
 - **Gerçek kişisel, banka veya vergi verisi girmeyin.**
-
-### Bana (Claude'a) geri dönmek için
-
-Dışa aktardığınız JSON dosyasını paylaşırsanız promptları aynı üreticiyle komut satırında da oluşturabilirim:
-
-```bash
-npm run prompt -- form-inceleme-2026-10-22.json            # iki prompt, ekrana
-npm run prompt -- form-inceleme-2026-10-22.json cari cikti/ # yalnızca Cari, dosyaya
-```
 
 ---
 
@@ -104,7 +78,6 @@ npm run prompt -- form-inceleme-2026-10-22.json cari cikti/ # yalnızca Cari, do
 |---|---|
 | `docs/GEREKSINIM_ENVANTERI.md` | Tüm gereksinimler: kimlik, kaynak belge ve bölüm, açıklama, etkilenen form, tür, güven, uygulama etkisi, açık sorular |
 | `docs/ACIK_SORULAR.md` | Onayınızı bekleyen sorular ve kararlar (engelleyiciler, belge çelişkileri, öneriler) |
-| `docs/baslangic-promptlari/` | İnceleme öncesi taslak promptlar (yapıyı görmek için) |
 | `docs/QA_RAPORU.md` | Test raporu |
 
 Envanter ve açık sorular dosyaları uygulamayla aynı veriden üretilir: `npm run docs`.
@@ -154,10 +127,8 @@ src/core/                Arayüzden bağımsız mantık (Node'da test edilir)
   validation.js          Zorunluluk, dosya ve (onaylıysa) format kontrolleri
   state.js               Durum ve yerel kalıcılık
   importExport.js        JSON dışa/içe aktarma ve doğrulama
-  readiness.js           Hazırlık durumu
-  prompt.js              Deterministik prompt üretici
-src/ui/                  Ekranlar (test, talimatlar, geri bildirim, gereksinimler, kararlar, prompt)
-scripts/                 Yerel sunucu, tek dosya paketleyici, belge üretici, komut satırı prompt üretici
+src/ui/                  Ekranlar (test, talimatlar, geri bildirim, gereksinimler, kararlar)
+scripts/                 Yerel sunucu, tek dosya paketleyici, belge üretici
 tests/                   Birim ve uçtan uca testler
 ```
 

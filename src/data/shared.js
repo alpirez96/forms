@@ -1,5 +1,5 @@
 // İki formu birlikte ilgilendiren (belgelerde gerçekten ortak geçen) maddeler.
-// Her biri her iki prompta da kendi başına anlaşılır biçimde eklenir.
+// Her biri iki formun envanterinde de kendi başına anlaşılır biçimde yer alır.
 
 export default [
   {
@@ -18,7 +18,7 @@ export default [
       talent: '"Cari Adı" alanının açıklaması olarak birebir korunur. Cari Hesap Açılış Talep Formu ayrı bir sistemdir; otomatik kontrol veya bağımlılık kurma (kontrol mekanizması açık soru: T-Q03).',
     },
     openQuestions: '',
-    openQuestionsByForm: { talent: 'Cari formuna bağlantı verilecek mi? Kayıtlı cari kontrolü nasıl yapılacak? (T-Q03)' },
+    openQuestionsByForm: { talent: 'Cari formuna bağlantı verilecek mi? Kayıtlı cari kontrolü yapılacak mı? (T-Q03)' },
     fields: { talent: ['cariAdi'], cari: [] },
     defaultStatus: 'kaynak-onayli',
   },

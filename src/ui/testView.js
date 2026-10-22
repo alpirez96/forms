@@ -3,8 +3,8 @@
 import { FORMS } from '../data/registry.js';
 import { SOURCES, BRANCHES, REQUIRED_MESSAGE } from '../data/enums.js';
 import {
-  effectiveForm, sectionFields, sectionShown, statusLookup, behaviorOn, flagActive, displayValue,
-  invalidChoicesAfterBranchChange, isMandatoryStatus, sectionTitle,
+  effectiveForm, sectionFields, statusLookup, behaviorOn, flagActive, displayValue,
+  invalidChoicesAfterBranchChange, isMandatoryStatus, sectionTitle, routedSectionIds, routeAnswersFor, routeGroups,
 } from '../core/schema.js';
 import { validateFields, validateField, fileErrors } from '../core/validation.js';
 import { h, clear, button, badge, toast, confirmDialog } from './dom.js';
@@ -17,12 +17,23 @@ export function stepsFor(formId, state) {
   const fs = state.forms[formId];
   const steps = [];
   if (form.hasBranches) steps.push({ id: 'yon', kind: 'branch', label: 'Fatura yönü', short: 'Adım 0' });
-  for (const s of form.sections) {
-    if (s.kind !== 'fields' || !sectionShown(s, fs.ui)) continue;
+  for (const id of routedSectionIds(form, fs.answers.values).ids) {
+    const s = form.sections.find((x) => x.id === id);
     steps.push({ id: s.id, kind: 'section', label: s.title, short: s.pageLabel });
   }
   if (behaviorOn(formId, state, 'review')) steps.push({ id: 'review', kind: 'review', label: 'Gözden geçir', short: 'Son adım' });
   return steps;
+}
+
+// Bir sayfadan sonra yönlendirmeye göre ne geldiği (notlar için).
+function nextAfter(form, sectionId) {
+  for (const g of routeGroups(form)) {
+    const i = g.path.indexOf(sectionId);
+    if (i < 0) continue;
+    const next = g.path[i + 1];
+    return next ? sectionTitle(form.sections.find((s) => s.id === next)) : null;
+  }
+  return null;
 }
 
 export function stepForField(formId, state, fieldId) {
@@ -40,7 +51,8 @@ function currentStep(formId, state) {
   const steps = stepsFor(formId, state);
   const fs = state.forms[formId];
   let idx = steps.findIndex((s) => s.id === fs.ui.step);
-  if (idx < 0) idx = 0;
+  // Yol dışında kalan bir sayfadaysak (ör. yanıt değişti) ilk form sayfasına dön.
+  if (idx < 0) idx = Math.max(0, steps.findIndex((s) => s.kind === 'section'));
   if (FORMS[formId].hasBranches && !fs.answers.branch) idx = 0;
   return { steps, idx, step: steps[idx] };
 }
@@ -183,7 +195,6 @@ async function resetScenario(app) {
     const fs = app.fs;
     fs.answers = { branch: null, values: {}, files: {} };
     fs.ui.step = app.form.hasBranches ? 'yon' : 't1';
-    fs.ui.simulate = {};
     fs.ui.visited = {};
   });
   toast('Test senaryosu sıfırlandı.');
@@ -240,7 +251,7 @@ function formHeader(app, full) {
         'p',
         {},
         hd.privacy.before,
-        h('button', { type: 'button', class: 'linklike', id: 'privacy-link', onclick: () => toast('Gizlilik politikası adresi belgelerde yok (C-Q07). Mevcut bağlantı boş sayfa açıyor (C-009).', 'warn') }, hd.privacy.link),
+        h('a', { href: hd.privacy.url, target: '_blank', rel: 'noopener noreferrer', id: 'privacy-link' }, hd.privacy.link),
       ),
     );
     if (showNotes) el.append(noteBox(app, hd.privacy.flag.req, hd.privacy.flag.text));
@@ -255,28 +266,10 @@ function stepper(app, steps, idx) {
   const fs = app.fs;
   const visited = fs.ui.visited || {};
   const locked = app.form.hasBranches && !fs.answers.branch;
-  const showNotes = fs.ui.showNotes !== false;
+  const route = routedSectionIds(app.form, fs.answers.values);
+  const firstSection = steps.findIndex((s) => s.kind === 'section');
   const list = h('ol', { class: 'stepper', 'aria-label': `Adım ${idx + 1} / ${steps.length}` });
-  const items = [];
-  steps.forEach((s, i) => items.push({ s, i }));
-  // Notlar açıkken içeriği bilinmeyen sayfaları da göster.
-  const missing = showNotes ? app.form.sections.filter((s) => s.kind === 'missing') : [];
-  const order = app.form.sections.map((s) => s.id);
-  const all = [];
-  for (const it of items) {
-    if (it.s.kind === 'section') {
-      const pos = order.indexOf(it.s.id);
-      for (const m of missing) if (order.indexOf(m.id) < pos && !all.some((x) => x.m === m)) all.push({ m });
-    }
-    if (it.s.kind === 'review') for (const m of missing) if (!all.some((x) => x.m === m)) all.push({ m });
-    all.push(it);
-  }
-  for (const entry of all) {
-    if (entry.m) {
-      list.append(h('li', { class: 'step missing', title: 'İçerik kaynak belgelerde yok (C-Q01)' }, h('span', { class: 'step-num' }, '?'), h('span', { class: 'step-label' }, `${entry.m.pageLabel} — içerik yok`)));
-      continue;
-    }
-    const { s, i } = entry;
+  steps.forEach((s, i) => {
     const reachable = i === 0 || (!locked && (visited[s.id] || i <= idx));
     const state = i === idx ? 'current' : visited[s.id] || i < idx ? 'done' : '';
     list.append(
@@ -297,7 +290,13 @@ function stepper(app, steps, idx) {
         ),
       ),
     );
-  }
+    // Yönlendirme sorusu yanıtlanmadan ilk sayfadan sonraki sayfalar bilinmez.
+    if (i === firstSection && (route.pending || route.unmapped)) {
+      const routeField = effectiveForm(app.formId, app.state, fs.answers.branch).fieldsById.get(app.form.routing.fieldId);
+      const text = route.pending ? `Sonraki sayfalar "${routeField.label}" yanıtına göre belirlenir` : `Bu "${routeField.label}" yanıtı için yönlendirme tanımlı değil`;
+      list.append(h('li', { class: 'step pending', title: text }, h('span', { class: 'step-num' }, '…'), h('span', { class: 'step-label' }, text)));
+    }
+  });
   return h('div', { class: 'stepper-wrap' }, h('p', { class: 'step-count' }, `Adım ${idx + 1} / ${steps.length}`), list);
 }
 
@@ -490,6 +489,8 @@ function renderField(app, field, result) {
     if (field.proposalReq && !isMandatoryStatus(statusOf(field.proposalReq))) meta.append(badge('Önerilen alan — onay bekliyor', 'purple'));
     if (field.labelNote) meta.append(h('span', { class: 'meta-note inline' }, field.labelNote));
     if (field.optionsByBranch) meta.append(badge('Seçenekler fatura yönüne göre değişir', 'teal'));
+    if (app.form.routing && field.id === app.form.routing.fieldId) meta.append(badge('Seçim sonraki sayfaları belirler', 'teal'));
+    if (field.maxLength) meta.append(badge(`En fazla ${field.maxLength} karakter`, 'gray', 'Canlı formdaki yanıt doğrulaması (DOC-D)'));
     wrapper.append(meta);
     for (const flag of field.flags || []) {
       const st = statusOf(flag.req);
@@ -516,6 +517,7 @@ function renderField(app, field, result) {
   if (field.type === 'text' || field.type === 'textarea') {
     const input = h(field.type === 'textarea' ? 'textarea' : 'input', {
       type: field.type === 'text' ? 'text' : null,
+      rows: field.type === 'textarea' ? 3 : null,
       id: inputId,
       class: 'input',
       value,
@@ -629,15 +631,9 @@ function reviewStep(app) {
       ),
     );
   }
-  for (const section of eff.sections) {
-    if (section.kind === 'missing') {
-      if (showNotes) wrap.append(h('div', { class: 'review-block missing' }, h('h4', {}, `${section.pageLabel} — içerik kaynak belgelerde yok (C-Q01)`)));
-      continue;
-    }
-    if (!steps.some((s) => s.id === section.id)) {
-      if (showNotes && section.condition) wrap.append(h('div', { class: 'review-block missing' }, h('h4', {}, `${sectionTitle(section)} — simülasyonda gizli (${section.condition.req})`)));
-      continue;
-    }
+  // Yol sırasıyla (ör. İstisna yolunda 5/6 → 3/6).
+  for (const step of steps.filter((s) => s.kind === 'section')) {
+    const section = eff.sections.find((s) => s.id === step.id);
     const dl = h('dl', { class: 'review-list' });
     for (const f of sectionFields(section)) dl.append(h('dt', {}, f.label, f.required ? ' *' : ''), h('dd', {}, answerText(f, fs)));
     wrap.append(
@@ -646,6 +642,12 @@ function reviewStep(app) {
         dl,
       ),
     );
+  }
+  if (showNotes && form.routing) {
+    const offPath = form.sections.filter((s) => s.kind === 'fields' && !steps.some((st) => st.id === s.id));
+    if (offPath.length) {
+      wrap.append(h('p', { class: 'meta-note' }, `Bu yanıtlarla gösterilmeyen sayfalar (yanıtları gönderilmez): ${offPath.map(sectionTitle).join(' · ')}.`));
+    }
   }
   return wrap;
 }
@@ -674,11 +676,14 @@ function submitAll(app) {
 }
 
 function successPanel(app) {
+  const confirmation = app.form.confirmation;
+  const showNotes = app.fs.ui.showNotes !== false;
   return h(
     'div',
     { class: 'success-panel', role: 'status' },
-    h('h3', {}, 'Gönderim simüle edildi'),
-    h('p', {}, 'Tüm zorunlu alanlar geçerli. Bu bir prototiptir: veriler hiçbir yere gönderilmedi, fatura veya muhasebe işlemi yapılmadı.'),
+    h('h3', { id: 'confirmation-message' }, confirmation ? confirmation.text : 'Gönderim simüle edildi'),
+    confirmation && showNotes ? h('p', { class: 'meta-note' }, `Canlı formdaki onay mesajı (${confirmation.source}, ${confirmation.req}).`) : null,
+    h('p', {}, 'Prototip: gönderim simüle edildi. Veriler hiçbir yere gönderilmedi, fatura veya muhasebe işlemi yapılmadı.'),
     h('p', { class: 'muted' }, 'Gerçek gönderim hedefi henüz belirlenmedi (açık soru).'),
     h(
       'div',
@@ -770,31 +775,40 @@ function notesForStep(app, step) {
         ),
       );
     }
-    if (step.id === 's2' && formId === 'cari') {
-      panel.append(box('Sonraki sayfalar', noteBox(app, 'C-Q01', 'Form 6 sayfalı; 3/6 ve 4/6 sayfalarının içeriği belgelerde yok. Prototip bu sayfaları atlar.')));
+    if (form.routing) {
+      const routeReqs = form.routing.reqs.map((r) => h('button', { type: 'button', class: 'req-link', onclick: () => app.goToRequirement(r) }, r));
+      const answers = routeAnswersFor(form, sectionDef.id);
+      if (answers === null) {
+        // İlk sayfa: tüm yolları göster, seçili yolu vurgula.
+        const current = fs.answers.values[form.routing.fieldId];
+        panel.append(
+          box(
+            'Sayfa yönlendirmesi',
+            h('p', {}, ...routeReqs, ' "Şirket/Belge Türü" yanıtı bu sayfadan sonraki sayfaları belirler (canlı form, DOC-D):'),
+            ...routeGroups(form).map((g) => h(
+              'p',
+              { class: g.answers.includes(current) ? 'active-branch' : 'muted' },
+              h('strong', {}, `${g.answers.join(', ')}: `),
+              [...g.path.map((id) => form.sections.find((s) => s.id === id).pageLabel), 'Gönder'].join(' → '),
+            )),
+          ),
+        );
+      } else {
+        const next = nextAfter(form, sectionDef.id);
+        panel.append(
+          box(
+            'Bu sayfa ne zaman gösterilir?',
+            h('p', {}, ...routeReqs, ` Şirket/Belge Türü: ${answers.join(', ')}.`),
+            h('p', {}, next ? `Bu sayfadan sonra: ${next}.` : 'Bu sayfadan sonra form gönderilir.'),
+          ),
+        );
+      }
     }
-    if (sectionDef.condition && sectionDef.condition.unknown) {
-      const simId = `sim-${sectionDef.id}`;
-      panel.append(
-        box(
-          'Gösterim koşulu bilinmiyor',
-          noteBox(app, sectionDef.condition.req, sectionDef.condition.text),
-          h('label', { class: 'switch', for: simId }, h('input', {
-            type: 'checkbox',
-            id: simId,
-            checked: sectionShown(sectionDef, fs.ui),
-            onchange: (e) => app.commit((state) => {
-              fs.ui.simulate[sectionDef.id] = e.target.checked;
-              // Bulunulan sayfa gizlendiyse sıradaki görünür adıma geç.
-              if (!e.target.checked && fs.ui.step === sectionDef.id) {
-                const order = form.sections.map((s) => s.id);
-                const after = stepsFor(formId, state).find((s) => s.kind === 'review' || order.indexOf(s.id) > order.indexOf(sectionDef.id));
-                fs.ui.step = after ? after.id : 'yon';
-              }
-            }),
-          }), ' Bu sayfayı göster (simülasyon)'),
-        ),
-      );
+    if (step.id === 's4' && formId === 'cari') {
+      panel.append(box('Sayfa numarası farkı', noteBox(app, 'C-Q13', 'DOC-A ekran görüntüsünde bu sayfa "Sayfa 6/6" idi; canlı formda (DOC-D) 4/6. Form ekran görüntülerinden sonra değiştirilmiş görünüyor.')));
+    }
+    if (step.id === 's5' && formId === 'cari') {
+      panel.append(box('Teknik bölüm', h('p', {}, h('button', { type: 'button', class: 'req-link', onclick: () => app.goToRequirement('C-045') }, 'C-045'), ' Canlı formun 6/6 bölümü boş bir "Submit" bölümüdür; bu sayfadan sonra TC Kimlik No sayfasına gitmeyi sağlar ve kullanıcıya gösterilmez.')));
     }
     const key = `${fs.answers.branch || '-'}:${sectionDef.id}`;
     const revId = `reviewed-${sectionDef.id}`;

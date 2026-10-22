@@ -2,33 +2,17 @@
 
 > `npm run docs` ile otomatik üretilir. Bu liste inceleme öncesi durumu gösterir; cevaplarınızı uygulamada ilgili maddenin "Cevap / karar notu" alanına yazın.
 
-## 1. Engelleyici sorular (cevaplanmadan güvenilir final prompt üretilemez) — 6
+## 1. Engelleyici sorular (cevaplanmadan güvenilir final prompt üretilemez) — 2
 
 ### Cari Form
 
-- **C-Q01** — Form 6 sayfadan oluşuyor ancak 3/6 ve 4/6 sayfaları kaynak belgelerde yok. Bu sayfalarda hangi alanlar var ve hangi durumda gösteriliyor?
-  - Kaynak: DOC-A — DOC-A sayfa göstergeleri (1/6, 2/6, 5/6, 6/6)
-  - Etki / geçici davranış: Bu sayfalar tanımlanmadan formun tam alan envanteri çıkarılamaz. Prototipte yer tutucu olarak gösterilir.
-  - Ayrıntı: Sayfa 3/6 ve 4/6'nın ekran görüntüleri veya alan listesi.
-- **C-Q02** — "Şirket/Belge Türü" açılır listesinin tam seçenek listesi nedir? Belgede yalnızca "Limited / Anonim Şirketi" görünüyor.
-  - Kaynak: DOC-A — DOC-A Sayfa 1/6 "Şirket/Belge Türü"
-  - Etki / geçici davranış: Seçenek listesi olmadan alan doğru uygulanamaz; büyük olasılıkla sayfa yönlendirmesini de belirliyor (C-Q03).
-  - Ayrıntı: Tam seçenek listesi ve her seçeneğin anlamı.
-- **C-Q03** — Sayfalar arası yönlendirme kuralları nelerdir? Özellikle "İstisna Belgesi" (5/6, zorunlu yükleme) hangi yanıtta istenir? Google Forms'taki "yanıta göre bölüme git" ayarları belgelerde görünmüyor.
-  - Kaynak: DOC-A — DOC-A Sayfa 2/6 → 5/6 → 6/6 akışı
-  - Etki / geçici davranış: Koşul bilinmeden İstisna Belgesi sayfası herkese zorunlu tutulursa yanlış kullanıcılar engellenebilir. Prototipte test anahtarıyla simüle edilir.
-  - Ayrıntı: Hangi Şirket/Belge Türü (veya başka yanıt) hangi sayfaya yönlendiriyor?
-- **C-Q04** — Olası çelişki: DOCX "Yurtdışı Satıcı (Ajans)" ve "Yurtdışı Müşteri" kategorilerini ekliyor; mevcut formda ise Türkiye'ye özgü alanlar (Vergi Numarası / TC Kimlik No, Vergi Dairesi, IBAN (TRY), Posta Kodu, İl ve İlçe) zorunlu ve Ülke listesinde yalnızca "Türkiye" görünüyor. Yurtdışı cariler için bu alanlar nasıl davranmalı? Ülke listesi nedir?
-  - Kaynak: DOC-C, DOC-A — DOC-C P008, P012 (Yurtdışı kategorileri) ↔ DOC-A Sayfa 1/6, 2/6, 6/6 (Türkiye'ye özgü zorunlu alanlar)
-  - Etki / geçici davranış: Kural uydurulmamalı. Karar verilene kadar alanlar belgede olduğu gibi kalır ve belirsizlik işaretlenir.
-  - Ayrıntı: Yurtdışı carilerde hangi alanlar zorunlu/opsiyonel/gizli? Yabancı vergi numarası nasıl alınır? Ülke listesinin kaynağı?
 - **C-Q09** — Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve yüklenen dosyalar nereye kaydedilir/iletilir (tablo, e-posta, muhasebe yazılımı)? Kime bildirim gider? Google Forms'ta mı kalınacak, özel bir uygulama mı yapılacak?
-  - Kaynak: DOC-A — DOC-A Sayfa 6/6 "Gönder" (gönderim sonrası belgelenmemiş)
-  - Etki / geçici davranış: Bu bilinmeden gerçek gönderim, depolama veya entegrasyon uygulanamaz.
+  - Kaynak: DOC-A, DOC-D — DOC-A Sayfa 6/6 "Gönder"; DOC-D (gönderim hedefi tanımda görünmüyor)
+  - Etki / geçici davranış: Bu bilinmeden gerçek gönderim, depolama veya entegrasyon uygulanamaz. Kullanıcıya gösterilecek onay mesajı biliniyor (C-044).
 
 ### Yeni Talent Form
 
-- **T-Q06** — Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve fotoğraf nereye kaydedilir/iletilir? Kime bildirim gider? Google Forms'ta mı kalınacak, özel bir uygulama mı yapılacak?
+- **T-Q06** — Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve fotoğraf nereye kaydedilir/iletilir? Kime bildirim gider? Kullanıcıya hangi onay mesajı gösterilir? Google Forms'ta mı kalınacak, özel bir uygulama mı yapılacak?
   - Kaynak: DOC-B — "Gönder" (gönderim sonrası belgelenmemiş)
   - Etki / geçici davranış: Bu bilinmeden gerçek gönderim, depolama veya entegrasyon uygulanamaz.
 
@@ -36,37 +20,40 @@
 
 ### Cari Form
 
-- **C-Q04** — Olası çelişki: DOCX "Yurtdışı Satıcı (Ajans)" ve "Yurtdışı Müşteri" kategorilerini ekliyor; mevcut formda ise Türkiye'ye özgü alanlar (Vergi Numarası / TC Kimlik No, Vergi Dairesi, IBAN (TRY), Posta Kodu, İl ve İlçe) zorunlu ve Ülke listesinde yalnızca "Türkiye" görünüyor. Yurtdışı cariler için bu alanlar nasıl davranmalı? Ülke listesi nedir?
-  - Kaynak: DOC-C, DOC-A — DOC-C P008, P012 (Yurtdışı kategorileri) ↔ DOC-A Sayfa 1/6, 2/6, 6/6 (Türkiye'ye özgü zorunlu alanlar)
-  - Etki / geçici davranış: Kural uydurulmamalı. Karar verilene kadar alanlar belgede olduğu gibi kalır ve belirsizlik işaretlenir.
-  - Ayrıntı: Yurtdışı carilerde hangi alanlar zorunlu/opsiyonel/gizli? Yabancı vergi numarası nasıl alınır? Ülke listesinin kaynağı?
 - **C-Q06** — Belge çelişkisi: Formu kim dolduruyor? Giriş metni ve DOCX kategori notları karşı tarafa (tedarikçi/müşteri) hitap ediyor; "Talebi Gönderen Personel — Şirket mailiniz" ise DOME personelinin doldurduğunu düşündürüyor.
   - Kaynak: DOC-A, DOC-C — DOC-A giriş metni ("Sistemimize … eklenmeniz") ↔ DOC-A "Talebi Gönderen Personel – Şirket mailiniz"
   - Etki / geçici davranış: İlk sorunun bakış açısı ("Fatura keseceğim" kimin ağzından), metinlerin hitabı ve kimlik doğrulama ihtiyacı buna bağlı. Prototip DOCX notlarının hitabını (karşı taraf) esas alır.
   - Ayrıntı: Form dış tarafa mı gönderiliyor, yoksa personel karşı taraf adına mı dolduruyor?
+- **C-Q13** — Belge çelişkisi (sürüm farkı): DOC-A ekran görüntülerinde "Vergi Bilgileri - Vergi Dairesi" sayfası "Sayfa 6/6", canlı formda (DOC-D) ise 4. bölüm; 6. bölüm boş "Submit" bölümü. Form, ekran görüntüleri alındıktan sonra değiştirilmiş görünüyor. Güncel yapı DOC-D mi?
+  - Kaynak: DOC-A, DOC-D — DOC-A PDF s.5 ("Vergi Dairesi" — Sayfa 6/6) ↔ DOC-D (Vergi Dairesi Bölüm 4, Bölüm 6 boş "Submit")
+  - Etki / geçici davranış: Prototip ve prompt daha yeni olan DOC-D yapısını kullanır; sayfa numaraları yeni uygulamada zaten değişecektir.
 
-## 3. Diğer açık sorular — 14
+## 3. Diğer açık sorular — 15
 
 ### Cari Form
 
-- **C-Q05** — İki branş arasında kategori listesi dışında başka fark var mı? Özellikle: (a) "Bana fatura kesilecek" branşında IBAN (TRY) zorunlu mu? (b) PO Numarası ve Fatura Gönderimi bilgilendirmesi bu branşta gösterilmeli mi? (c) İstisna Belgesi ve PDF yükleme hangi branşlarda geçerli?
-  - Kaynak: DOC-C, DOC-A — DOC-C P004–P012 yalnızca kategori listesini ayırıyor; DOC-A bilgilendirme ve IBAN alanları
-  - Etki / geçici davranış: Karar verilene kadar iki branş, kategori listesi dışında aynı alanları kullanır; farklar uydurulmaz.
-- **C-Q07** — Gizlilik politikası bağlantısının doğru adresi nedir? (Mevcut bağlantı boş sayfa açıyor.)
-  - Kaynak: DOC-C, DOC-A — DOC-C P002; DOC-A Sayfa 1/6
-  - Etki / geçici davranış: Adres bilinene kadar yapılandırılabilir yer tutucu kullanılmalı.
+- **C-Q04** — Yurtdışı cariler için alanlar nasıl davranmalı? DOCX "Yurtdışı Satıcı (Ajans)" ve "Yurtdışı Müşteri" kategorilerini ekliyor. Canlı formda ülke listesi Türkiye, Amerika Birleşik Devletleri, Birleşik Krallık, Çin, Diğer; ancak ülke seçimi hiçbir alanı değiştirmiyor (İl ve İlçe, Posta Kodu, IBAN (TRY), Vergi Numarası / TC Kimlik No veya TC Kimlik No, Vergi Dairesi herkese zorunlu).
+  - Kaynak: DOC-C, DOC-D — DOC-C P008, P012 (Yurtdışı kategorileri) ↔ DOC-D (ülke listesi ve ülkeden bağımsız zorunlu alanlar)
+  - Etki / geçici davranış: Karar verilene kadar canlı formdaki davranış korunur: tüm ülkeler için aynı alanlar ve zorunluluklar. Kural uydurulmamalı.
+  - Ayrıntı: Yurtdışı carilerde hangi alanlar zorunlu/opsiyonel/gizli olmalı? Ülke listesi genişletilecek mi?
+- **C-Q05** — İki branş arasında kategori listesi dışında başka fark var mı? Özellikle: (a) "Bana fatura kesilecek" branşında IBAN (TRY) zorunlu mu? (b) PO Numarası ve Fatura Gönderimi bilgilendirmesi bu branşta gösterilmeli mi? (c) PDF yükleme önerisi hangi branşlarda geçerli? (d) Şirket/Belge Türü seçenekleri ve sayfa yönlendirmesi (İstisna Belgesi, Serbest Meslek Makbuzu, Gider Pusulası dahil) "Bana fatura kesilecek" branşında aynı mı kalacak?
+  - Kaynak: DOC-C, DOC-A, DOC-D — DOC-C P004–P012 yalnızca kategori listesini ayırıyor; DOC-A/DOC-D bilgilendirme, IBAN ve Şirket/Belge Türü yönlendirmesi
+  - Etki / geçici davranış: Karar verilene kadar iki branş, kategori listesi dışında aynı alanları ve aynı yönlendirmeyi kullanır; farklar uydurulmaz.
+- **C-Q07** — Gizlilik politikası bağlantısı nasıl düzeltilecek? Canlı formdaki adres https://dome.istanbul/privacy-policy; DOCX'e göre bu bağlantı boş sayfa açıyor. Doğru adres başka mı, yoksa bu adresteki sayfa mı düzeltilecek?
+  - Kaynak: DOC-C, DOC-D — DOC-C P002; adres DOC-D
+  - Etki / geçici davranış: Karar verilene kadar adres yapılandırılabilir olmalı; mevcut adres varsayılan değer olarak kullanılabilir ama doğrulanmış sayılmaz.
 - **C-Q08** — Mevcut form Google Forms'ta, DOME alanında ve oturum açmış Google hesabıyla çalışıyor ("Dosyaları yükleyip bu formu gönderdiğinizde Google hesabınızla ilişkilendirilen ad, e-posta adresi ve fotoğraf kaydedilir"). Yeni uygulamada kimlik doğrulama gerekecek mi?
-  - Kaynak: DOC-A — DOC-A tüm sayfalar (oturum açık hesap, "Bu form DOME alanında oluşturuldu")
+  - Kaynak: DOC-A, DOC-D — DOC-A tüm sayfalar (oturum açık hesap, "Bu form DOME alanında oluşturuldu"); DOC-D alan bilgisi "DOME"
   - Etki / geçici davranış: C-Q06 ile bağlantılı. Karar verilmeden kimlik doğrulama eklenmemeli/kaldırılmamalı.
 - **C-Q10** — DOCX'te "Vergi Numarası / TC Kimlik No" (Sayfa 2/6) ve "Vergi Dairesi" (Sayfa 6/6) ekran görüntüleri not olmadan yer alıyor. Bir değişiklik mi isteniyor (ör. iki vergi alanının aynı sayfada birleştirilmesi)?
   - Kaynak: DOC-C — DOC-C görsel 4 ve 5 (P015–P016)
-  - Etki / geçici davranış: Değişiklik varsayılmaz; mevcut sayfa yapısı korunur.
+  - Etki / geçici davranış: Değişiklik varsayılmaz; mevcut sayfa yapısı korunur. DOC-D'ye göre bu iki sayfa Limited / Anonim Şirketi ve Şahıs Firması yolunda art arda gelir.
 - **C-Q11** — Fatura yönüne göre değişen kategori sorusu (Cari Türü) zorunlu mu olacak? Mevcut formda zorunlu değil.
-  - Kaynak: DOC-A, DOC-C — DOC-A Sayfa 1/6 "Cari Türü" (yıldız yok); DOC-C P005/P010 ("…birini seçin lütfen")
+  - Kaynak: DOC-A, DOC-C, DOC-D — DOC-A Sayfa 1/6 "Cari Türü" (yıldız yok); DOC-D (zorunlu değil); DOC-C P005/P010 ("…birini seçin lütfen")
   - Etki / geçici davranış: Karar verilene kadar belgedeki gibi isteğe bağlı kalır.
 - **C-Q12** — "İstisna Belgesi" için desteklenen dosya türleri nelerdir? Belgede "Desteklenen 1 dosya" deniyor ancak türler listelenmiyor.
-  - Kaynak: DOC-A — DOC-A Sayfa 5/6
-  - Etki / geçici davranış: Karar verilene kadar tür kısıtı uygulanmaz; yalnızca 1 dosya ve 10 MB sınırı uygulanır.
+  - Kaynak: DOC-A, DOC-D — DOC-A Sayfa 5/6; DOC-D (dosya ayarları tanımda yok)
+  - Etki / geçici davranış: Karar verilene kadar tür kısıtı uygulanmaz; yalnızca 1 dosya ve 10 MB sınırı uygulanır. Not: Google Forms'ta tür kısıtı varsa açıklamada türler listelenir (Talent formundaki "image" gibi); burada liste olmaması kısıt olmadığına işaret ediyor.
 
 ### Yeni Talent Form
 
@@ -91,24 +78,24 @@
 
 ### Her iki form (ortak)
 
-- **S-002** — "İstisna Belgesi" iki formda da geçiyor: Cari Hesap Açılış Talep Formu'nda zorunlu dosya yükleme sayfası olarak; Yeni Talent Formu'nda "Belge Tipi" seçeneği olarak. İki kullanım arasındaki ilişki (ör. Talent formunda bu seçenek seçilince belge yüklemesi istenmesi) belgelenmemiş.
-  - Kaynak: DOC-A, DOC-B — DOC-A Sayfa 5/6 "İstisna Belgesi" (zorunlu yükleme) ↔ DOC-B Alan 8 "Belge Tipi" seçeneği "İstisna Belgesi"
+- **S-002** — "İstisna Belgesi", "Serbest Meslek Makbuzu" ve "Gider Pusulası" iki formda da belge türü seçeneği olarak geçiyor. Cari Hesap Açılış Talep Formu'nda "İstisna Belgesi" seçimi ayrıca zorunlu bir belge yükleme sayfası açıyor; Yeni Talent Formu'nda bu seçeneklere bağlı bir davranış yok. İki form arasındaki ilişki (ör. aynı kavram mı, Talent formunda da belge istenmeli mi) belgelenmemiş.
+  - Kaynak: DOC-A, DOC-D, DOC-B — DOC-A/DOC-D Cari formu belge türü seçenekleri ve "İstisna Belgesi" yükleme sayfası ↔ DOC-B Alan 8 "Belge Tipi" seçenekleri
   - Etki / geçici davranış: Karar verilene kadar iki form birbirinden bağımsız davranır; ek yükleme alanı veya formlar arası kural eklenmez.
 - **S-003** — Cari formundaki "Talent / Influencer" kategorisi ile ayrı Yeni Talent Formu arasındaki ilişki belgelenmemiş (ör. bu kategori seçildiğinde Yeni Talent Formu'nun da doldurulması gerekir mi?).
   - Kaynak: DOC-A, DOC-C, DOC-B — DOC-A/DOC-C "Cari Türü" seçeneği "Talent / Influencer" ↔ DOC-B Yeni Talent Formu
   - Etki / geçici davranış: Karar verilene kadar formlar arası yönlendirme veya bağımlılık eklenmez.
 
-## 4. Onayınızı bekleyen öneriler (belgede yok veya belge "olabilir" diyor) — 15
+## 4. Onayınızı bekleyen öneriler (belgede yok veya belge "olabilir" diyor) — 16
 
 ### Cari Form
 
 - **C-040** — IBAN alanlarının yanına bir PDF yükleme alanı eklenmesi önerisi: vergi levhası ve firmanın banka bilgisinin imzalı şekilde yüklenmesi için.
   - Kaynak: DOC-C — DOC-C P014
-  - Etki / geçici davranış: Not "yapabiliriz" diyor; öneri niteliğinde. Onaylanırsa: dosya türü PDF.
+  - Etki / geçici davranış: Not "yapabiliriz" diyor; öneri niteliğinde. Canlı formda (DOC-D) böyle bir alan yok. Onaylanırsa: dosya türü PDF.
   - Ayrıntı: Tek dosya mı (vergi levhası + banka bilgisi birlikte) yoksa iki ayrı yükleme mi? Zorunlu mu? Boyut sınırı? Her iki branşta mı? "İmzalı" şartı nasıl kontrol edilecek (yalnızca açıklama mı)?
 - **C-P01** — E-posta format doğrulaması: Talebi Gönderen Personel, Yetkili Mail, Finans Mail alanları geçerli e-posta biçiminde olmalı.
   - Kaynak: ANALIZ — Belgede yok — alan adlarından çıkarım ("mail")
-  - Etki / geçici davranış: Öneri durumundayken prototipte yalnızca uyarı (engellemez). Onaylanırsa hata olur.
+  - Etki / geçici davranış: Öneri durumundayken prototipte yalnızca uyarı (engellemez). Onaylanırsa hata olur. Canlı formdaki "metin içerir (boş)" kuralı bunu sağlamıyor (C-020).
   - Ayrıntı: Talebi Gönderen Personel için şirket alan adı (ör. @dome.istanbul) zorunlu mu?
 - **C-P02** — Telefon format doğrulaması: yalnızca rakam, boşluk, "+", parantez ve tire; 10–15 rakam.
   - Kaynak: ANALIZ — Belgede yok
@@ -116,7 +103,8 @@
   - Ayrıntı: Yurtdışı numaralar kabul edilecek mi?
 - **C-P03** — Vergi Numarası / TC Kimlik No: yalnızca rakam; 10 hane (Vergi Kimlik No) veya 11 hane (TC Kimlik No).
   - Kaynak: ANALIZ — Belgede yok — alan etiketinden çıkarım
-  - Etki / geçici davranış: Öneri durumundayken yalnızca uyarı. Algoritmik sağlama (checksum) önerilmiyor. Yurtdışı cariler için geçersiz olabilir (C-Q04).
+  - Etki / geçici davranış: Öneri durumundayken yalnızca uyarı. Canlı formda bu alan için yalnızca "en fazla 15 karakter" kuralı var (C-036); 10/11 hane kuralı yabancı vergi numaralarını reddeder (C-Q04). Algoritmik sağlama (checksum) önerilmiyor.
+  - Ayrıntı: Kural yalnızca Ülke = Türkiye iken mi uygulanmalı?
 - **C-P04** — IBAN format doğrulaması (ISO 13616, mod-97 kontrolü; boşluklar yok sayılır) — IBAN (TRY) ve doluysa IBAN (USD).
   - Kaynak: ANALIZ — Belgede yok
   - Etki / geçici davranış: Öneri durumundayken yalnızca uyarı.
@@ -136,6 +124,9 @@
 - **C-P09** — Prototip sunumu: "Sayfa 1/6" alanları belgedeki sırayla, görsel alt başlıklar altında gösterilir (Talep ve cari bilgileri · Adres bilgileri · Yetkili ve finans iletişim bilgileri · Banka bilgileri · Şirket / belge türü). Her alanın altında açıklama metni, hatada alanın altında kırmızı mesaj ve sayfa üstünde hata özeti gösterilir; ilk hatalı alana odaklanılır.
   - Kaynak: ANALIZ — Belgede yok — prototipte test edilen sunum
   - Etki / geçici davranış: Alan sırası ve metinler değişmez; yalnızca görsel gruplama ve hata sunumu eklenir.
+- **C-P10** — TC Kimlik No: tam 11 hane, yalnızca rakam.
+  - Kaynak: ANALIZ — Belgede yok — alan etiketinden çıkarım
+  - Etki / geçici davranış: Öneri durumundayken yalnızca uyarı. Canlı formda yalnızca "en fazla 11 karakter" kuralı var (C-043). Algoritmik sağlama (checksum) önerilmiyor.
 
 ### Yeni Talent Form
 

@@ -4,8 +4,9 @@ import { generatePrompt, reviewHash } from '../../src/core/prompt.js';
 import { readiness } from '../../src/core/readiness.js';
 import { freshState, addDecision, addFeedback, setStatus } from './helpers.js';
 
-const CARI_ONLY = ['IBAN (TRY)', 'Vergi Dairesi', 'Posta Kodu', 'Fatura keseceğim', 'Şirket/Belge Türü', 'Yetkili Mail', 'TC Kimlik'];
-const TALENT_ONLY = ['Twitch Link', 'Talent Nickname', 'Bir ajansa bağlı mı?', 'Talebi Gönderen Kişi Mail', 'Fotoğraf', 'Gider Pusulası', 'Uberkuloz'];
+// "Gider Pusulası", "Serbest Meslek Makbuzu" ve "İstisna Belgesi" iki formda da geçer (S-002); bu listelerde yoktur.
+const CARI_ONLY = ['IBAN (TRY)', 'Vergi Dairesi', 'Posta Kodu', 'Fatura keseceğim', 'Şirket/Belge Türü', 'Yetkili Mail', 'TC Kimlik', 'Şahıs Firması', 'Cari Talebiniz', 'privacy-policy'];
+const TALENT_ONLY = ['Twitch Link', 'Talent Nickname', 'Bir ajansa bağlı mı?', 'Talebi Gönderen Kişi Mail', 'Fotoğraf', 'Lifestyle', 'Uberkuloz', 'Instagram Link'];
 
 test('prompt üretimi deterministiktir', () => {
   const s = freshState();
@@ -63,10 +64,36 @@ test('belge metinleri prompta birebir aktarılır', () => {
 
 test('açık ve engelleyici sorular görünür; geliştiriciye uydurmaması söylenir', () => {
   const p = generatePrompt('cari', freshState());
-  assert.ok(p.includes('### 12.1 Engelleyici sorular'));
-  for (const id of ['C-Q01', 'C-Q02', 'C-Q03', 'C-Q04', 'C-Q09']) assert.ok(p.includes(`[${id}]`), id);
+  const blockers = p.slice(p.indexOf('### 12.1'), p.indexOf('### 12.2'));
+  assert.ok(blockers.includes('[C-Q09]'));
+  for (const id of ['C-Q01', 'C-Q02', 'C-Q03', 'C-Q04']) assert.ok(!blockers.includes(`[${id}]`), `${id} artık engelleyici değil`);
+  const others = p.slice(p.indexOf('### 12.2'), p.indexOf('### 12.3'));
+  for (const id of ['C-Q04', 'C-Q05', 'C-Q06', 'C-Q07', 'C-Q13']) assert.ok(others.includes(`[${id}]`), id);
   assert.ok(p.includes('Cevap uydurma'));
   assert.ok(p.includes('TASLAK'));
+});
+
+test('canlı formla cevaplanan sorular kaynakla doğrulanmış gereksinim olarak listelenir', () => {
+  const p = generatePrompt('cari', freshState());
+  const mandatory = p.slice(p.indexOf('### 3.1'), p.indexOf('### 3.2'));
+  for (const id of ['C-Q01', 'C-Q02', 'C-Q03', 'C-041', 'C-042', 'C-043', 'C-044']) assert.ok(mandatory.includes(`[${id}]`), id);
+  assert.ok(mandatory.includes('Cevaplandı (DOC-D)'));
+  const conflicts = p.slice(p.indexOf('### 12.3'), p.indexOf('### 12.4'));
+  assert.ok(conflicts.includes('[C-Q13]'), 'DOC-A/DOC-D sayfa numarası farkı çelişki olarak görünür');
+});
+
+test('Cari promptu Şirket/Belge Türü yönlendirmesini, uzunluk kurallarını ve onay mesajını içerir', () => {
+  const p = generatePrompt('cari', freshState());
+  assert.ok(p.includes('- "Limited / Anonim Şirketi", "Şahıs Firması": Sayfa 1/6 → Sayfa 2/6 — Vergi Bilgileri - Vergi Numarası / TC Kimlik No → Sayfa 4/6 — Vergi Bilgileri - Vergi Dairesi → Gönder'));
+  assert.ok(p.includes('- "İstisna Belgesi": Sayfa 1/6 → Sayfa 5/6 — İstisna Belgesi → Sayfa 3/6 — TC Kimlik No → Gönder'));
+  assert.ok(p.includes('- "Serbest Meslek Makbuzu", "Gider Pusulası": Sayfa 1/6 → Sayfa 3/6 — TC Kimlik No → Gönder'));
+  assert.ok(p.includes('"Vergi Numarası / TC Kimlik No": en fazla 15 karakter'));
+  assert.ok(p.includes('"TC Kimlik No": en fazla 11 karakter'));
+  assert.ok(p.includes('"Teşekkürler. Cari Talebiniz Alınmıştır."'));
+  assert.ok(p.includes('https://dome.istanbul/privacy-policy'));
+  assert.ok(p.includes('TEKNİK BÖLÜM (C-045'), 'boş "Submit" bölümü kullanıcıya gösterilmeyecek şekilde açıklanır');
+  assert.ok(p.includes('Seçenekler (bu sırayla): "Türkiye", "Amerika Birleşik Devletleri", "Birleşik Krallık", "Çin", "Diğer"'));
+  assert.ok(!p.includes('İÇERİK BİLİNMİYOR'));
 });
 
 test('onaylı karar yalnızca kendi formunun promptuna girer ve alan envanterine uygulanır', () => {
@@ -145,4 +172,5 @@ test('hazırlık seviyeleri', () => {
   assert.equal(readiness('talent', s).level, 'blocked');
   setStatus(s, 'talent', 'T-Q06', 'test-onayli', 'karar');
   assert.equal(readiness('talent', s).level, 'draft');
+  assert.deepEqual(readiness('cari', s).blockers.map((r) => r.id), ['C-Q09']);
 });

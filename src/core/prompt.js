@@ -8,9 +8,9 @@ import {
 } from '../data/enums.js';
 import {
   effectiveForm, sectionFields, statusLookup, noteLookup, isMandatoryStatus, isDroppedStatus, describeFlagCondition,
-  sectionTitle, targetLabel, BEHAVIOR_REQS,
+  sectionTitle, targetLabel, BEHAVIOR_REQS, routeGroups, routeAnswersFor,
 } from './schema.js';
-import { CHECKS } from './validation.js';
+import { CHECKS, maxLengthMessage } from './validation.js';
 import { readiness } from './readiness.js';
 
 // --- Yardımcılar -------------------------------------------------------------
@@ -104,6 +104,9 @@ function fieldAttrs(field, ctx) {
   if (field.options && field.options.length) a.push(['Seçenekler (bu sırayla)', field.options.map(q).join(', ')]);
   if (field.clearable) a.push(['Seçimi temizle', 'Var (yanıt seçildikten sonra "Seçimi temizle" eylemi)']);
   if (field.file) a.push(['Dosya kısıtları', fileText(field.file)]);
+  if (field.maxLength) {
+    a.push(['Uzunluk doğrulaması (canlı form, DOC-D)', `en fazla ${field.maxLength} karakter. Hata metni belgede yok (Google varsayılanıydı); prototipteki metin: ${q(maxLengthMessage(field.maxLength))}`]);
+  }
   for (const check of field.checks || []) {
     const status = ctx.statusOf(check.req);
     if (isMandatoryStatus(status)) a.push([`Format doğrulaması (${check.req}, onaylı)`, `${CHECKS[check.kind].label} — hata metni: ${q(CHECKS[check.kind].message)}`]);
@@ -163,13 +166,31 @@ function behaviorMode(ctx, key) {
   return 'pending';
 }
 
-// Gösterim koşulu bilinmeyen sayfadaki alanlar için kısa not.
+// --- Yönlendirme yardımcıları -------------------------------------------------
+
+const pageTitle = (ctx, id) => sectionTitle(ctx.form.sections.find((s) => s.id === id));
+const routingLabel = (ctx) => (ctx.form.routing ? ctx.fieldsById.get(ctx.form.routing.fieldId).label : '');
+
+// Yönlendirmeye bağlı sayfadaki alanlar için kısa not; ilk sayfa ve yönlendirmesiz formlarda boş.
 function conditionNote(ctx, field) {
-  const section = ctx.form.sections.find((s) => s.id === field.sectionId);
-  if (!section || !section.condition || !section.condition.unknown) return '';
-  const st = ctx.statusOf(section.condition.req);
-  if (isMandatoryStatus(st) && ctx.noteOf(section.condition.req)) return '';
-  return ` (yalnızca sayfa gösterildiğinde; koşul bilinmiyor — ${section.condition.req})`;
+  const answers = routeAnswersFor(ctx.form, field.sectionId);
+  if (!answers) return '';
+  return ` (yalnızca ${q(routingLabel(ctx))} = ${answers.map(q).join(' / ')} iken)`;
+}
+
+// Bir sayfadan sonra yönlendirmeye göre ne geldiği.
+function nextPageText(ctx, sectionId) {
+  for (const g of routeGroups(ctx.form)) {
+    const i = g.path.indexOf(sectionId);
+    if (i >= 0) return g.path[i + 1] ? pageTitle(ctx, g.path[i + 1]) : 'form gönderilir';
+  }
+  return 'form gönderilir';
+}
+
+// "Sayfa 1/6 → Sayfa 2/6 — … → Gönder" biçiminde yol metni.
+function pathText(ctx, path) {
+  const first = ctx.form.sections.find((s) => s.kind === 'fields');
+  return [first.pageLabel, ...path.map((id) => pageTitle(ctx, id)), 'Gönder'].join(' → ');
 }
 
 const proposalPending = (ctx, f) => Boolean(f.proposalReq && !isMandatoryStatus(ctx.statusOf(f.proposalReq)));
@@ -341,17 +362,15 @@ function inventory(ctx, L) {
   }
   for (const section of ctx.form.sections) {
     L.push(`### ${sectionTitle(section)}`, '');
-    if (section.kind === 'missing') {
-      L.push(`- İÇERİK BİLİNMİYOR (${section.reqs.join(', ')}). Kaynak: ${section.source} — ${section.ref}.`);
-      L.push('- Bu sayfanın alanlarını uydurma. Sayfa yapısında yer tutucu/TODO bırak ve soruyu raporla.', '');
+    if (section.kind === 'technical') {
+      L.push(`- TEKNİK BÖLÜM (${section.reqs.join(', ')}; kaynak: ${section.source} — ${section.ref}). ${section.note}`);
+      L.push('- Yeni uygulamada bu bölümün karşılığını kullanıcıya gösterme; yalnızca yönlendirmeyi (Bölüm 7) koru.', '');
       continue;
     }
     if (section.titleNote) L.push(`Not: ${section.titleNote}`, '');
-    if (section.condition && section.condition.unknown) {
-      const st = ctx.statusOf(section.condition.req);
-      const note = ctx.noteOf(section.condition.req);
-      if (isMandatoryStatus(st) && note) L.push(`Gösterim koşulu (karar ${section.condition.req}): ${note}`, '');
-      else L.push(`Gösterim koşulu: BİLİNMİYOR (${section.condition.req}). ${section.condition.text.replace(' Test için göster/gizle anahtarını kullanın.', '')} Koşulu uydurma; yapılandırılabilir bırak.`, '');
+    const answers = routeAnswersFor(ctx.form, section.id);
+    if (answers) {
+      L.push(`Gösterim koşulu: yalnızca ${q(routingLabel(ctx))} = ${answers.map(q).join(' / ')} iken (C-041, C-042). Bu sayfadan sonra: ${nextPageText(ctx, section.id)}.`, '');
     }
     let n = 1;
     const baseGroups = ctx.eff[ctx.branches[0]].sections.find((s) => s.id === section.id).groups;
@@ -385,8 +404,14 @@ function texts(ctx, L) {
     }
   }
   if (h.privacy) {
-    L.push(`- Gizlilik metni (${h.privacy.req}): ${q(h.privacy.before.trim())} + bağlantı metni ${q(h.privacy.link)}. Bağlantı adresi: ${ctx.noteOf(h.privacy.flag.req) && isMandatoryStatus(ctx.statusOf(h.privacy.flag.req)) ? ctx.noteOf(h.privacy.flag.req) : `BİLİNMİYOR (${h.privacy.flag.req}); yapılandırılabilir yer tutucu kullan, mevcut bozuk bağlantıyı kopyalama (C-009)`}.`);
+    const flagReq = h.privacy.flag.req;
+    const decided = isMandatoryStatus(ctx.statusOf(flagReq)) && ctx.noteOf(flagReq);
+    const address = decided
+      ? `karar (${flagReq}): ${ctx.noteOf(flagReq)}`
+      : `canlı formda ${h.privacy.url}; bu adresin boş sayfa açtığı bildirildi (C-009) ve düzeltme yolu açık soru (${flagReq}). Adresi yapılandırılabilir tut; doğrulanmış sayma`;
+    L.push(`- Gizlilik metni (${h.privacy.req}): ${q(h.privacy.before.trim())} + bağlantı metni ${q(h.privacy.link)}. Bağlantı adresi: ${address}.`);
   }
+  if (form.confirmation) L.push(`- Gönderim sonrası onay mesajı (${form.confirmation.req}, ${form.confirmation.source}): ${q(form.confirmation.text)}`);
   L.push(`- Zorunluluk açıklaması: ${q(h.requiredLegend)} (yıldız kırmızı)`);
   L.push(`- Zorunlu alan hata mesajı: ${q(REQUIRED_MESSAGE)}`);
   if (form.hasBranches) {
@@ -406,17 +431,14 @@ function requiredMatrix(ctx, L) {
   L.push('## 6. Zorunlu ve isteğe bağlı alanlar', '');
   if (ctx.form.hasBranches) L.push(`- ${q(ctx.form.branchQuestion.label)}: Zorunlu (her iki branş için ilk adım)`);
   for (const section of ctx.form.sections) {
-    if (section.kind === 'missing') {
-      L.push(`- ${sectionTitle(section)}: bilinmiyor (${section.reqs.join(', ')})`);
-      continue;
-    }
+    if (section.kind !== 'fields') continue;
     for (const id of orderedFieldIds(ctx, section)) {
       const per = ctx.branches.map((b) => [b, fieldInBranch(ctx, section.id, id, b)]);
       const any = per.find(([, f]) => f)[1];
       if (per.every(([, f]) => !f || f.removed)) continue;
       const word = (f) => (!f || f.removed ? 'Yok' : f.required ? 'Zorunlu' : 'İsteğe bağlı');
       const proposal = any.proposalReq && !isMandatoryStatus(ctx.statusOf(any.proposalReq)) ? ` — önerilen alan (${any.proposalReq}), onaylanmadı` : '';
-      const cond = section.condition && section.condition.unknown ? ` — sayfa koşulu bilinmiyor (${section.condition.req})` : '';
+      const cond = conditionNote(ctx, any) ? ` —${conditionNote(ctx, any)}` : '';
       const words = per.map(([b, f]) => [b, word(f)]);
       const same = new Set(words.map(([, w]) => w)).size === 1;
       const value = same
@@ -446,20 +468,25 @@ function conditional(ctx, L) {
       for (const d of decisionsBranch) L.push(`  - [${d.id}] Yalnızca ${q(BRANCH_SCOPES[d.branch])}: ${d.text}${decisionChangeText(d, ctx.formId, ctx.state) ? ` (${decisionChangeText(d, ctx.formId, ctx.state)})` : ''}`);
     }
     L.push('');
-    L.push('### 7.2 Sayfa yönlendirmeleri', '');
-    for (const section of ctx.form.sections) {
-      if (section.kind === 'missing') L.push(`- ${sectionTitle(section)}: içerik ve gösterim koşulu bilinmiyor (${section.reqs.join(', ')}).`);
-      else if (section.condition && section.condition.unknown) {
-        const st = ctx.statusOf(section.condition.req);
-        const note = ctx.noteOf(section.condition.req);
-        L.push(`- ${sectionTitle(section)}: ${isMandatoryStatus(st) && note ? `koşul (karar): ${note}` : `gösterim koşulu bilinmiyor (${section.condition.req}); koşulu uydurma, yapılandırılabilir bırak`}.`);
-      } else L.push(`- ${sectionTitle(section)}: her iki branşta gösterilir (belgede koşul yok).`);
-    }
-    L.push('');
-  } else {
+  } else if (!ctx.form.routing) {
     L.push('- Kaynak belgede koşullu alan, dallanma veya sayfa yönlendirmesi tanımlanmamıştır. Onaylı kararlar (Bölüm 11) dışında koşullu davranış ekleme.', '');
   }
-  const title = ctx.form.hasBranches ? '### 7.3 Davranışı belgelenmemiş durumlar' : '### Davranışı belgelenmemiş durumlar';
+  if (ctx.form.routing) {
+    const label = routingLabel(ctx);
+    L.push(`### ${ctx.form.hasBranches ? '7.2 ' : ''}Sayfa yönlendirmesi (${q(label)})`, '');
+    const firstPage = ctx.form.sections.find((s) => s.kind === 'fields');
+    L.push(`Canlı formdaki (${ctx.form.routing.source}) "yanıta göre bölüme git" ayarları ve bölüm sonu yönlendirmeleri. ${q(label)} sorusu ${firstPage.pageLabel} sayfasının son sorusudur ve sonraki sayfaları belirler:`, '');
+    for (const g of routeGroups(ctx.form)) L.push(`- ${g.answers.map(q).join(', ')}: ${pathText(ctx, g.path)}`);
+    L.push('');
+    L.push('- Yolda olmayan sayfalar gösterilmez ve o sayfalardaki yanıtlar gönderilmez (kullanıcı geri dönüp seçimini değiştirirse yol yeniden hesaplanır).');
+    L.push('- "İstisna Belgesi" yolunda sayfa sırası 5/6 → 3/6\'dır; sayfa numarası değil yol sırası esas alınır.');
+    L.push('- Yönlendirme fatura yönünden bağımsızdır; iki branşta da aynıdır (fark olup olmayacağı açık soru: C-Q05).');
+    L.push('- Bölüm sonu yönlendirmeleri, Google Forms\'un bu bilgiyi bir sonraki bölüm başlığında saklama kuralına göre okunmuştur (C-042, güven: güçlü çıkarım).');
+    const technical = ctx.form.sections.filter((s) => s.kind === 'technical');
+    for (const t of technical) L.push(`- ${sectionTitle(t)} (${t.reqs.join(', ')}): yalnızca yönlendirme için var; kullanıcıya gösterilmez ve yeni uygulamada gerekmez.`);
+    L.push('');
+  }
+  const title = ctx.form.hasBranches ? `### 7.${ctx.form.routing ? 3 : 2} Davranışı belgelenmemiş durumlar` : '### Davranışı belgelenmemiş durumlar';
   L.push(title, '');
   let any = false;
   for (const [, f] of ctx.fieldsById) {
@@ -490,6 +517,10 @@ function validation(ctx, L) {
     if (f.file.accept && f.file.accept.includes('pdf')) rules.push(`PDF olmayan dosya reddedilir: ${q('Yalnızca PDF dosyası yükleyebilirsiniz.')}`);
     rules.push(`en fazla ${f.file.maxFiles || 1} dosya`);
     L.push(`- ${q(f.label)}: ${rules.join('; ')}.`);
+  }
+  for (const [, f] of ctx.fieldsById) {
+    if (!f.maxLength || f.removed) continue;
+    L.push(`- ${q(f.label)}: en fazla ${f.maxLength} karakter (canlı form, DOC-D); aşılırsa ilerleme engellenir. Hata metni belgede yok; prototipteki metin ${q(maxLengthMessage(f.maxLength))}.`);
   }
   const approved = [];
   const pending = [];
@@ -532,16 +563,15 @@ function experience(ctx, L) {
   );
   const review = behaviorLine(ctx, 'review', '"Gözden geçir" adımı: gönderimden önce tüm yanıtlar bölüm bölüm özetlenir; her bölümde "Düzenle" ile ilgili adıma dönülür, "Gönder" bu adımdadır');
   let step = 1;
-  L.push(`${step++}. Üst bilgi bloğu: form başlığı${form.header.intro ? ', giriş metni, "Fatura Süreçleri Hakkında Önemli Bilgilendirme" maddeleri, gizlilik metni' : ''} ve ${q(form.header.requiredLegend)}. Her adımda formun üstünde görünür.`);
+  L.push(`${step++}. Üst bilgi bloğu: form başlığı${form.header.intro ? ', giriş metni, "Fatura Süreçleri Hakkında Önemli Bilgilendirme" maddeleri, gizlilik metni' : ''} ve ${q(form.header.requiredLegend)}. ${form.hasBranches ? 'İlk adımda tam gösterilir; sonraki adımlarda yalnızca form başlığı görünür (mevcut Google Forms davranışıyla aynı).' : 'Formun üstünde görünür.'}`);
   if (form.hasBranches) {
     L.push(`${step++}. Adım 0 — Fatura yönü: soru ve iki büyük seçim kartı (${form.branchQuestion.options.map((o) => q(o.label)).join(' / ')}). Bu adım tamamlanmadan diğer adımlar kilitlidir. Seçim yapıldıktan sonraki her adımda seçili yön bir etiketle gösterilir ve "Değiştir" ile Adım 0'a dönülebilir.`);
-    const pages = form.sections.map((s) => {
-      if (s.kind === 'missing') return `${s.pageLabel} (içerik bilinmiyor — ${s.reqs.join(', ')})`;
-      if (s.condition && s.condition.unknown) return `${sectionTitle(s)} (koşul bilinmiyor — ${s.condition.req})`;
-      return sectionTitle(s);
-    });
-    L.push(`${step++}. Form sayfaları sırasıyla: ${pages.join(' → ')}. Prototip, içeriği bilinmeyen sayfaları atlar; son üründe bunlar için yer tutucu/TODO bırak.`);
-    L.push(`${step++}. Her sayfada üstte adım/ilerleme göstergesi (adım adları ve "Adım X / N"), altta "Geri" ve "Sonraki". "Sonraki" yalnızca o sayfanın doğrulaması geçerse ilerler; "Geri" doğrulama yapmadan döner ve girilen değerler korunur. Daha önce ulaşılmış adımlara ilerleme göstergesinden dönülebilir.`);
+    if (form.routing) {
+      L.push(`${step++}. Form sayfaları ${q(routingLabel(ctx))} yanıtına göre (Bölüm 7.2): ${routeGroups(form).map((g) => `${g.answers.map(q).join(', ')} → ${pathText(ctx, g.path)}`).join(' · ')}. Bu soru yanıtlanana kadar ilerleme göstergesinde "Sonraki sayfalar … yanıtına göre belirlenir" yer tutucusu görünür.`);
+    } else {
+      L.push(`${step++}. Form sayfaları sırasıyla: ${form.sections.filter((s) => s.kind === 'fields').map(sectionTitle).join(' → ')}.`);
+    }
+    L.push(`${step++}. Her sayfada üstte adım/ilerleme göstergesi (izlenen yoldaki adım adları ve "Adım X / N"), altta "Geri" ve "Sonraki". "Sonraki" yalnızca o sayfanın doğrulaması geçerse ilerler; "Geri" doğrulama yapmadan döner ve girilen değerler korunur. Daha önce ulaşılmış adımlara ilerleme göstergesinden dönülebilir.`);
   } else {
     L.push(`${step++}. Tek sayfa: tüm alanlar belgedeki sırayla, görsel alt başlıklar altında.`);
     L.push(`${step++}. Sayfa sonundaki birincil düğme tüm zorunlu alanları doğrular; hata varsa ilerlemez.`);
@@ -551,7 +581,10 @@ function experience(ctx, L) {
   const submitReq = form.hasBranches ? 'C-Q09' : 'T-Q06';
   const st = ctx.statusOf(submitReq);
   const note = ctx.noteOf(submitReq);
-  L.push(`${step++}. Gönderim: ${isMandatoryStatus(st) && note ? `karar (${submitReq}): ${note}` : `gönderim hedefi bilinmiyor (${submitReq}, engelleyici). Gerçek kayıt/iletim uygulama; gönderim katmanını tek bir arayüz arkasında yer tutucu olarak bırak. Prototip başarı ekranında "gönderim simüle edildi" mesajı gösterir.`}`);
+  L.push(`${step++}. Gönderim: ${isMandatoryStatus(st) && note ? `karar (${submitReq}): ${note}` : `gönderim hedefi bilinmiyor (${submitReq}, engelleyici). Gerçek kayıt/iletim uygulama; gönderim katmanını tek bir arayüz arkasında yer tutucu olarak bırak.`}`);
+  L.push(
+    `${step++}. Gönderim sonrası ekran: ${form.confirmation ? `onay mesajı ${q(form.confirmation.text)} (${form.confirmation.req}).` : 'onay mesajı belgede yok (açık soru). Prototip "Gönderim simüle edildi" başlığını kullanır; bu metni ürüne taşıma.'}`,
+  );
   L.push('');
 }
 
@@ -700,7 +733,16 @@ function acceptance(ctx, L) {
       A.push(`${q(f.label)} en fazla 1 dosya kabul eder; ${f.file.maxSizeMB} MB üzeri dosya reddedilir${f.file.accept === 'image/*' ? '; görsel olmayan dosya reddedilir' : ''}.`);
     }
   }
+  for (const [, f] of ctx.fieldsById) {
+    if (f.maxLength && !f.removed) A.push(`${q(f.label)} alanına ${f.maxLength + 1} veya daha fazla karakter girildiğinde ilerleme engellenir ve alanın altında hata gösterilir.`);
+  }
+  if (ctx.form.routing) {
+    for (const g of routeGroups(ctx.form)) {
+      A.push(`${q(routingLabel(ctx))} = ${g.answers.map(q).join(' veya ')} seçildiğinde sayfalar tam olarak şu sırayla gelir: ${pathText(ctx, g.path)}; diğer sayfalar gösterilmez ve yanıtları gönderilmez.`);
+    }
+  }
   if (behaviorMode(ctx, 'review') === 'on') A.push('Gönderimden önce "Gözden geçir" adımı tüm yanıtları bölüm bölüm gösterir; her bölümden "Düzenle" ile ilgili adıma dönülür ve yanıtlar korunur.');
+  if (ctx.form.confirmation) A.push(`Başarılı gönderimden sonra ${q(ctx.form.confirmation.text)} mesajı gösterilir.`);
   A.push('Bölüm 5\'teki tüm metinler birebir (Türkçe karakterler dahil) görünür.');
   A.push('Alanlar Bölüm 4\'teki sırayla gösterilir; seçenek listeleri belgedeki sırayı korur.');
   for (const d of ctx.fs.decisions.slice().sort(byId)) A.push(`Onaylı karar ${d.id} uygulanmıştır: ${d.text}`);
@@ -729,7 +771,13 @@ function scenarios(ctx, L) {
       const cat = ctx.eff[b].fieldsById.get('cariTuru');
       if (cat && cat.options.length > 1) P.push(`${q(BRANCHES[b])} branşında her kategori seçeneği (${cat.options.map(q).join(', ')}) ayrı ayrı seçilip form tamamlanabilir.`);
     }
-  } else {
+  }
+  if (ctx.form.routing) {
+    for (const g of routeGroups(ctx.form)) {
+      P.push(`${q(routingLabel(ctx))} = ${g.answers.map(q).join(' / ')}${g.answers.length > 1 ? ' (her biri ayrı test)' : ''}: ${pathText(ctx, g.path)}; yoldaki zorunlu alanlar dolu → ${reviewStep}gönderim başarılı${ctx.form.confirmation ? ` ve ${q(ctx.form.confirmation.text)} gösterilir` : ''}.`);
+    }
+  }
+  if (!ctx.form.hasBranches) {
     P.push(`Tüm zorunlu alanlar geçerli örnek verilerle dolu, fotoğraf olarak 10 MB altı bir görsel → ${reviewStep}gönderim başarılı (gönderim hedefi belirlenmediyse simüle).`);
     for (const [, f] of ctx.fieldsById) if ((f.type === 'select' || f.type === 'radio') && !f.removed) P.push(`${q(f.label)} için her seçenek (${f.options.map(q).join(', ')}) seçilebilir ve seçilen değer doğru kaydedilir.`);
   }
@@ -756,6 +804,9 @@ function scenarios(ctx, L) {
     if (f.file.accept === 'image/*') N.push(`${q(f.label)} alanına PDF gibi görsel olmayan bir dosya yüklenir → reddedilir.`);
   }
   for (const [, f] of ctx.fieldsById) {
+    if (f.maxLength && !f.removed) N.push(`${q(f.label)}${conditionNote(ctx, f)} alanına ${f.maxLength + 1} karakter girilir → uzunluk hatası, ilerleme engellenir.`);
+  }
+  for (const [, f] of ctx.fieldsById) {
     for (const c of f.checks || []) if (isMandatoryStatus(ctx.statusOf(c.req)) && !f.removed) N.push(`${q(f.label)} alanına geçersiz değer girilir (${CHECKS[c.kind].label}) → ${q(CHECKS[c.kind].message)}.`);
   }
   N.forEach((n, i) => L.push(`N${i + 1}. ${n}`));
@@ -774,7 +825,15 @@ function edgeCases(ctx, L) {
     }[behaviorMode(ctx, 'clearOnBranch')];
     E.push(`"Fatura keseceğim" ile kategori seçilip alanlar doldurulduktan sonra yön "Bana fatura kesilecek" olarak değiştirilir → ${clear}.`);
     E.push('Yön değiştirilip eski yöne geri dönülür → ortak alanlardaki yanıtlar kaybolmaz.');
-    E.push('Gösterim koşulu bilinmeyen sayfalar (Bölüm 7.2) için yer tutucu davranışı tutarlıdır ve kullanıcıyı kilitlemez.');
+  }
+  if (ctx.form.routing) {
+    const groups = routeGroups(ctx.form);
+    const label = q(routingLabel(ctx));
+    if (groups.length > 1) {
+      E.push(`${label} = ${q(groups[0].answers[0])} ile sonraki sayfa doldurulduktan sonra geri dönülüp ${q(groups[groups.length - 1].answers[0])} seçilir → yol yeniden hesaplanır; önceki yolun sayfaları gösterilmez ve yanıtları gönderilmez.`);
+    }
+    const reversed = groups.find((g) => g.path.some((id, i) => i > 0 && ctx.form.sections.findIndex((s) => s.id === id) < ctx.form.sections.findIndex((s) => s.id === g.path[i - 1])));
+    if (reversed) E.push(`${label} = ${q(reversed.answers[0])} yolunda sayfalar form sırasının tersine ilerler (${pathText(ctx, reversed.path)}); "Geri" düğmesi de bu yolu izler.`);
   }
   E.push('Metin alanlarına Türkçe karakterler (İSTANBUL, ığüşöç, KAĞITHANE) girilir → değiştirilmeden saklanır ve gösterilir.');
   const wsId = BEHAVIOR_REQS[ctx.formId].whitespace;
@@ -783,7 +842,11 @@ function edgeCases(ctx, L) {
     off: `Yalnızca boşluk içeren yanıt → yanıt olarak kabul edilir (${wsId} reddedildi).`,
     pending: `Yalnızca boşluk içeren zorunlu yanıtın boş sayılıp sayılmayacağı ${wsId} onayına bağlıdır; onay yoksa davranışı sor.`,
   }[behaviorMode(ctx, 'whitespace')]);
-  E.push('Çok uzun metin (ör. 1000+ karakter) → arayüz bozulmaz; belgede uzunluk sınırı yoktur, sınır ekleme.');
+  E.push(
+    [...ctx.fieldsById.values()].some((f) => f.maxLength)
+      ? 'Uzunluk sınırı tanımlı olmayan metin alanlarına çok uzun metin (ör. 1000+ karakter) girilir → arayüz bozulmaz; bu alanlara sınır ekleme.'
+      : 'Çok uzun metin (ör. 1000+ karakter) → arayüz bozulmaz; belgede uzunluk sınırı yoktur, sınır ekleme.',
+  );
   E.push(behaviorMode(ctx, 'review') === 'on' ? 'Geri/ileri gezinmede ve gözden geçir ekranından "Düzenle" ile dönüşte yanıtlar korunur.' : 'Geri/ileri gezinmede yanıtlar korunur.');
   E.push('"Gönder" düğmesine art arda tıklanır → tek gönderim oluşur.');
   E.push('Dosya seçilip kaldırılır ve yeniden seçilir → yalnızca son dosya geçerlidir; zorunlu dosya kaldırılınca hata geri gelir.');

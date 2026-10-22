@@ -143,10 +143,38 @@ export function sectionFields(section, { includeRemoved = false } = {}) {
   return out;
 }
 
-export function sectionShown(section, ui) {
-  if (!section.condition || !section.condition.unknown) return true;
-  const sim = ui && ui.simulate ? ui.simulate[section.id] : undefined;
-  return sim === undefined ? section.condition.defaultShown : Boolean(sim);
+// --- Sayfa yönlendirmesi ------------------------------------------------------
+
+// Yanıtlara göre izlenen sayfa yolu. Yönlendirme yoksa tüm sayfalar sırayla gelir.
+// pending: yönlendirme sorusu henüz yanıtlanmadı; unmapped: yanıt için tanımlı yol yok.
+export function routedSectionIds(form, values) {
+  const pages = form.sections.filter((s) => s.kind === 'fields').map((s) => s.id);
+  const routing = form.routing;
+  if (!routing) return { ids: pages, pending: false, unmapped: false };
+  const answer = values[routing.fieldId];
+  if (!answer) return { ids: [pages[0]], pending: true, unmapped: false };
+  const path = routing.paths[answer];
+  return path ? { ids: [pages[0], ...path], pending: false, unmapped: false } : { ids: [pages[0]], pending: false, unmapped: true };
+}
+
+// Bir sayfanın hangi yönlendirme yanıtlarında gösterildiği; yönlendirme yoksa null.
+export function routeAnswersFor(form, sectionId) {
+  if (!form.routing) return null;
+  const first = form.sections.find((s) => s.kind === 'fields');
+  if (first && first.id === sectionId) return null;
+  return Object.entries(form.routing.paths).filter(([, path]) => path.includes(sectionId)).map(([answer]) => answer);
+}
+
+// Yönlendirme yollarını tekilleştirir: [{ answers: [...], path: ['s2','s4'] }]
+export function routeGroups(form) {
+  if (!form.routing) return [];
+  const groups = [];
+  for (const [answer, path] of Object.entries(form.routing.paths)) {
+    const hit = groups.find((g) => g.path.join('>') === path.join('>'));
+    if (hit) hit.answers.push(answer);
+    else groups.push({ answers: [answer], path: path.slice() });
+  }
+  return groups;
 }
 
 // Seçenek değerleri: belgede tanımlı seçenekler + prototip yer tutucuları.
@@ -191,7 +219,6 @@ export function displayValue(field, value) {
 // --- Geri bildirim / karar hedefleri ----------------------------------------
 
 export function sectionTitle(section) {
-  if (section.kind === 'missing') return `${section.pageLabel} — ${section.title}`;
   return section.pageLabel === section.title ? section.title : `${section.pageLabel} — ${section.title}`;
 }
 

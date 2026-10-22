@@ -3,7 +3,7 @@
 
 import { FORM_IDS, knownReqIds, sharedReqIds } from '../data/registry.js';
 import { STATUS, FEEDBACK_CATEGORIES, FEEDBACK_STATUS, PRIORITIES, BRANCH_SCOPES, FIELD_TYPES } from '../data/enums.js';
-import { SCHEMA_VERSION, emptyFormState } from './state.js';
+import { SCHEMA_VERSION, emptyFormState, migrateSectionRefs } from './state.js';
 
 export const EXPORT_KIND = 'muhasebe-form-inceleme';
 const MAX_TEXT = 20000;
@@ -178,7 +178,7 @@ export function validateImport(text) {
       feedback: Math.max(Number(f.counters && f.counters.feedback) || 0, maxNo(feedback)),
       decision: Math.max(Number(f.counters && f.counters.decision) || 0, maxNo(decisions)),
     };
-    data.forms[id] = { feedback, decisions, reqStatus, sectionReviewed, prompt, counters, experienceConfirmed: Boolean(f.experienceConfirmed) };
+    data.forms[id] = migrateSectionRefs(id, { feedback, decisions, reqStatus, sectionReviewed, prompt, counters, experienceConfirmed: Boolean(f.experienceConfirmed) }, raw.schemaVersion);
     summary[id] = { feedback: feedback.length, decisions: decisions.length, reqStatus: Object.keys(reqStatus).length };
   }
   data.shared.reqStatus = cleanReqStatus(raw.shared && raw.shared.reqStatus, sharedReqIds(), 'ortak gereksinim durumu', warnings);

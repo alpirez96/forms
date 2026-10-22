@@ -82,7 +82,9 @@ test('Cari: ilk soru diğer alanlardan önce gelir ve yanıtlanmadan ilerlenemez
   const { context, page, errors } = await open();
   assert.equal(await page.locator('#in-talepEden').count(), 0);
   assert.ok(await page.isVisible('#fld-faturaYonu'));
-  assert.ok((await page.locator('.stepper .step-btn:disabled').count()) >= 4, 'diğer adımlar kilitli');
+  const totalSteps = await page.locator('.stepper .step-btn').count();
+  assert.ok(totalSteps >= 2);
+  assert.equal(await page.locator('.stepper .step-btn:disabled').count(), totalSteps - 1, 'ilk adım dışındaki tüm adımlar kilitli');
   await page.click('#btn-next');
   assert.equal(await page.textContent('#err-faturaYonu'), REQUIRED);
   assert.equal(await page.locator('#in-talepEden').count(), 0);
@@ -162,25 +164,61 @@ for (const branch of ['issue', 'receive']) {
       await page.click('#btn-next');
     }
     assert.ok(await page.isVisible('.success-panel'));
-    assert.deepEqual(visited, ['Temel bilgiler', 'Vergi Bilgileri - Vergi Numarası / TC Kimlik No', 'İstisna Belgesi', 'Vergi Bilgileri - Vergi Dairesi', 'Gözden geçir ve gönder']);
+    // Örnek veri "Limited / Anonim Şirketi" seçer: 1/6 → 2/6 → 4/6 (canlı form, DOC-D)
+    assert.deepEqual(visited, ['Temel bilgiler', 'Vergi Bilgileri - Vergi Numarası / TC Kimlik No', 'Vergi Bilgileri - Vergi Dairesi', 'Gözden geçir ve gönder']);
+    assert.equal(await page.textContent('#confirmation-message'), 'Teşekkürler. Cari Talebiniz Alınmıştır.');
     assert.deepEqual(errors, []);
     await context.close();
   });
 }
 
-test('Cari: koşulu bilinmeyen İstisna Belgesi sayfası simülasyonla gizlenebilir', async () => {
+const ROUTES = [
+  { answer: 'Şahıs Firması', pages: ['Vergi Bilgileri - Vergi Numarası / TC Kimlik No', 'Vergi Bilgileri - Vergi Dairesi'] },
+  { answer: 'İstisna Belgesi', pages: ['İstisna Belgesi', 'TC Kimlik No'] },
+  { answer: 'Serbest Meslek Makbuzu', pages: ['TC Kimlik No'] },
+  { answer: 'Gider Pusulası', pages: ['TC Kimlik No'] },
+];
+
+for (const route of ROUTES) {
+  test(`Cari: Şirket/Belge Türü = ${route.answer} canlı formdaki sayfa yolunu izler`, async () => {
+    const { context, page, errors } = await open();
+    await chooseBranch(page, 'issue');
+    await page.click('#btn-next');
+    assert.match(await page.textContent('.stepper'), /Sonraki sayfalar "Şirket\/Belge Türü" yanıtına göre belirlenir/);
+    await page.click('#btn-sample');
+    await page.selectOption('#in-sirketBelgeTuru', route.answer);
+    assert.doesNotMatch(await page.textContent('.stepper'), /yanıtına göre belirlenir/);
+    const visited = [];
+    for (let i = 0; i < 8 && !(await page.locator('.success-panel').count()); i += 1) {
+      const title = await page.textContent('.section-title');
+      visited.push(title);
+      if (title === 'TC Kimlik No') {
+        await page.fill('#in-tcKimlikNo', '123456789012');
+        await page.click('#btn-next');
+        assert.match(await page.textContent('#fb-tcKimlikNo'), /en fazla 11 karakter/, 'canlı formdaki uzunluk sınırı');
+        await page.fill('#in-tcKimlikNo', '12345678901');
+      }
+      if (title === 'İstisna Belgesi') await shot(page, 'cari-istisna');
+      await page.click('#btn-next');
+    }
+    assert.deepEqual(visited, ['Temel bilgiler', ...route.pages, 'Gözden geçir ve gönder']);
+    assert.ok(await page.isVisible('.success-panel'));
+    assert.deepEqual(errors, []);
+    await context.close();
+  });
+}
+
+test('Cari: yol dışındaki alana gidilmek istendiğinde hangi seçimin gerektiği söylenir', async () => {
   const { context, page, errors } = await open();
   await chooseBranch(page, 'issue');
   await page.click('#btn-next');
   await page.click('#btn-sample');
-  await page.click('#btn-next');
-  await page.click('#btn-next');
-  assert.equal(await page.textContent('.section-title'), 'İstisna Belgesi');
-  await shot(page, 'cari-istisna');
-  // Tıklama sayfayı yeniden çizer ve sıradaki adıma geçer; bu yüzden uncheck() yerine click().
-  await page.click('#sim-s5');
-  assert.equal(await page.textContent('.section-title'), 'Vergi Bilgileri - Vergi Dairesi');
-  assert.ok(!(await page.textContent('.stepper')).includes('İstisna'));
+  await page.click('#tab-requirements');
+  await page.fill('#rf-search', 'C-043');
+  await page.click('#reqcard-C-043 .chip:has-text("tcKimlikNo")');
+  assert.match(await page.textContent('#toast-region'), /İstisna Belgesi, Serbest Meslek Makbuzu, Gider Pusulası/);
+  assert.equal(await page.textContent('.section-title'), 'Temel bilgiler');
+  assert.ok(await page.isVisible('#fld-sirketBelgeTuru'));
   assert.deepEqual(errors, []);
   await context.close();
 });
@@ -332,20 +370,21 @@ test('JSON dışa aktarma, içe aktarma ve bozuk dosya', async () => {
 test('gereksinim durumu, deneyim onayı ve reddedilen öneri prototipi ve promptu günceller', async () => {
   const { context, page, errors } = await open();
   await page.click('#tab-requirements');
-  await page.fill('#rf-search', 'C-Q01');
-  await page.selectOption('#req-status-C-Q01', 'test-onayli');
-  await page.fill('#req-note-C-Q01', 'Sayfa 3/6 ve 4/6 kaldırıldı');
-  await page.locator('#req-note-C-Q01').blur();
+  await page.fill('#rf-search', 'C-Q09');
+  await page.selectOption('#req-status-C-Q09', 'test-onayli');
+  await page.fill('#req-note-C-Q09', 'ÖRNEK KARAR: yanıtlar şirket içi tabloya yazılacak');
+  await page.locator('#req-note-C-Q09').blur();
   await shot(page, 'requirements');
   await page.click('#tab-prompt');
-  assert.match(await page.textContent('#ready-cari'), /Engelleyici açık soru\s*4/);
+  assert.match(await page.textContent('#ready-cari'), /Engelleyici açık soru\s*0/);
   await page.click('#btn-confirm-experience');
   await confirmModal(page, 'Onaylıyorum');
   await page.click('#btn-generate');
   let text = await page.inputValue('#prompt-text-cari');
   assert.ok(text.includes('Prototip deneyimi final onayı: VERİLDİ'));
   assert.ok(text.includes('(C-P07 — onaylı, ZORUNLU)'));
-  assert.ok(text.includes('Sayfa 3/6 ve 4/6 kaldırıldı'));
+  assert.ok(text.includes('karar (C-Q09): ÖRNEK KARAR: yanıtlar şirket içi tabloya yazılacak'));
+  assert.ok(!text.includes('> UYARI: Bu bir TASLAK prompttur'), 'engelleyici kalmayınca taslak uyarısı yok');
   await shot(page, 'prompt-ready');
 
   await page.click('#tab-requirements');

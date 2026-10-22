@@ -53,7 +53,6 @@ test('alanların, bayrakların ve kontrollerin gereksinim referansları mevcut',
     const ids = new Set(requirementsFor(id).map((r) => r.id));
     for (const s of FORMS[id].sections) {
       for (const r of s.reqs || []) assert.ok(ids.has(r), `${id}: bölüm ${s.id} → ${r}`);
-      if (s.condition) assert.ok(ids.has(s.condition.req));
       for (const g of s.groups || []) for (const f of g.fields) {
         for (const r of f.reqs || []) assert.ok(ids.has(r), `${id}: ${f.id} → ${r}`);
         for (const fl of f.flags || []) assert.ok(ids.has(fl.req), `${id}: ${f.id} bayrak → ${fl.req}`);
@@ -67,6 +66,23 @@ test('alanların, bayrakların ve kontrollerin gereksinim referansları mevcut',
       for (const r of ins.reqs) assert.ok(ids.has(r), `${id}: talimat ${ins.title} → ${r}`);
     }
   }
+});
+
+test('yönlendirme tanımı tutarlı: her seçeneğin yolu var ve yollar mevcut sayfalara gider', () => {
+  const { routing, sections } = FORMS.cari;
+  const field = sections[0].groups.flatMap((g) => g.fields).find((f) => f.id === routing.fieldId);
+  assert.ok(field, 'yönlendirme sorusu ilk sayfada');
+  assert.deepEqual(Object.keys(routing.paths).sort(), field.options.slice().sort(), 'her seçeneğin bir yolu var');
+  const pages = new Set(sections.filter((s) => s.kind === 'fields').map((s) => s.id));
+  for (const path of Object.values(routing.paths)) for (const id of path) assert.ok(pages.has(id), `bilinmeyen sayfa ${id}`);
+  const reached = new Set(Object.values(routing.paths).flat());
+  for (const s of sections.slice(1)) {
+    if (s.kind === 'fields') assert.ok(reached.has(s.id), `${s.id} hiçbir yoldan ulaşılmıyor`);
+    else assert.ok(!reached.has(s.id), 'teknik bölüme ulaşılmamalı');
+  }
+  const reqIds = new Set(requirementsFor('cari').map((r) => r.id));
+  for (const r of routing.reqs) assert.ok(reqIds.has(r));
+  assert.ok(reqIds.has(FORMS.cari.confirmation.req));
 });
 
 test('Cari Form kaynak belgedeki alan sırasını korur', () => {

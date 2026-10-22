@@ -25,15 +25,19 @@ export default [
   {
     id: 'S-002',
     form: 'both',
-    source: ['DOC-A', 'DOC-B'],
-    ref: 'DOC-A Sayfa 5/6 "İstisna Belgesi" (zorunlu yükleme) ↔ DOC-B Alan 8 "Belge Tipi" seçeneği "İstisna Belgesi"',
+    source: ['DOC-A', 'DOC-D', 'DOC-B'],
+    ref: 'DOC-A/DOC-D Cari formu belge türü seçenekleri ve "İstisna Belgesi" yükleme sayfası ↔ DOC-B Alan 8 "Belge Tipi" seçenekleri',
     description:
-      '"İstisna Belgesi" iki formda da geçiyor: Cari Hesap Açılış Talep Formu\'nda zorunlu dosya yükleme sayfası olarak; Yeni Talent Formu\'nda "Belge Tipi" seçeneği olarak. İki kullanım arasındaki ilişki (ör. Talent formunda bu seçenek seçilince belge yüklemesi istenmesi) belgelenmemiş.',
+      '"İstisna Belgesi", "Serbest Meslek Makbuzu" ve "Gider Pusulası" iki formda da belge türü seçeneği olarak geçiyor. Cari Hesap Açılış Talep Formu\'nda "İstisna Belgesi" seçimi ayrıca zorunlu bir belge yükleme sayfası açıyor; Yeni Talent Formu\'nda bu seçeneklere bağlı bir davranış yok. İki form arasındaki ilişki (ör. aynı kavram mı, Talent formunda da belge istenmeli mi) belgelenmemiş.',
     type: 'unresolved',
     confidence: 'unclear',
     implications: 'Karar verilene kadar iki form birbirinden bağımsız davranır; ek yükleme alanı veya formlar arası kural eklenmez.',
+    implicationsByForm: {
+      cari: 'Bu formda bu türler "Şirket/Belge Türü" seçenekleridir ve sayfa yönlendirmesini belirler (C-041). Yeni Talent Formu ile otomatik bağlantı kurma.',
+      talent: 'Bu formda bu türler "Belge Tipi" seçenekleridir ve koşullu davranış yoktur. Karar verilene kadar ek yükleme alanı veya formlar arası kural eklenmez.',
+    },
     openQuestions: '',
-    fields: { talent: ['belgeTipi'], cari: ['istisnaBelgesi'] },
+    fields: { talent: ['belgeTipi'], cari: ['istisnaBelgesi', 'sirketBelgeTuru'] },
     defaultStatus: 'acik-soru',
   },
   {

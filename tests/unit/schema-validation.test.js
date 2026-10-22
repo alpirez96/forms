@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { effectiveForm, sectionFields, statusLookup, flagActive, invalidChoicesAfterBranchChange, behaviorOn } from '../../src/core/schema.js';
+import { effectiveForm, sectionFields, statusLookup, flagActive, invalidChoicesAfterBranchChange, behaviorOn, routedSectionIds, routeAnswersFor } from '../../src/core/schema.js';
 import { validateField, ibanValid, isEmptyValue } from '../../src/core/validation.js';
+import { FORMS } from '../../src/data/registry.js';
 import { REQUIRED_MESSAGE } from '../../src/data/enums.js';
 import { freshState, addDecision, setStatus } from './helpers.js';
 
@@ -101,6 +102,35 @@ test('format kontrolleri öneri iken uyarı, onaylanınca hata, reddedilince kap
   setStatus(s, 'cari', 'C-P01', 'reddedildi');
   r = validateField(f, 'gecersiz', null, statusLookup(s, 'cari'));
   assert.deepEqual(r, { errors: [], warnings: [] });
+});
+
+test('Şirket/Belge Türü yanıtı izlenen sayfa yolunu belirler (DOC-D)', () => {
+  const route = (v) => routedSectionIds(FORMS.cari, { sirketBelgeTuru: v });
+  assert.deepEqual(route('Limited / Anonim Şirketi').ids, ['s1', 's2', 's4']);
+  assert.deepEqual(route('Şahıs Firması').ids, ['s1', 's2', 's4']);
+  assert.deepEqual(route('İstisna Belgesi').ids, ['s1', 's5', 's3']);
+  assert.deepEqual(route('Serbest Meslek Makbuzu').ids, ['s1', 's3']);
+  assert.deepEqual(route('Gider Pusulası').ids, ['s1', 's3']);
+  assert.deepEqual(routedSectionIds(FORMS.cari, {}), { ids: ['s1'], pending: true, unmapped: false });
+  assert.deepEqual(route('Kararla eklenen seçenek'), { ids: ['s1'], pending: false, unmapped: true });
+  assert.deepEqual(routeAnswersFor(FORMS.cari, 's3'), ['İstisna Belgesi', 'Serbest Meslek Makbuzu', 'Gider Pusulası']);
+  assert.equal(routeAnswersFor(FORMS.cari, 's1'), null);
+  assert.deepEqual(routedSectionIds(FORMS.talent, {}).ids, ['t1'], 'yönlendirmesiz formda tüm sayfalar');
+  assert.ok(!FORMS.cari.sections.some((s) => s.kind === 'missing'), 'eksik sayfa kalmadı');
+});
+
+test('canlı formdaki uzunluk sınırları hata verir (DOC-D)', () => {
+  const s = freshState();
+  const st = statusLookup(s, 'cari');
+  const vergiNo = field(s, 'cari', 'issue', 'vergiNo');
+  const tckn = field(s, 'cari', 'issue', 'tcKimlikNo');
+  assert.deepEqual(validateField(vergiNo, 'A'.repeat(15), null, st).errors, []);
+  assert.match(validateField(vergiNo, 'A'.repeat(16), null, st).errors[0], /en fazla 15 karakter/);
+  assert.deepEqual(validateField(tckn, '12345678901', null, st).errors, []);
+  assert.match(validateField(tckn, '123456789012', null, st).errors[0], /en fazla 11 karakter/);
+  assert.equal(validateField(tckn, '1234', null, st).warnings[0].req, 'C-P10', '11 hane kuralı yalnızca öneri');
+  assert.deepEqual(field(s, 'cari', 'issue', 'ulke').options, ['Türkiye', 'Amerika Birleşik Devletleri', 'Birleşik Krallık', 'Çin', 'Diğer']);
+  assert.equal(field(s, 'cari', 'issue', 'adres').type, 'textarea');
 });
 
 test('IBAN mod-97', () => {

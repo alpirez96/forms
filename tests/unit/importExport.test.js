@@ -37,6 +37,34 @@ test('dışa aktarım test yanıtlarını içermez ve geri yüklenebilir', () =>
   assert.equal(target.forms.cari.counters.feedback, 1);
 });
 
+test('sürüm 1 verisi taşınır: eski "Vergi Dairesi" sayfası (s6) canlı formdaki s4 olur', () => {
+  const v1 = {
+    kind: EXPORT_KIND,
+    schemaVersion: 1,
+    forms: {
+      cari: {
+        feedback: [{ id: 'GB-C-001', category: 'diger', description: 'Vergi dairesi notu', target: 'section:s6' }],
+        decisions: [{ id: 'K-C-001', text: 'Yeni alan', target: 'section:s6', change: { kind: 'add', add: { sectionId: 's6', label: 'Ek', type: 'text' } } }],
+        sectionReviewed: { 'issue:s6': true, 'issue:s2': true },
+      },
+    },
+  };
+  const r = validateImport(JSON.stringify(v1));
+  assert.equal(r.ok, true);
+  const cari = r.data.forms.cari;
+  assert.equal(cari.feedback[0].target, 'section:s4');
+  assert.equal(cari.decisions[0].target, 'section:s4');
+  assert.equal(cari.decisions[0].change.add.sectionId, 's4');
+  assert.deepEqual(Object.keys(cari.sectionReviewed).sort(), ['issue:s2', 'issue:s4']);
+
+  const stored = normalizeState({ schemaVersion: 1, forms: { cari: { ui: { step: 's6', simulate: { s5: false } }, feedback: [{ id: 'GB-C-001', target: 'section:s6' }] } } });
+  assert.equal(stored.forms.cari.ui.step, 's4');
+  assert.ok(!('simulate' in stored.forms.cari.ui));
+  assert.equal(stored.forms.cari.feedback[0].target, 'section:s4');
+  const current = normalizeState({ schemaVersion: 2, forms: { cari: { ui: { step: 's6' } } } });
+  assert.equal(current.forms.cari.ui.step, 's6', 'güncel sürüm yeniden taşınmaz');
+});
+
 test('bozuk dosyalar anlaşılır hatayla reddedilir', () => {
   assert.equal(validateImport('').ok, false);
   assert.match(validateImport('{bozuk').errors[0], /JSON/);

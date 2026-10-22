@@ -40,7 +40,10 @@ python3 -m http.server 8080
      - **Bana fatura kesilecek:** Müşteri, Yurtdışı Müşteri
    - **Örnek veri doldur** açıkça "ÖRNEK" işaretli sahte veri girer. **Senaryoyu sıfırla** yalnızca test yanıtlarını temizler.
    - Sağdaki **test notları** her adımın kaynağını, koşullu mantığını ve açık sorularını gösterir. Sarı kutular belgelerin yanıt vermediği noktalardır. "Test notlarını göster" kapatılırsa form sade hâliyle görünür.
-   - Kaynakta içeriği olmayan sayfalar ("Sayfa 3/6 — içerik yok") ve koşulu bilinmeyen sayfalar (İstisna Belgesi; göster/gizle anahtarı) açıkça işaretlidir.
+   - Cari Form'da **Şirket/Belge Türü** seçimi sonraki sayfaları belirler (canlı formdaki gibi):
+     - Limited / Anonim Şirketi, Şahıs Firması → Vergi Numarası / TC Kimlik No → Vergi Dairesi
+     - Serbest Meslek Makbuzu, Gider Pusulası → TC Kimlik No
+     - İstisna Belgesi → İstisna Belgesi → TC Kimlik No
 3. **Not alın.** Her alanın yanındaki **Not** düğmesi, o alana ve branşa bağlı bir geri bildirim açar. Kategori, açıklama, beklenen davranış, durum (Açık / Çözüldü / Ertelendi) ve öncelik girilir. Bölüm için "Bu adım için not ekle"yi kullanın.
 4. **İnceledim işareti.** Sağ panelde her bölüm için (Cari'de her iki yön için ayrı) "Bu bölümü inceledim" işaretleyin. Hazırlık durumunda sayılır.
 5. **Gereksinimleri gözden geçirin.** "Gereksinimler ve açık sorular" sekmesinde her maddenin kaynak belgesi ve referansı vardır. Durumlar:
@@ -97,7 +100,18 @@ npm run prompt -- form-inceleme-2026-10-22.json cari cikti/ # yalnızca Cari, do
 
 Envanter ve açık sorular dosyaları uygulamayla aynı veriden üretilir: `npm run docs`.
 
-**Kaynak belgeler** (`CARI__AC_ILIS__FORMU_MERGED.pdf`, `Yeni_Talent_Formu_MERGED.pdf`, `CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`) depoya eklenmedi. Ekran görüntülerinde kişisel veri içerebilecek test değerleri var. Belge metinleri ve notları uygulamadaki "Belge talimatları" sekmesine birebir aktarıldı.
+**Kaynak belgeler** depoya eklenmedi; ekran görüntülerinde ve kayıtlı sayfada kişisel veri içerebilecek değerler var:
+
+| Kimlik | Dosya | İçerik |
+|---|---|---|
+| DOC-A | `CARI__AC_ILIS__FORMU_MERGED.pdf` | Cari formunun ekran görüntüleri (sayfa 1, 2, 5, 6) |
+| DOC-B | `Yeni_Talent_Formu_MERGED.pdf` | Yeni Talent formunun ekran görüntüsü ve seçenek notları |
+| DOC-C | `CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx` | Cari formu için muhasebe ekibinin değişiklik notları |
+| DOC-D | `Cari_Hesap_Ac__l_s__Talep_Formu.html` | Canlı Cari formunun tarayıcıdan kaydedilmiş sayfası |
+
+Belge metinleri ve notları uygulamadaki "Belge talimatları" sekmesine birebir aktarıldı.
+
+> **Canlı formdan tam yapı almak:** Google Forms sayfası ekranda yalnızca ilk sayfayı gösterse de, tarayıcıda **Ctrl+S → "Web sayfası, yalnızca HTML"** ile kaydedilen dosya formun tamamını içerir: bütün bölümler, seçenekler, zorunluluklar, uzunluk kuralları, "yanıta göre bölüme git" yönlendirmeleri ve onay mesajı. DOC-D bu yolla alındı. Aynı yöntem Yeni Talent Formu için de kullanılabilir. Formu kaydetmeden önce boş olduğundan emin olun; kayıtlı taslak yanıtlar da dosyaya girer.
 
 ---
 

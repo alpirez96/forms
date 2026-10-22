@@ -40,6 +40,11 @@ export const CHECKS = {
     test: (v) => /^\d{10,11}$/.test(v.trim()),
     message: 'Vergi Kimlik No 10, TC Kimlik No 11 haneli olmalı ve yalnızca rakam içermeli.',
   },
+  tckn: {
+    label: 'TC Kimlik No (11 hane)',
+    test: (v) => /^\d{11}$/.test(v.trim()),
+    message: 'TC Kimlik No 11 haneli olmalı ve yalnızca rakam içermeli.',
+  },
   iban: {
     label: 'IBAN biçimi (mod-97)',
     test: (v) => ibanValid(v),
@@ -56,6 +61,11 @@ export const CHECKS = {
     message: 'Bağlantı http:// veya https:// ile başlamalı.',
   },
 };
+
+// Belgelenmiş uzunluk sınırı (DOC-D). Hata metni belgede yok; prototip metnidir.
+export function maxLengthMessage(n) {
+  return `Bu alana en fazla ${n} karakter girilebilir.`;
+}
 
 export function fileErrors(field, meta) {
   const errors = [];
@@ -93,6 +103,8 @@ export function validateField(field, value, fileMeta, statusOf, opts = {}) {
     if (!optionValues(field).includes(value)) errors.push('Bu seçim mevcut seçenekler arasında değil; lütfen yeniden seçin.');
     return { errors, warnings };
   }
+
+  if (field.maxLength && String(value).length > field.maxLength) errors.push(maxLengthMessage(field.maxLength));
 
   for (const check of field.checks || []) {
     const impl = CHECKS[check.kind];

@@ -3,15 +3,44 @@
 import { FORM_IDS } from '../data/registry.js';
 
 export const STORAGE_KEY = 'muhasebe-form-inceleme.v1';
-export const SCHEMA_VERSION = 1;
+// 2: Cari Form sayfa kimlikleri canlı form tanımına (DOC-D) göre düzenlendi.
+export const SCHEMA_VERSION = 2;
 
 export const ID_PREFIX = { cari: 'C', talent: 'T' };
+
+// Sürüm 1'de "Vergi Dairesi" sayfası s6 idi (DOC-A'daki "Sayfa 6/6"); canlı formda 4/6 olduğu için s4 oldu.
+const SECTION_RENAMES_V2 = { cari: { s6: 's4' } };
+
+// Eski sürümden gelen bölüm referanslarını (adım, inceleme işaretleri, not/karar hedefleri) günceller.
+export function migrateSectionRefs(formId, formState, fromVersion) {
+  if (fromVersion >= 2) return formState;
+  const map = SECTION_RENAMES_V2[formId];
+  if (!map) return formState;
+  const sec = (id) => map[id] || id;
+  const target = (t) => (typeof t === 'string' && t.startsWith('section:') ? `section:${sec(t.slice(8))}` : t);
+  if (formState.ui) {
+    if (formState.ui.step) formState.ui.step = sec(formState.ui.step);
+    if (formState.ui.visited) formState.ui.visited = Object.fromEntries(Object.entries(formState.ui.visited).map(([k, v]) => [sec(k), v]));
+  }
+  if (formState.sectionReviewed) {
+    formState.sectionReviewed = Object.fromEntries(Object.entries(formState.sectionReviewed).map(([k, v]) => {
+      const [branch, id] = k.split(':');
+      return [`${branch}:${sec(id)}`, v];
+    }));
+  }
+  for (const f of formState.feedback || []) f.target = target(f.target);
+  for (const d of formState.decisions || []) {
+    d.target = target(d.target);
+    if (d.change && d.change.add && d.change.add.sectionId) d.change.add.sectionId = sec(d.change.add.sectionId);
+  }
+  return formState;
+}
 
 export function emptyFormState(formId) {
   return {
     activeTab: 'test',
     answers: { branch: null, values: {}, files: {} },
-    ui: { step: formId === 'cari' ? 'yon' : 't1', simulate: {}, showNotes: true },
+    ui: { step: formId === 'cari' ? 'yon' : 't1', showNotes: true },
     sectionReviewed: {},
     feedback: [],
     decisions: [],
@@ -33,10 +62,14 @@ export function normalizeState(raw) {
   const base = defaultState();
   if (!raw || typeof raw !== 'object') return base;
   const out = { ...base, activeForm: FORM_IDS.includes(raw.activeForm) ? raw.activeForm : 'cari' };
+  const fromVersion = typeof raw.schemaVersion === 'number' ? raw.schemaVersion : 1;
   for (const id of FORM_IDS) {
     const src = (raw.forms && raw.forms[id]) || {};
     const def = base.forms[id];
-    out.forms[id] = {
+    // Sürüm 1'deki "simulate" anahtarı artık kullanılmıyor.
+    const srcUi = { ...(src.ui || {}) };
+    delete srcUi.simulate;
+    out.forms[id] = migrateSectionRefs(id, {
       ...def,
       ...src,
       answers: {
@@ -45,14 +78,14 @@ export function normalizeState(raw) {
         values: { ...((src.answers && src.answers.values) || {}) },
         files: { ...((src.answers && src.answers.files) || {}) },
       },
-      ui: { ...def.ui, ...(src.ui || {}), simulate: { ...((src.ui && src.ui.simulate) || {}) } },
+      ui: { ...def.ui, ...srcUi },
       prompt: { ...def.prompt, ...(src.prompt || {}) },
       counters: { ...def.counters, ...(src.counters || {}) },
       feedback: Array.isArray(src.feedback) ? src.feedback : [],
       decisions: Array.isArray(src.decisions) ? src.decisions : [],
       reqStatus: src.reqStatus && typeof src.reqStatus === 'object' ? src.reqStatus : {},
       sectionReviewed: src.sectionReviewed && typeof src.sectionReviewed === 'object' ? src.sectionReviewed : {},
-    };
+    }, fromVersion);
   }
   out.shared = { reqStatus: (raw.shared && raw.shared.reqStatus) || {} };
   return out;

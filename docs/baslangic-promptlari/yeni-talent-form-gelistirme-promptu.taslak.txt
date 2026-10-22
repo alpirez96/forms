@@ -270,12 +270,13 @@ Not: Kaynak form tek sayfadır. Alt grup başlıkları prototip için verildi; a
 
 Aşağıdaki akış prototipte test edilen deneyimdir. Kullanıcı henüz final onayı vermedi; "OPSİYONEL ÖNERİ" işaretli adımlar onay bekler.
 
-1. Üst bilgi bloğu: form başlığı ve "* Zorunlu soruyu belirtir". Her adımda formun üstünde görünür.
+1. Üst bilgi bloğu: form başlığı ve "* Zorunlu soruyu belirtir". Formun üstünde görünür.
 2. Tek sayfa: tüm alanlar belgedeki sırayla, görsel alt başlıklar altında.
 3. Sayfa sonundaki birincil düğme tüm zorunlu alanları doğrular; hata varsa ilerlemez.
 4. "Gözden geçir" adımı: gönderimden önce tüm yanıtlar bölüm bölüm özetlenir; her bölümde "Düzenle" ile ilgili adıma dönülür, "Gönder" bu adımdadır — OPSİYONEL ÖNERİ (T-P04, onaylanmadı; uygulamadan önce onay iste).
 5. "Formu temizle": tüm yanıtları siler (belgelenmiş eylem). Onay penceresi gösterilmesi belgede yok; prototip onay sorar.
-6. Gönderim: gönderim hedefi bilinmiyor (T-Q06, engelleyici). Gerçek kayıt/iletim uygulama; gönderim katmanını tek bir arayüz arkasında yer tutucu olarak bırak. Prototip başarı ekranında "gönderim simüle edildi" mesajı gösterir.
+6. Gönderim: gönderim hedefi bilinmiyor (T-Q06, engelleyici). Gerçek kayıt/iletim uygulama; gönderim katmanını tek bir arayüz arkasında yer tutucu olarak bırak.
+7. Gönderim sonrası ekran: onay mesajı belgede yok (açık soru). Prototip "Gönderim simüle edildi" başlığını kullanır; bu metni ürüne taşıma.
 
 ## 10. UX ve erişilebilirlik beklentileri
 
@@ -309,7 +310,7 @@ Aşağıdakiler kaynak belgelerden değil, genel kalite beklentilerinden gelir; 
 
 Bu sorular cevaplanmadan ilgili kısmı uygulama. Yapılandırılabilir yer tutucu veya TODO bırak, soruyu teslim raporunda tekrar sor.
 
-- [T-Q06] Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve fotoğraf nereye kaydedilir/iletilir? Kime bildirim gider? Google Forms'ta mı kalınacak, özel bir uygulama mı yapılacak?
+- [T-Q06] Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve fotoğraf nereye kaydedilir/iletilir? Kime bildirim gider? Kullanıcıya hangi onay mesajı gösterilir? Google Forms'ta mı kalınacak, özel bir uygulama mı yapılacak?
   Engellenen karar/uygulama: Bu bilinmeden gerçek gönderim, depolama veya entegrasyon uygulanamaz.
   Kaynak: DOC-B — "Gönder" (gönderim sonrası belgelenmemiş)
 
@@ -329,8 +330,8 @@ Cevap uydurma. Aşağıdaki "Geçici davranış" satırı, karar verilene kadar 
   Geçici davranış: Karar verilene kadar "image/*" kabul edilir.
 - [T-Q07] Mevcut form DOME alanında, oturum açmış Google hesabıyla çalışıyor ve ayrıca "Talebi Gönderen Kişi Mail" soruluyor. Formu yalnızca DOME personeli mi dolduracak? Yeni uygulamada kimlik doğrulama gerekecek mi; e-posta oturumdan otomatik alınabilir mi?
   Geçici davranış: Karar verilene kadar e-posta alanı elle doldurulur; kimlik doğrulama eklenmez.
-- [S-002] "İstisna Belgesi" iki formda da geçiyor: Cari Hesap Açılış Talep Formu'nda zorunlu dosya yükleme sayfası olarak; Yeni Talent Formu'nda "Belge Tipi" seçeneği olarak. İki kullanım arasındaki ilişki (ör. Talent formunda bu seçenek seçilince belge yüklemesi istenmesi) belgelenmemiş.
-  Geçici davranış: Karar verilene kadar iki form birbirinden bağımsız davranır; ek yükleme alanı veya formlar arası kural eklenmez.
+- [S-002] "İstisna Belgesi", "Serbest Meslek Makbuzu" ve "Gider Pusulası" iki formda da belge türü seçeneği olarak geçiyor. Cari Hesap Açılış Talep Formu'nda "İstisna Belgesi" seçimi ayrıca zorunlu bir belge yükleme sayfası açıyor; Yeni Talent Formu'nda bu seçeneklere bağlı bir davranış yok. İki form arasındaki ilişki (ör. aynı kavram mı, Talent formunda da belge istenmeli mi) belgelenmemiş.
+  Geçici davranış: Bu formda bu türler "Belge Tipi" seçenekleridir ve koşullu davranış yoktur. Karar verilene kadar ek yükleme alanı veya formlar arası kural eklenmez.
 - [S-003] Cari formundaki "Talent / Influencer" kategorisi ile ayrı Yeni Talent Formu arasındaki ilişki belgelenmemiş (ör. bu kategori seçildiğinde Yeni Talent Formu'nun da doldurulması gerekir mi?).
   Geçici davranış: Karar verilene kadar formlar arası yönlendirme veya bağımlılık eklenmez.
 

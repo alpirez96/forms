@@ -3,12 +3,12 @@
 Bu prompt, "Muhasebe Formları Gereksinim Prototipi" uygulamasındaki kaynak belge analizinden, test sırasında verilen kararlardan ve açık sorulardan deterministik olarak üretilmiştir. Kendi başına yeterlidir; başka bir prompt veya belge okumayı gerektirmez.
 
 - Form: Cari Hesap Açılış Talep Formu
-- İnceleme verisi özeti (sürüm izleme için): 714f9fb0
+- İnceleme verisi özeti (sürüm izleme için): ce8a6ef4
 - Hazırlık durumu: ENGELLEYİCİ AÇIK SORU VAR — Taslak prompt üretilebilir; engellenen kısımlar promptta açıkça işaretlenir.
-- Engelleyici açık soru: 5 · Diğer açık soru: 9 · Onay bekleyen öneri: 10 · Açık geri bildirim: 0 · Onaylı karar: 0
-- İncelenen bölüm: 0/8 · Prototip deneyimi final onayı: henüz verilmedi
+- Engelleyici açık soru: 1 · Diğer açık soru: 11 · Onay bekleyen öneri: 11 · Açık geri bildirim: 0 · Onaylı karar: 0
+- İncelenen bölüm: 0/10 · Prototip deneyimi final onayı: henüz verilmedi
 
-> UYARI: Bu bir TASLAK prompttur. 5 engelleyici soru (Bölüm 12.1) cevaplanmadan ilgili kısımları uygulama; yapılandırılabilir yer tutucu/TODO bırak ve soruları raporla.
+> UYARI: Bu bir TASLAK prompttur. 1 engelleyici soru (Bölüm 12.1) cevaplanmadan ilgili kısımları uygulama; yapılandırılabilir yer tutucu/TODO bırak ve soruları raporla.
 
 ## 0. Bu promptu nasıl uygulamalısın
 
@@ -36,7 +36,7 @@ Temel değişiklik: Form, diğer tüm alanlardan önce "Fatura mı keseceğim, b
 ## 2. Kaynak belgeler ve geçerli talimatlar
 
 - **DOC-A** — Cari Hesap Açılış Talep Formu – birleştirilmiş ekran görüntüleri (PDF) (dosya: CARI__AC_ILIS__FORMU_MERGED.pdf)
-  Google Forms üzerindeki mevcut "Cari Hesap Açılış Talep Formu"nun 5 PDF sayfalık ekran görüntüsü. PDF sayfa 1–2 = form sayfası 1/6, PDF sayfa 3 = 2/6, PDF sayfa 4 = 5/6, PDF sayfa 5 = 6/6. Form sayfaları 3/6 ve 4/6 belgede yer almıyor. Alanlara test amaçlı değerler girilmiş; bu değerler gereksinim değildir.
+  Google Forms üzerindeki mevcut "Cari Hesap Açılış Talep Formu"nun 5 PDF sayfalık ekran görüntüsü. PDF sayfa 1–2 = form sayfası 1/6, PDF sayfa 3 = 2/6, PDF sayfa 4 = 5/6, PDF sayfa 5 = 6/6. Form sayfaları 3/6 ve 4/6 belgede yer almıyor (DOC-D ile tamamlandı). Alanlara test amaçlı değerler girilmiş; bu değerler gereksinim değildir.
 - **DOC-B** — Yeni Talent Formu – ekran görüntüsü ve seçenek notları (PDF) (dosya: Yeni_Talent_Formu_MERGED.pdf) — bu formda yalnızca ortak (S-) maddelerde atıf yapılır
   Ayrı "Yeni Talent Formu"nun ekran görüntüsü.
 - **DOC-C** — Cari Açılış Formu – Örnek Şablon (DOCX, değişiklik notları) (dosya: CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx)
@@ -52,16 +52,22 @@ Belgelerde farklı kitlelere yönelik metinler var. Formu dolduran kişiye göst
 
 - [Proje brifi] **Zorunlu ilk soru** (BRIEF — Cari Form, Bölüm A; C-001)
   "Fatura mı keseceğim, bana fatura mı kesilecek?" — seçenekler: "Fatura keseceğim" / "Bana fatura kesilecek". Diğer tüm alanlardan önce sorulur ve sonraki deneyimi belirler.
-- [Formu dolduran kişiye yönelik metin] **Giriş metni** (DOC-A — Sayfa 1/6 başlık altı; DOC-C görsel 1; C-005)
+- [Formu dolduran kişiye yönelik metin] **Giriş metni** (DOC-A — Sayfa 1/6 başlık altı; DOC-C görsel 1; DOC-D form açıklaması; C-005)
   Sistemimize tedarikçi veya müşteri olarak eklenmeniz ve faturalarınızın zamanında işleme alınabilmesi için bu formda gereken tüm bilgileri doğru şekilde doldurmanızı rica ederiz.
-- [Formu dolduran kişiye yönelik metin] **Fatura Süreçleri Hakkında Önemli Bilgilendirme — PO Numarası Zorunluluğu** (DOC-A — Sayfa 1/6 başlık altı; DOC-C görsel 1; C-006)
+- [Formu dolduran kişiye yönelik metin] **Fatura Süreçleri Hakkında Önemli Bilgilendirme — PO Numarası Zorunluluğu** (DOC-A — Sayfa 1/6 başlık altı; DOC-C görsel 1; DOC-D form açıklaması; C-006)
   Tüm tedarikçi faturalarında "E" harfi ile başlayan geçerli bir Satın Alma Sipariş (PO) numarası bulunmalıdır. PO numarası içermeyen faturalar kabul edilmeyecek ve ödeme süreci başlatılmadan iade edilecektir.
-- [Formu dolduran kişiye yönelik metin] **Fatura Süreçleri Hakkında Önemli Bilgilendirme — Fatura Gönderimi** (DOC-A — Sayfa 1/6 başlık altı; DOC-C görsel 1; C-007)
+- [Formu dolduran kişiye yönelik metin] **Fatura Süreçleri Hakkında Önemli Bilgilendirme — Fatura Gönderimi** (DOC-A — Sayfa 1/6 başlık altı; DOC-C görsel 1; DOC-D form açıklaması (mailto bağlantısı); C-007)
   E-arşiv ve kağıt faturalarınızı lütfen PDF formatında ilgili e-posta adreslerimize iletiniz: finans@dome.istanbul
-- [Formu dolduran kişiye yönelik metin] **Gizlilik politikası onayı** (DOC-A — Sayfa 1/6 başlık altı; DOC-C görsel 1; C-008)
-  Bu formu doldurarak bu linkten ulaşabileceğiniz gizlilik politikamızı kabul etmiş sayılırsınız. (Link adresi belgede yok.)
+- [Formu dolduran kişiye yönelik metin] **Gizlilik politikası onayı** (DOC-D — Form açıklamasının zengin metni; metin DOC-A Sayfa 1/6 ve DOC-C görsel 1 ile aynı; C-008)
+  Bu formu doldurarak bu linkten ulaşabileceğiniz gizlilik politikamızı kabul etmiş sayılırsınız. (Bağlantı adresi: https://dome.istanbul/privacy-policy)
 - [Formu dolduran kişiye yönelik metin] **Alan açıklamaları** (DOC-A — Sayfa 1/6 ve 5/6; C-020, C-022, C-023, C-037)
   Talebi Gönderen Personel: "Şirket mailiniz" · Cari Hesap Adı: "Örnek: DOME MEDYA VE İLETİŞİM ANONİM ŞİRKETİ" · Nickname: "Örnek: Dome İstanbul" · İstisna Belgesi: "Desteklenen 1 dosya yükleyebilirsiniz. En fazla 10 MB olmalıdır."
+- [Formu dolduran kişiye yönelik metin] **Gönderim sonrası onay mesajı** (DOC-D — Form ayarları — onay mesajı; C-044)
+  "Teşekkürler. Cari Talebiniz Alınmıştır."
+- [Canlı formun mantığı ve ayarları (form tanımından)] **Şirket/Belge Türü'ne göre sayfa yönlendirmesi** (DOC-D — Şirket/Belge Türü seçeneklerinin "bölüme git" değerleri ve bölüm sonu yönlendirmeleri; C-041, C-042)
+  Limited / Anonim Şirketi, Şahıs Firması → Sayfa 2/6 "Vergi Bilgileri - Vergi Numarası / TC Kimlik No" → Sayfa 4/6 "Vergi Bilgileri - Vergi Dairesi" → Gönder. Serbest Meslek Makbuzu, Gider Pusulası → Sayfa 3/6 "TC Kimlik No" → Gönder. İstisna Belgesi → Sayfa 5/6 "İstisna Belgesi" → Sayfa 3/6 "TC Kimlik No" → Gönder.
+- [Canlı formun mantığı ve ayarları (form tanımından)] **Yanıt doğrulamaları** (DOC-D — Soruların yanıt doğrulama ayarları; C-036, C-043, C-020)
+  "Vergi Numarası / TC Kimlik No": en fazla 15 karakter. "TC Kimlik No": en fazla 11 karakter. "Talebi Gönderen Personel": "metin içerir" kuralı boş değerle tanımlı (fiilen etkisiz; e-posta biçimi denetlenmiyor). Özel hata metni tanımlanmamış (Google varsayılanı).
 - [Muhasebe ekibinin değişiklik notu (tasarım/geliştirme)] **Gizlilik linki boş sayfa açıyor** (DOC-C — P002 (görsel 1 altı); C-009, C-Q07)
   "*Burada gizlilik politikası linkine bastığımızda boş sayfa geliyor," (cümle virgülle bitiyor; devamı yok).
 - [Muhasebe ekibinin değişiklik notu (tasarım/geliştirme)] **Cari Türü yerine fatura yönüne göre kategori kırılımı** (DOC-C — P004–P012 (görsel 2 "Cari Türü" altı); C-002, C-003)
@@ -69,11 +75,13 @@ Belgelerde farklı kitlelere yönelik metinler var. Formu dolduran kişiye göst
 - [Muhasebe ekibinin değişiklik notu (tasarım/geliştirme)] **IBAN yanına PDF yükleme alanı önerisi** (DOC-C — P014 (görsel 3 "IBAN (TRY) / IBAN (USD)" altı); C-040)
   "*Burada yana bir pdf yükleme alanı yapabiliriz, vergi levhası ve firmanın banka bilgisini imzalı bir şekilde yüklemesi için."
 - [Muhasebe ekibinin değişiklik notu (tasarım/geliştirme)] **Vergi bilgisi ekranları (not yok)** (DOC-C — Görsel 4 ve 5 (P015–P016); C-Q10)
-  DOCX'in sonunda "Vergi Numarası / TC Kimlik No" (Sayfa 2/6) ve "Vergi Dairesi" (Sayfa 6/6) ekran görüntüleri herhangi bir not olmadan yer alıyor. Amaçları belirsiz.
+  DOCX'in sonunda "Vergi Numarası / TC Kimlik No" (Sayfa 2/6) ve "Vergi Dairesi" (Sayfa 6/6) ekran görüntüleri herhangi bir not olmadan yer alıyor. Amaçları belirsiz. (DOC-D'ye göre bu iki sayfa Limited / Anonim Şirketi ve Şahıs Firması yolunda art arda gelir.)
 - [Google Forms platform metni] **Google Forms platform metinleri** (DOC-A — Tüm sayfalar; C-010, C-011, C-Q08)
   Oturum açık hesap + "Hesap değiştir"; "Dosyaları yükleyip bu formu gönderdiğinizde Google hesabınızla ilişkilendirilen ad, e-posta adresi ve fotoğraf kaydedilir"; "* Zorunlu soruyu belirtir"; "Bu form DOME alanında oluşturuldu."; "Google Formlar üzerinden asla şifre göndermeyin."; Geri / Sonraki / Gönder / Formu temizle; "Sayfa X / 6".
-- [Ekran görüntüsündeki test verisi (gereksinim değil)] **Ekran görüntülerindeki doldurulmuş değerler** (DOC-A — Sayfa 1/6, 2/6, 6/6; DOC-C görsel 3–5)
-  DOC-A ve DOC-C ekran görüntülerinde alanlara test değerleri girilmiş (ör. e-posta, telefon, IBAN, vergi numarası, il/ilçe). Bunlar gereksinim veya örnek format kuralı değildir; kişisel veri içerebilecekleri için prototipe ve prompta aktarılmadı.
+- [Google Forms platform metni] **Boş "Submit" bölümü** (DOC-D — Bölüm 6; C-045)
+  Canlı formun son bölümü (6/6) "Submit" başlıklı ve soru içermiyor. "İstisna Belgesi" sayfasından sonra "TC Kimlik No" sayfasına gitmeyi sağlamak için eklenmiş teknik bir bölüm görünümünde; hiçbir yoldan ulaşılmıyor.
+- [Ekran görüntüsündeki test verisi (gereksinim değil)] **Ekran görüntülerindeki ve kayıtlı sayfadaki doldurulmuş değerler** (DOC-A — DOC-A Sayfa 1/6, 2/6, 6/6; DOC-C görsel 3–5; DOC-D Bölüm 1)
+  DOC-A ve DOC-C ekran görüntülerinde alanlara test değerleri girilmiş (ör. e-posta, telefon, IBAN, vergi numarası, il/ilçe). DOC-D'de ise ilk sayfadaki alanlarda kayıtlı taslak yanıtlar var. Bunlar gereksinim veya örnek format kuralı değildir; kişisel veri içerebilecekleri için okunmadı, prototipe ve prompta aktarılmadı.
 
 ## 3. Kaynağa izlenebilir gereksinimler
 
@@ -85,55 +93,58 @@ Her madde kaynak belge ve bölüm referansıyla verilmiştir. Açık sorular bur
   Kaynak: BRIEF — Proje brifi – Cari Form, Bölüm A · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
   Etki: Bu soru yanıtlanmadan diğer bölümlere geçilemez. Yön değiştiğinde koşullu alanlar (Cari Türü seçenekleri ve branşa özgü kararlar) güncellenir.
 - [C-002] "Cari Türü" alanındaki "Marka" ve "Ajans" seçenekleri yerine fatura yönüne göre kategori kırılımı kullanılır. Fatura keseceğim → Genel Tedarikçi, Satıcı (Ajans), Yurtdışı Satıcı (Ajans), Talent / Influencer. Bana fatura kesilecek → Müşteri, Yurtdışı Müşteri.
-  Kaynak: DOC-C, DOC-A — DOC-C P004–P012; mevcut seçenekler DOC-A Sayfa 1/6 · Tür: İş kuralı · Güven: Güçlü çıkarım · Durum: Kaynakla doğrulandı
-  Etki: Cari Türü seçenekleri branşa göre değişir; "Marka" ve "Ajans" kaldırılır. Branş değiştiğinde geçersiz kalan seçim temizlenmelidir (bkz. C-P06).
+  Kaynak: DOC-C, DOC-A, DOC-D — DOC-C P004–P012; mevcut seçenekler DOC-A Sayfa 1/6 ve DOC-D · Tür: İş kuralı · Güven: Güçlü çıkarım · Durum: Kaynakla doğrulandı
+  Etki: Cari Türü seçenekleri branşa göre değişir; "Marka" ve "Ajans" kaldırılır. Branş değiştiğinde geçersiz kalan seçim temizlenmelidir (bkz. C-P06). Canlı form (DOC-D) hâlâ eski seçenekleri (Talent / Influencer, Marka, Ajans) kullanıyor; değişiklik henüz uygulanmamış.
   Not/soru: DOCX notu "kırılımlar olabilir" diyor; listenin nihai olduğu ve alan etiketinin "Cari Türü" olarak kalacağı teyit edilmeli.
 - [C-003] Branş eşleşmesi: DOCX'teki "Fatura kesecekseniz…" listesi "Fatura keseceğim" branşına; "Size fatura keseceksek…" listesi "Bana fatura kesilecek" branşına karşılık gelir. Bu notlardaki cümleler kategori sorusunun yardım metni olarak kullanılır.
   Kaynak: DOC-C, BRIEF — DOC-C P005 ve P010; Proje brifi · Tür: İş kuralı · Güven: Güçlü çıkarım · Durum: Kaynakla doğrulandı
   Etki: Eşleşme, notların formu dolduran karşı tarafa ("siz") hitap ettiği okumasına dayanır. Formu DOME personeli dolduruyorsa ifade yönü ters okunabilir (bkz. C-Q06).
 - [C-004] Form başlığı: "Cari Hesap Açılış Talep Formu".
-  Kaynak: DOC-A, DOC-C — DOC-A Sayfa 1/6 başlık; DOC-C görsel 1 · Tür: İçerik · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Kaynak: DOC-A, DOC-C, DOC-D — DOC-A Sayfa 1/6 başlık; DOC-C görsel 1; DOC-D form başlığı · Tür: İçerik · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Canlı formun dosya adı "Cari Açılış Talep Formu"dur; kullanıcıya görünen başlık "Cari Hesap Açılış Talep Formu".
 - [C-005] Giriş metni birebir gösterilir: "Sistemimize tedarikçi veya müşteri olarak eklenmeniz ve faturalarınızın zamanında işleme alınabilmesi için bu formda gereken tüm bilgileri doğru şekilde doldurmanızı rica ederiz."
-  Kaynak: DOC-A, DOC-C — DOC-A Sayfa 1/6 başlık altı; DOC-C görsel 1 · Tür: İçerik · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Kaynak: DOC-A, DOC-C, DOC-D — DOC-A Sayfa 1/6 başlık altı; DOC-C görsel 1; DOC-D form açıklaması · Tür: İçerik · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
   Etki: Metin formu dolduran karşı tarafa hitap eder (bkz. C-Q06).
 - [C-006] Bilgilendirme "PO Numarası Zorunluluğu" birebir gösterilir: "Tüm tedarikçi faturalarında "E" harfi ile başlayan geçerli bir Satın Alma Sipariş (PO) numarası bulunmalıdır. PO numarası içermeyen faturalar kabul edilmeyecek ve ödeme süreci başlatılmadan iade edilecektir."
-  Kaynak: DOC-A, DOC-C — DOC-A Sayfa 1/6 "Fatura Süreçleri Hakkında Önemli Bilgilendirme" · Tür: İş kuralı · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Kaynak: DOC-A, DOC-C, DOC-D — DOC-A Sayfa 1/6 "Fatura Süreçleri Hakkında Önemli Bilgilendirme"; DOC-D form açıklaması · Tür: İş kuralı · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
   Etki: Bu bir fatura süreci kuralı için bilgilendirmedir; form PO numarası toplamaz veya doğrulamaz. Metin "tedarikçi faturaları"na atıf yapar.
   Not/soru: "Bana fatura kesilecek" branşında gösterilip gösterilmeyeceği: C-Q05.
 - [C-007] Bilgilendirme "Fatura Gönderimi" birebir gösterilir: "E-arşiv ve kağıt faturalarınızı lütfen PDF formatında ilgili e-posta adreslerimize iletiniz:" ve e-posta adresi finans@dome.istanbul (mailto bağlantısı).
-  Kaynak: DOC-A, DOC-C — DOC-A Sayfa 1/6 "Fatura Süreçleri Hakkında Önemli Bilgilendirme" · Tür: İçerik · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
-  Etki: Form e-posta göndermez; yalnızca bilgilendirir.
+  Kaynak: DOC-A, DOC-C, DOC-D — DOC-A Sayfa 1/6 "Fatura Süreçleri Hakkında Önemli Bilgilendirme"; DOC-D form açıklaması · Tür: İçerik · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Form e-posta göndermez; yalnızca bilgilendirir. Canlı formda adres "mailto:finans@dome.istanbul" bağlantısıdır (DOC-D).
   Not/soru: "Bana fatura kesilecek" branşında gösterilip gösterilmeyeceği: C-Q05.
-- [C-008] Gizlilik onay metni gösterilir: "Bu formu doldurarak bu linkten ulaşabileceğiniz gizlilik politikamızı kabul etmiş sayılırsınız." İkinci kısım gizlilik politikasına bağlantıdır.
-  Kaynak: DOC-A, DOC-C — DOC-A Sayfa 1/6 başlık altı; DOC-C görsel 1 · Tür: İçerik · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
-  Etki: Bağlantı adresi belgelerde yok (C-Q07). Ayrı bir onay kutusu belgede yok; metin bilgilendirme olarak gösterilir.
-- [C-009] Mevcut formda gizlilik politikası bağlantısı boş sayfa açıyor; bağlantı çalışan bir gizlilik politikası sayfasına yönlenmelidir.
-  Kaynak: DOC-C — DOC-C P002 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
-  Etki: Doğru adres bilinmiyor (C-Q07); adres yapılandırılabilir olmalı ve bilinmeden uydurulmamalı.
+- [C-008] Gizlilik onay metni gösterilir: "Bu formu doldurarak bu linkten ulaşabileceğiniz gizlilik politikamızı kabul etmiş sayılırsınız." İkinci kısım gizlilik politikasına bağlantıdır; canlı formdaki adres https://dome.istanbul/privacy-policy.
+  Kaynak: DOC-A, DOC-C, DOC-D — DOC-A Sayfa 1/6 başlık altı; DOC-C görsel 1; DOC-D form açıklamasının zengin metni · Tür: İçerik · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Ayrı bir onay kutusu belgede yok; metin bilgilendirme olarak gösterilir. Bağlantının çalışmadığı bildirildi (C-009, C-Q07).
+- [C-009] Mevcut formda gizlilik politikası bağlantısı (https://dome.istanbul/privacy-policy) boş sayfa açıyor; bağlantı çalışan bir gizlilik politikası sayfasına yönlenmelidir.
+  Kaynak: DOC-C, DOC-D — DOC-C P002; adres DOC-D · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Doğru adres veya sayfanın düzeltilmesi C-Q07'ye bağlı. Adres yapılandırılabilir olmalı ve bilinmeden uydurulmamalı.
   Not/soru: Not virgülle bitiyor; devamında başka bir istek olup olmadığı belirsiz.
 - [C-010] Zorunlu alanlar etiket sonunda kırmızı "*" ile işaretlenir; form başında "* Zorunlu soruyu belirtir" açıklaması bulunur.
   Kaynak: DOC-A — DOC-A tüm sayfalar · Tür: Kullanıcı deneyimi · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
   Etki: Zorunlu alan boşken ilerleme/gönderim engellenmelidir. Cari belgelerinde hata metni görünmüyor; aynı platformun varsayılan metni "Bu, yanıtlanması zorunlu bir sorudur" (Talent ekran görüntüsünde görülen) prototipte kullanıldı.
-- [C-011] Çok sayfalı akış: ilk sayfada "Sonraki"; ara sayfalarda "Geri" ve "Sonraki"; son sayfada "Geri" ve "Gönder". İlerleme göstergesi "Sayfa X / 6". Her sayfada "Formu temizle" eylemi.
-  Kaynak: DOC-A — DOC-A Sayfa 1/6, 2/6, 5/6, 6/6 alt kısım · Tür: Kullanıcı deneyimi · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
-  Etki: Yeni yapıda sayfa sayısı ilk soru ve eksik sayfalara göre değişebilir. Geri dönüldüğünde girilen değerlerin korunması beklenir (platform davranışı).
+- [C-011] Çok sayfalı akış: ilk sayfada "Sonraki"; ara sayfalarda "Geri" ve "Sonraki"; yolun son sayfasında "Geri" ve "Gönder". İlerleme göstergesi "Sayfa X / 6" (form 6 bölümdür; kullanıcı yalnızca kendi yolundaki sayfaları görür). Her sayfada "Formu temizle" eylemi.
+  Kaynak: DOC-A, DOC-D — DOC-A Sayfa 1/6, 2/6, 5/6, 6/6 alt kısım; DOC-D 6 bölüm · Tür: Kullanıcı deneyimi · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Yeni yapıda sayfa sayısı ilk soru ve yönlendirmeye göre değişir. Geri dönüldüğünde girilen değerlerin korunması beklenir (platform davranışı).
 - [C-020] "Talebi Gönderen Personel" — zorunlu kısa metin; açıklama "Şirket mailiniz".
-  Kaynak: DOC-A — DOC-A Sayfa 1/6 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
-  Etki: E-posta formatı belgede doğrulanmıyor (öneri: C-P01). "Personel" ifadesi formu doldurana dair belirsizlik yaratıyor (C-Q06).
+  Kaynak: DOC-A, DOC-D — DOC-A Sayfa 1/6; doğrulama ayarı DOC-D · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Canlı formda bu alana "metin içerir" türünde bir yanıt doğrulaması eklenmiş ama değeri boş; fiilen hiçbir girişi engellemiyor ve e-posta biçimi denetlenmiyor (öneri: C-P01). "Personel" ifadesi formu doldurana dair belirsizlik yaratıyor (C-Q06).
 - [C-021] "Cari Türü" — tek seçimli (radyo) soru; mevcut formda zorunlu değil (yıldız yok) ve "Seçimi temizle" eylemi var. Mevcut seçenekler: Talent / Influencer, Marka, Ajans (C-002 ile değişir).
-  Kaynak: DOC-A, DOC-C — DOC-A Sayfa 1/6; DOC-C görsel 2 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
-  Etki: Seçenekler C-002'ye göre branşa bağlıdır. Zorunluluk: C-Q11.
+  Kaynak: DOC-A, DOC-C, DOC-D — DOC-A Sayfa 1/6; DOC-C görsel 2; DOC-D Bölüm 1 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Seçenekler C-002'ye göre branşa bağlıdır. Canlı formda bu soru sayfa yönlendirmesi yapmaz. Zorunluluk: C-Q11.
 - [C-022] "Cari Hesap Adı" — zorunlu kısa metin; açıklama "Örnek: DOME MEDYA VE İLETİŞİM ANONİM ŞİRKETİ".
   Kaynak: DOC-A — DOC-A Sayfa 1/6 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
 - [C-023] "Nickname" — zorunlu kısa metin; açıklama "Örnek: Dome İstanbul".
   Kaynak: DOC-A — DOC-A Sayfa 1/6 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
-- [C-024] "Ülke" — zorunlu açılır liste; ekran görüntüsünde yalnızca "Türkiye" değeri görünüyor.
-  Kaynak: DOC-A — DOC-A Sayfa 1/6 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
-  Etki: Tam ülke listesi belgede yok; prototipte "Diğer ülke" yalnızca yer tutucudur (C-Q04).
-- [C-025] "İl ve İlçe" — zorunlu kısa metin (tek alan).
-  Kaynak: DOC-A — DOC-A Sayfa 1/6 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
-- [C-026] "Adres" — zorunlu kısa metin.
-  Kaynak: DOC-A — DOC-A Sayfa 1/6 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+- [C-024] "Ülke" — zorunlu açılır liste. Seçenekler (bu sırayla): Türkiye, Amerika Birleşik Devletleri, Birleşik Krallık, Çin, Diğer.
+  Kaynak: DOC-D, DOC-A — DOC-D Bölüm 1 (seçenek listesi); DOC-A Sayfa 1/6 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: "Diğer" düz bir seçenektir; serbest metin alanı açmaz. Ülke seçimi canlı formda hiçbir alanı veya sayfayı değiştirmez (C-Q04).
+- [C-025] "İl ve İlçe" — zorunlu uzun metin (paragraf) sorusu; tek alan.
+  Kaynak: DOC-D, DOC-A — DOC-D Bölüm 1 (soru türü); DOC-A Sayfa 1/6 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: DOC-A ekran görüntüsünde tek satır gibi görünür; DOC-D soru türünün "paragraf" olduğunu gösterir.
+- [C-026] "Adres" — zorunlu uzun metin (paragraf) sorusu.
+  Kaynak: DOC-D, DOC-A — DOC-D Bölüm 1 (soru türü); DOC-A Sayfa 1/6 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: DOC-A ekran görüntüsünde tek satır gibi görünür; DOC-D soru türünün "paragraf" olduğunu gösterir.
 - [C-027] "Posta Kodu" — zorunlu kısa metin.
   Kaynak: DOC-A — DOC-A Sayfa 1/6 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
   Etki: Format belgede yok (öneri: C-P05).
@@ -156,17 +167,42 @@ Her madde kaynak belge ve bölüm referansıyla verilmiştir. Açık sorular bur
   Etki: Format belgede yok (öneri: C-P04). Müşteri branşındaki zorunluluğu: C-Q05.
 - [C-034] "IBAN (USD)" — isteğe bağlı kısa metin (yıldız yok).
   Kaynak: DOC-A, DOC-C — DOC-A Sayfa 1/6; DOC-C görsel 3 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
-- [C-035] "Şirket/Belge Türü" — zorunlu açılır liste; ekran görüntüsünde yalnızca seçili değer "Limited / Anonim Şirketi" görünüyor.
-  Kaynak: DOC-A — DOC-A Sayfa 1/6 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
-  Etki: Diğer seçenekler ve bu seçimin sonraki sayfa yönlendirmesine etkisi bilinmiyor (C-Q02, C-Q03).
-- [C-036] Sayfa 2/6 "Vergi Bilgileri - Vergi Numarası / TC Kimlik No": "Vergi Numarası / TC Kimlik No" — zorunlu kısa metin.
-  Kaynak: DOC-A, DOC-C — DOC-A Sayfa 2/6; DOC-C görsel 4 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
-  Etki: Format belgede yok (öneri: C-P03).
+- [C-035] "Şirket/Belge Türü" — zorunlu açılır liste. Seçenekler (bu sırayla): Limited / Anonim Şirketi, Şahıs Firması, İstisna Belgesi, Serbest Meslek Makbuzu, Gider Pusulası.
+  Kaynak: DOC-D, DOC-A — DOC-D Bölüm 1 (seçenek listesi); DOC-A Sayfa 1/6 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Seçim, Sayfa 1/6'dan sonra hangi sayfaların geleceğini belirler (C-041, C-042).
+- [C-036] Sayfa 2/6 "Vergi Bilgileri - Vergi Numarası / TC Kimlik No": "Vergi Numarası / TC Kimlik No" — zorunlu kısa metin; en fazla 15 karakter.
+  Kaynak: DOC-A, DOC-C, DOC-D — DOC-A Sayfa 2/6; DOC-C görsel 4; DOC-D Bölüm 2 (uzunluk doğrulaması) · Tür: Doğrulama · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Uzunluk sınırı canlı formdan gelir; özel hata metni tanımlanmamış (Google varsayılanı). 15 karakter sınırı yabancı vergi numaralarına da yer bırakır. Rakam/hane kuralı yok (öneri: C-P03). Bu sayfa yalnızca Limited / Anonim Şirketi ve Şahıs Firması yolunda gösterilir.
 - [C-037] Sayfa 5/6 "İstisna Belgesi": "İstisna Belgesi" — zorunlu dosya yükleme; açıklama "Desteklenen 1 dosya yükleyebilirsiniz. En fazla 10 MB olmalıdır."
-  Kaynak: DOC-A — DOC-A Sayfa 5/6 · Tür: Doğrulama · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
-  Etki: En fazla 1 dosya, en fazla 10 MB. Desteklenen türler belgede yok (C-Q12). Sayfanın hangi koşulda gösterileceği bilinmiyor (C-Q03).
-- [C-038] Sayfa 6/6 "Vergi Bilgileri - Vergi Dairesi": "Vergi Dairesi" — zorunlu kısa metin. Bu sayfada "Gönder" düğmesi bulunur.
-  Kaynak: DOC-A, DOC-C — DOC-A Sayfa 6/6; DOC-C görsel 5 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Kaynak: DOC-A, DOC-D — DOC-A Sayfa 5/6; DOC-D Bölüm 5 · Tür: Doğrulama · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: En fazla 1 dosya, en fazla 10 MB. Desteklenen türler belgede yok (C-Q12). Bu sayfa yalnızca Şirket/Belge Türü = İstisna Belgesi yolunda gösterilir; ardından Sayfa 3/6 "TC Kimlik No" gelir (C-042).
+- [C-038] "Vergi Bilgileri - Vergi Dairesi" sayfası: "Vergi Dairesi" — zorunlu kısa metin. Canlı formda bu sayfa 4/6'dır (DOC-A'da 6/6) ve ardından form gönderilir.
+  Kaynak: DOC-A, DOC-C, DOC-D — DOC-A Sayfa 6/6; DOC-C görsel 5; DOC-D Bölüm 4 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Yalnızca Limited / Anonim Şirketi ve Şahıs Firması yolunda, Sayfa 2/6'dan sonra gösterilir. Sayfa numarası farkı: C-Q13.
+- [C-041] Yanıta göre yönlendirme: Limited / Anonim Şirketi → Sayfa 2/6 "Vergi Bilgileri - Vergi Numarası / TC Kimlik No"; Şahıs Firması → Sayfa 2/6; İstisna Belgesi → Sayfa 5/6 "İstisna Belgesi"; Serbest Meslek Makbuzu → Sayfa 3/6 "TC Kimlik No"; Gider Pusulası → Sayfa 3/6 "TC Kimlik No".
+  Kaynak: DOC-D — DOC-D Bölüm 1 — "Şirket/Belge Türü" seçeneklerinin "yanıta göre bölüme git" değerleri · Tür: İş kuralı · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Sayfa 1/6'daki "Sonraki" düğmesi seçilen türe göre farklı sayfaya gider. Yönlendirme fatura yönünden bağımsızdır (C-Q05).
+- [C-042] Tam yollar: (1) Limited / Anonim Şirketi, Şahıs Firması: Sayfa 1/6 → 2/6 Vergi Numarası / TC Kimlik No → 4/6 Vergi Dairesi → Gönder (3/6 atlanır). (2) Serbest Meslek Makbuzu, Gider Pusulası: Sayfa 1/6 → 3/6 TC Kimlik No → Gönder. (3) İstisna Belgesi: Sayfa 1/6 → 5/6 İstisna Belgesi → 3/6 TC Kimlik No → Gönder.
+  Kaynak: DOC-D — DOC-D bölüm başlıklarındaki "bölümden sonra" yönlendirmeleri · Tür: İş kuralı · Güven: Güçlü çıkarım · Durum: Kaynakla doğrulandı
+  Etki: Google Forms bir bölümden sonra nereye gidileceğini bir sonraki bölüm başlığında saklar ("bu sayfa sonundan önceki sayfayı tamamlayınca"); yollar bu kurala göre okundu. Yol dışında kalan sayfalardaki yanıtlar gönderilmez (platform davranışı). İstisna yolunda sayfa sırası 5/6 → 3/6'dır; ilerleme göstergesi bu nedenle geri sayar.
+- [C-043] Sayfa 3/6 "TC Kimlik No": "TC Kimlik No" — zorunlu kısa metin; en fazla 11 karakter.
+  Kaynak: DOC-D — DOC-D Bölüm 3 "TC Kimlik No" · Tür: Doğrulama · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Yalnızca Serbest Meslek Makbuzu, Gider Pusulası ve İstisna Belgesi yollarında gösterilir; bu sayfadan sonra form gönderilir. Özel hata metni tanımlanmamış (Google varsayılanı). Rakam/hane kuralı yok (öneri: C-P10).
+- [C-044] Gönderimden sonra gösterilen onay mesajı: "Teşekkürler. Cari Talebiniz Alınmıştır."
+  Kaynak: DOC-D — DOC-D form ayarları — onay mesajı · Tür: İçerik · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Gönderim sonrası ekran bu metni birebir göstermelidir.
+- [C-045] Canlı formun 6. bölümü "Submit" başlıklı ve soru içermeyen teknik bir bölümdür; "İstisna Belgesi" sayfasından sonra "TC Kimlik No" sayfasına gitmeyi sağlar ve hiçbir yoldan ulaşılmaz.
+  Kaynak: DOC-D — DOC-D Bölüm 6 "Submit" · Tür: Teknik · Güven: Güçlü çıkarım · Durum: Kaynakla doğrulandı
+  Etki: Yeni uygulamada bu bölümün karşılığı kullanıcıya gösterilmemelidir; yalnızca yönlendirme (C-042) korunmalıdır.
+- [C-Q01] Cevaplandı (DOC-D): DOC-A'da görünmeyen sayfalar canlı formda Sayfa 3/6 "TC Kimlik No" ve Sayfa 4/6 "Vergi Bilgileri - Vergi Dairesi"dir; 6. bölüm boş teknik "Submit" bölümüdür.
+  Kaynak: DOC-D, DOC-A — DOC-D Bölüm 3 ve 4; DOC-A sayfa göstergeleri (1/6, 2/6, 5/6, 6/6) · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Formun tam alan envanteri artık biliniyor (C-042, C-043, C-045). DOC-A ile sayfa numarası farkı: C-Q13.
+- [C-Q02] Cevaplandı (DOC-D): "Şirket/Belge Türü" seçenekleri Limited / Anonim Şirketi, Şahıs Firması, İstisna Belgesi, Serbest Meslek Makbuzu, Gider Pusulası'dır (DOC-A'da yalnızca seçili değer görünüyordu).
+  Kaynak: DOC-D, DOC-A — DOC-D Bölüm 1 "Şirket/Belge Türü"; DOC-A Sayfa 1/6 · Tür: İşlevsel · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı
+  Etki: Bkz. C-035 ve yönlendirme C-041.
+- [C-Q03] Cevaplandı (DOC-D): "İstisna Belgesi" sayfası yalnızca Şirket/Belge Türü = İstisna Belgesi seçildiğinde açılır ve ardından "TC Kimlik No" sayfası gelir. Tüm yollar C-042'dedir.
+  Kaynak: DOC-D — DOC-D seçenek ve bölüm yönlendirmeleri · Tür: İşlevsel · Güven: Güçlü çıkarım · Durum: Kaynakla doğrulandı
+  Etki: Bölüm sonu yönlendirmeleri Google Forms'un saklama kuralına göre okundu (C-042).
 - [S-001] Yeni Talent Formu, talentin carisi sistemde kayıtlı değilse ayrı "Cari Hesap Açılış Talep Formu"nun da doldurulmasını şart koşar ("Eğer carisi sistemde kayıtlı değilse cari formu da doldurulmalıdır.").
   Kaynak: DOC-B — DOC-B Alan 7 "Cari Adı" açıklaması · Tür: İş kuralı · Güven: Açıkça belgelenmiş · Durum: Kaynakla doğrulandı · Ortak madde (iki form)
   Etki: Bu formun yapısını değiştirmez; formun sistemde kayıtlı olmayan talent carileri için de doldurulduğunu gösterir. Yeni Talent Formu ile otomatik bağlantı, kontrol veya veri aktarımı kurma.
@@ -175,11 +211,11 @@ Her madde kaynak belge ve bölüm referansıyla verilmiştir. Açık sorular bur
 
 - [C-040] IBAN alanlarının yanına bir PDF yükleme alanı eklenmesi önerisi: vergi levhası ve firmanın banka bilgisinin imzalı şekilde yüklenmesi için.
   Kaynak: DOC-C — DOC-C P014 · Tür: İşlevsel · Güven: Güçlü çıkarım · Durum: Önerilen iyileştirme
-  Etki: Not "yapabiliriz" diyor; öneri niteliğinde. Onaylanırsa: dosya türü PDF.
+  Etki: Not "yapabiliriz" diyor; öneri niteliğinde. Canlı formda (DOC-D) böyle bir alan yok. Onaylanırsa: dosya türü PDF.
   Not/soru: Tek dosya mı (vergi levhası + banka bilgisi birlikte) yoksa iki ayrı yükleme mi? Zorunlu mu? Boyut sınırı? Her iki branşta mı? "İmzalı" şartı nasıl kontrol edilecek (yalnızca açıklama mı)?
 - [C-P01] E-posta format doğrulaması: Talebi Gönderen Personel, Yetkili Mail, Finans Mail alanları geçerli e-posta biçiminde olmalı.
   Kaynak: ANALIZ — Belgede yok — alan adlarından çıkarım ("mail") · Tür: Doğrulama · Güven: Belirsiz · Durum: Önerilen iyileştirme
-  Etki: Öneri durumundayken prototipte yalnızca uyarı (engellemez). Onaylanırsa hata olur.
+  Etki: Öneri durumundayken prototipte yalnızca uyarı (engellemez). Onaylanırsa hata olur. Canlı formdaki "metin içerir (boş)" kuralı bunu sağlamıyor (C-020).
   Not/soru: Talebi Gönderen Personel için şirket alan adı (ör. @dome.istanbul) zorunlu mu?
 - [C-P02] Telefon format doğrulaması: yalnızca rakam, boşluk, "+", parantez ve tire; 10–15 rakam.
   Kaynak: ANALIZ — Belgede yok · Tür: Doğrulama · Güven: Belirsiz · Durum: Önerilen iyileştirme
@@ -187,7 +223,8 @@ Her madde kaynak belge ve bölüm referansıyla verilmiştir. Açık sorular bur
   Not/soru: Yurtdışı numaralar kabul edilecek mi?
 - [C-P03] Vergi Numarası / TC Kimlik No: yalnızca rakam; 10 hane (Vergi Kimlik No) veya 11 hane (TC Kimlik No).
   Kaynak: ANALIZ — Belgede yok — alan etiketinden çıkarım · Tür: Doğrulama · Güven: Belirsiz · Durum: Önerilen iyileştirme
-  Etki: Öneri durumundayken yalnızca uyarı. Algoritmik sağlama (checksum) önerilmiyor. Yurtdışı cariler için geçersiz olabilir (C-Q04).
+  Etki: Öneri durumundayken yalnızca uyarı. Canlı formda bu alan için yalnızca "en fazla 15 karakter" kuralı var (C-036); 10/11 hane kuralı yabancı vergi numaralarını reddeder (C-Q04). Algoritmik sağlama (checksum) önerilmiyor.
+  Not/soru: Kural yalnızca Ülke = Türkiye iken mi uygulanmalı?
 - [C-P04] IBAN format doğrulaması (ISO 13616, mod-97 kontrolü; boşluklar yok sayılır) — IBAN (TRY) ve doluysa IBAN (USD).
   Kaynak: ANALIZ — Belgede yok · Tür: Doğrulama · Güven: Belirsiz · Durum: Önerilen iyileştirme
   Etki: Öneri durumundayken yalnızca uyarı.
@@ -207,6 +244,9 @@ Her madde kaynak belge ve bölüm referansıyla verilmiştir. Açık sorular bur
 - [C-P09] Prototip sunumu: "Sayfa 1/6" alanları belgedeki sırayla, görsel alt başlıklar altında gösterilir (Talep ve cari bilgileri · Adres bilgileri · Yetkili ve finans iletişim bilgileri · Banka bilgileri · Şirket / belge türü). Her alanın altında açıklama metni, hatada alanın altında kırmızı mesaj ve sayfa üstünde hata özeti gösterilir; ilk hatalı alana odaklanılır.
   Kaynak: ANALIZ — Belgede yok — prototipte test edilen sunum · Tür: Kullanıcı deneyimi · Güven: Belirsiz · Durum: Önerilen iyileştirme
   Etki: Alan sırası ve metinler değişmez; yalnızca görsel gruplama ve hata sunumu eklenir.
+- [C-P10] TC Kimlik No: tam 11 hane, yalnızca rakam.
+  Kaynak: ANALIZ — Belgede yok — alan etiketinden çıkarım · Tür: Doğrulama · Güven: Belirsiz · Durum: Önerilen iyileştirme
+  Etki: Öneri durumundayken yalnızca uyarı. Canlı formda yalnızca "en fazla 11 karakter" kuralı var (C-043). Algoritmik sağlama (checksum) önerilmiyor.
 
 ### 3.3 Ertelenen kararlar (bu iterasyonda uygulama; gerekiyorsa TODO bırak)
 
@@ -251,9 +291,9 @@ Not: Kaynakta bu sayfanın ayrı bir başlığı yok (form başlığının altı
    - Seçenekler (bu sırayla) [Bana fatura kesilecek]: "Müşteri", "Yurtdışı Müşteri"
    - Seçimi temizle: Var (yanıt seçildikten sonra "Seçimi temizle" eylemi)
    - Belgedeki eski seçenekler: "Talent / Influencer", "Marka", "Ajans" — C-002 ile değiştirildi; kullanma
-   - Kaynak: DOC-C — P004–P012 (kategori kırılımı notu); mevcut seçenekler DOC-A Sayfa 1/6 (C-002, C-003, C-021)
+   - Kaynak: DOC-C — P004–P012 (kategori kırılımı notu); mevcut seçenekler DOC-A Sayfa 1/6 ve DOC-D (C-002, C-003, C-021)
    - Belirsizlik (C-Q11): Her durumda: Mevcut formda bu soru zorunlu değil (yıldız yok, "Seçimi temizle" var). Yeni yapıda zorunlu olup olmayacağı belirtilmemiş. Davranış uydurma; Bölüm 12'ye bak.
-   - Belirsizlik (C-Q04): "Cari Türü" şu değerlerden biri iken: "Yurtdışı Satıcı (Ajans)", "Yurtdışı Müşteri": Yurtdışı kategorisi seçildi: Türkiye'ye özgü zorunlu alanların (Vergi No/TCKN, Vergi Dairesi, IBAN (TRY), Posta Kodu) nasıl davranacağı belgelerde yok. Davranış uydurma; Bölüm 12'ye bak.
+   - Belirsizlik (C-Q04): "Cari Türü" şu değerlerden biri iken: "Yurtdışı Satıcı (Ajans)", "Yurtdışı Müşteri": Yurtdışı kategorisi seçildi: canlı formda ülkeye göre hiçbir alan değişmiyor (Vergi No/TCKN, Vergi Dairesi, IBAN (TRY), Posta Kodu herkese zorunlu). Yurtdışı cariler için böyle kalıp kalmayacağı belgelenmemiş. Davranış uydurma; Bölüm 12'ye bak.
    - Belirsizlik (S-003): "Cari Türü" = "Talent / Influencer" iken: "Talent / Influencer" ile ayrı Yeni Talent Formu arasındaki ilişki belgelenmemiş. Davranış uydurma; Bölüm 12'ye bak.
 3. `cariHesapAdi` — "Cari Hesap Adı"
    - Tür: Kısa metin
@@ -274,20 +314,17 @@ Not: Kaynakta bu sayfanın ayrı bir başlığı yok (form başlığının altı
    - Tür: Açılır liste
    - Zorunlu: Evet
    - Yer tutucu: "Seçin"
-   - Seçenekler (bu sırayla): "Türkiye"
-   - Prototip yer tutucu seçeneği: "Diğer ülke (prototip yer tutucusu — liste belgede yok)" yalnızca prototipte test içindir; belgede yok, UYGULAMA
-   - Kaynak: DOC-A — Sayfa 1/6 (açılır listede yalnızca "Türkiye" görünüyor) (C-024)
-   - Belirsizlik (C-Q04): "Ülke" = "Diğer ülke (prototip yer tutucusu — liste belgede yok)" iken: Türkiye dışı ülke seçildi: ülke listesi ve Türkiye'ye özgü alanların davranışı belgelerde yok. Davranış uydurma; Bölüm 12'ye bak.
+   - Seçenekler (bu sırayla): "Türkiye", "Amerika Birleşik Devletleri", "Birleşik Krallık", "Çin", "Diğer"
+   - Kaynak: DOC-D — Bölüm 1 — seçenek listesi (DOC-A ekran görüntüsünde yalnızca "Türkiye" görünüyordu) (C-024)
+   - Belirsizlik (C-Q04): "Ülke" şu değerlerden biri iken: "Amerika Birleşik Devletleri", "Birleşik Krallık", "Çin", "Diğer": Türkiye dışı ülke seçildi: canlı formda ülkeye göre hiçbir alan değişmiyor. Yurtdışı cariler için Türkiye'ye özgü alanların zorunlu kalıp kalmayacağı belgelenmemiş. Davranış uydurma; Bölüm 12'ye bak.
 6. `ilIlce` — "İl ve İlçe"
-   - Tür: Kısa metin
+   - Tür: Uzun metin
    - Zorunlu: Evet
-   - Yer tutucu: "Yanıtınız"
-   - Kaynak: DOC-A — Sayfa 1/6 (C-025)
+   - Kaynak: DOC-D — Bölüm 1 — uzun metin (paragraf) sorusu; DOC-A Sayfa 1/6 (C-025)
 7. `adres` — "Adres"
-   - Tür: Kısa metin
+   - Tür: Uzun metin
    - Zorunlu: Evet
-   - Yer tutucu: "Yanıtınız"
-   - Kaynak: DOC-A — Sayfa 1/6 (C-026)
+   - Kaynak: DOC-D — Bölüm 1 — uzun metin (paragraf) sorusu; DOC-A Sayfa 1/6 (C-026)
 8. `postaKodu` — "Posta Kodu"
    - Tür: Kısa metin
    - Zorunlu: Evet
@@ -358,33 +395,47 @@ Not: Kaynakta bu sayfanın ayrı bir başlığı yok (form başlığının altı
    - Tür: Açılır liste
    - Zorunlu: Evet
    - Yer tutucu: "Seçin"
-   - Seçenekler (bu sırayla): "Limited / Anonim Şirketi"
-   - Prototip yer tutucu seçeneği: "Diğer seçenekler (belgede görünmüyor — yer tutucu)" yalnızca prototipte test içindir; belgede yok, UYGULAMA
-   - Kaynak: DOC-A — Sayfa 1/6 (yalnızca seçili değer "Limited / Anonim Şirketi" görünüyor) (C-035)
-   - Belirsizlik (C-Q02): Her durumda: Seçeneklerin tam listesi belgede yok; yalnızca "Limited / Anonim Şirketi" görünüyor. Davranış uydurma; Bölüm 12'ye bak.
+   - Seçenekler (bu sırayla): "Limited / Anonim Şirketi", "Şahıs Firması", "İstisna Belgesi", "Serbest Meslek Makbuzu", "Gider Pusulası"
+   - Kaynak: DOC-D — Bölüm 1 — seçenekler ve "yanıta göre bölüme git" ayarları (DOC-A'da yalnızca seçili değer görünüyordu) (C-035, C-041)
+   - Belirsizlik (C-Q05): Branş "Bana fatura kesilecek" iken: Canlı formda bu seçenekler ve sayfa yönlendirmesi fatura yönünden bağımsız. "Bana fatura kesilecek" yönünde aynı kalıp kalmayacağı belgelenmemiş. Davranış uydurma; Bölüm 12'ye bak.
 
 ### Sayfa 2/6 — Vergi Bilgileri - Vergi Numarası / TC Kimlik No
+
+Gösterim koşulu: yalnızca "Şirket/Belge Türü" = "Limited / Anonim Şirketi" / "Şahıs Firması" iken (C-041, C-042). Bu sayfadan sonra: Sayfa 4/6 — Vergi Bilgileri - Vergi Dairesi.
 
 1. `vergiNo` — "Vergi Numarası / TC Kimlik No"
    - Tür: Kısa metin
    - Zorunlu: Evet
    - Yer tutucu: "Yanıtınız"
+   - Uzunluk doğrulaması (canlı form, DOC-D): en fazla 15 karakter. Hata metni belgede yok (Google varsayılanıydı); prototipteki metin: "Bu alana en fazla 15 karakter girilebilir."
    - Önerilen format doğrulaması (C-P03): Vergi No (10 hane) / TCKN (11 hane) — OPSİYONEL, onaylanmadı; onay almadan uygulama
-   - Kaynak: DOC-A — Sayfa 2/6 (C-036)
+   - Kaynak: DOC-A — Sayfa 2/6; uzunluk kuralı DOC-D (C-036)
 
-### Sayfa 3/6 — İçerik kaynak belgelerde yok
+### Sayfa 3/6 — TC Kimlik No
 
-- İÇERİK BİLİNMİYOR (C-Q01). Kaynak: DOC-A — Sayfa göstergesi "Sayfa X / 6"; PDF'te form sayfası 3/6 bulunmuyor.
-- Bu sayfanın alanlarını uydurma. Sayfa yapısında yer tutucu/TODO bırak ve soruyu raporla.
+Gösterim koşulu: yalnızca "Şirket/Belge Türü" = "İstisna Belgesi" / "Serbest Meslek Makbuzu" / "Gider Pusulası" iken (C-041, C-042). Bu sayfadan sonra: form gönderilir.
 
-### Sayfa 4/6 — İçerik kaynak belgelerde yok
+1. `tcKimlikNo` — "TC Kimlik No"
+   - Tür: Kısa metin
+   - Zorunlu: Evet
+   - Yer tutucu: "Yanıtınız"
+   - Uzunluk doğrulaması (canlı form, DOC-D): en fazla 11 karakter. Hata metni belgede yok (Google varsayılanıydı); prototipteki metin: "Bu alana en fazla 11 karakter girilebilir."
+   - Önerilen format doğrulaması (C-P10): TC Kimlik No (11 hane) — OPSİYONEL, onaylanmadı; onay almadan uygulama
+   - Kaynak: DOC-D — Bölüm 3 (C-043)
 
-- İÇERİK BİLİNMİYOR (C-Q01). Kaynak: DOC-A — Sayfa göstergesi "Sayfa X / 6"; PDF'te form sayfası 4/6 bulunmuyor.
-- Bu sayfanın alanlarını uydurma. Sayfa yapısında yer tutucu/TODO bırak ve soruyu raporla.
+### Sayfa 4/6 — Vergi Bilgileri - Vergi Dairesi
+
+Gösterim koşulu: yalnızca "Şirket/Belge Türü" = "Limited / Anonim Şirketi" / "Şahıs Firması" iken (C-041, C-042). Bu sayfadan sonra: form gönderilir.
+
+1. `vergiDairesi` — "Vergi Dairesi"
+   - Tür: Kısa metin
+   - Zorunlu: Evet
+   - Yer tutucu: "Yanıtınız"
+   - Kaynak: DOC-A — Sayfa 6/6 (DOC-A); Bölüm 4 (DOC-D) (C-038)
 
 ### Sayfa 5/6 — İstisna Belgesi
 
-Gösterim koşulu: BİLİNMİYOR (C-Q03). Bu sayfanın hangi yanıtta gösterildiği belgelerde yok (Google Forms bölüm yönlendirmesi görünmüyor). Koşulu uydurma; yapılandırılabilir bırak.
+Gösterim koşulu: yalnızca "Şirket/Belge Türü" = "İstisna Belgesi" iken (C-041, C-042). Bu sayfadan sonra: Sayfa 3/6 — TC Kimlik No.
 
 1. `istisnaBelgesi` — "İstisna Belgesi"
    - Tür: Dosya yükleme
@@ -395,13 +446,10 @@ Gösterim koşulu: BİLİNMİYOR (C-Q03). Bu sayfanın hangi yanıtta gösterild
    - Belirsizlik (C-Q12): Her durumda: "Desteklenen" dosya türleri belgede listelenmemiş; prototip tür kontrolü yapmaz. Davranış uydurma; Bölüm 12'ye bak.
    - Belirsizlik (S-002): Her durumda: "İstisna Belgesi" Yeni Talent Formu'nda da Belge Tipi seçeneği olarak geçiyor; iki form arasındaki ilişki belirsiz. Davranış uydurma; Bölüm 12'ye bak.
 
-### Sayfa 6/6 — Vergi Bilgileri - Vergi Dairesi
+### Sayfa 6/6 — "Submit" (boş teknik bölüm)
 
-1. `vergiDairesi` — "Vergi Dairesi"
-   - Tür: Kısa metin
-   - Zorunlu: Evet
-   - Yer tutucu: "Yanıtınız"
-   - Kaynak: DOC-A — Sayfa 6/6 (C-038)
+- TEKNİK BÖLÜM (C-045; kaynak: DOC-D — Bölüm 6). Canlı formda soru içermeyen, "Submit" başlıklı son bölüm. Google Forms'ta bir bölümden sonra nereye gidileceği bir sonraki bölümün başlığında saklandığı için, "İstisna Belgesi" sayfasından sonra "TC Kimlik No" sayfasına gitmek amacıyla eklenmiş görünüyor. Hiçbir yoldan ulaşılmaz; kullanıcıya gösterilmez.
+- Yeni uygulamada bu bölümün karşılığını kullanıcıya gösterme; yalnızca yönlendirmeyi (Bölüm 7) koru.
 
 ## 5. Metin içerikleri (birebir kullanılacak)
 
@@ -411,7 +459,8 @@ Gösterim koşulu: BİLİNMİYOR (C-Q03). Bu sayfanın hangi yanıtta gösterild
   - Madde (C-006): kalın "PO Numarası Zorunluluğu:" + "Tüm tedarikçi faturalarında "E" harfi ile başlayan geçerli bir Satın Alma Sipariş (PO) numarası bulunmalıdır. PO numarası içermeyen faturalar kabul edilmeyecek ve ödeme süreci başlatılmadan iade edilecektir."
   - Madde (C-007): kalın "Fatura Gönderimi:" + "E-arşiv ve kağıt faturalarınızı lütfen PDF formatında ilgili e-posta adreslerimize iletiniz:" + e-posta bağlantısı finans@dome.istanbul (mailto)
   - Belirsizlik (C-Q05): Bu bilgilendirme "tedarikçi faturaları"na atıf yapıyor. "Bana fatura kesilecek" branşında gösterilip gösterilmeyeceği belgelerde belirtilmemiş. Karar verilene kadar bilgilendirme her iki branşta gösterilir; branşa göre gizleme uydurma.
-- Gizlilik metni (C-008): "Bu formu doldurarak" + bağlantı metni "bu linkten ulaşabileceğiniz gizlilik politikamızı kabul etmiş sayılırsınız.". Bağlantı adresi: BİLİNMİYOR (C-Q07); yapılandırılabilir yer tutucu kullan, mevcut bozuk bağlantıyı kopyalama (C-009).
+- Gizlilik metni (C-008): "Bu formu doldurarak" + bağlantı metni "bu linkten ulaşabileceğiniz gizlilik politikamızı kabul etmiş sayılırsınız.". Bağlantı adresi: canlı formda https://dome.istanbul/privacy-policy; bu adresin boş sayfa açtığı bildirildi (C-009) ve düzeltme yolu açık soru (C-Q07). Adresi yapılandırılabilir tut; doğrulanmış sayma.
+- Gönderim sonrası onay mesajı (C-044, DOC-D): "Teşekkürler. Cari Talebiniz Alınmıştır."
 - Zorunluluk açıklaması: "* Zorunlu soruyu belirtir" (yıldız kırmızı)
 - Zorunlu alan hata mesajı: "Bu, yanıtlanması zorunlu bir sorudur"
 - İlk soru: "Fatura mı keseceğim, bana fatura mı kesilecek?"; seçenekler "Fatura keseceğim" / "Bana fatura kesilecek"
@@ -439,11 +488,10 @@ Gösterim koşulu: BİLİNMİYOR (C-Q03). Bu sayfanın hangi yanıtta gösterild
 - "IBAN (USD)" (Sayfa 1/6 — Temel bilgiler): İsteğe bağlı (her iki branş)
 - "Vergi Levhası ve İmzalı Banka Bilgisi (PDF)" (Sayfa 1/6 — Temel bilgiler): İsteğe bağlı (her iki branş) — önerilen alan (C-040), onaylanmadı
 - "Şirket/Belge Türü" (Sayfa 1/6 — Temel bilgiler): Zorunlu (her iki branş)
-- "Vergi Numarası / TC Kimlik No" (Sayfa 2/6 — Vergi Bilgileri - Vergi Numarası / TC Kimlik No): Zorunlu (her iki branş)
-- Sayfa 3/6 — İçerik kaynak belgelerde yok: bilinmiyor (C-Q01)
-- Sayfa 4/6 — İçerik kaynak belgelerde yok: bilinmiyor (C-Q01)
-- "İstisna Belgesi" (Sayfa 5/6 — İstisna Belgesi): Zorunlu (her iki branş) — sayfa koşulu bilinmiyor (C-Q03)
-- "Vergi Dairesi" (Sayfa 6/6 — Vergi Bilgileri - Vergi Dairesi): Zorunlu (her iki branş)
+- "Vergi Numarası / TC Kimlik No" (Sayfa 2/6 — Vergi Bilgileri - Vergi Numarası / TC Kimlik No): Zorunlu (her iki branş) — (yalnızca "Şirket/Belge Türü" = "Limited / Anonim Şirketi" / "Şahıs Firması" iken)
+- "TC Kimlik No" (Sayfa 3/6 — TC Kimlik No): Zorunlu (her iki branş) — (yalnızca "Şirket/Belge Türü" = "İstisna Belgesi" / "Serbest Meslek Makbuzu" / "Gider Pusulası" iken)
+- "Vergi Dairesi" (Sayfa 4/6 — Vergi Bilgileri - Vergi Dairesi): Zorunlu (her iki branş) — (yalnızca "Şirket/Belge Türü" = "Limited / Anonim Şirketi" / "Şahıs Firması" iken)
+- "İstisna Belgesi" (Sayfa 5/6 — İstisna Belgesi): Zorunlu (her iki branş) — (yalnızca "Şirket/Belge Türü" = "İstisna Belgesi" iken)
 
 ## 7. Koşullu mantık ve dallanma
 
@@ -455,21 +503,27 @@ Gösterim koşulu: BİLİNMİYOR (C-Q03). Bu sayfanın hangi yanıtta gösterild
 - Belgelerde iki branş arasında kategori listesi dışında başka bir fark tanımlanmamıştır. Aşağıda listelenen onaylı branş kararları dışında fark uydurma (açık soru: C-Q05).
 - Yön değiştirildiğinde yeni branşta geçersiz kalan Cari Türü seçimi temizlenir, kullanıcı bilgilendirilir ve diğer yanıtlar korunur — OPSİYONEL ÖNERİ (C-P06, onaylanmadı; uygulamadan önce onay iste).
 
-### 7.2 Sayfa yönlendirmeleri
+### 7.2 Sayfa yönlendirmesi ("Şirket/Belge Türü")
 
-- Sayfa 1/6 — Temel bilgiler: her iki branşta gösterilir (belgede koşul yok).
-- Sayfa 2/6 — Vergi Bilgileri - Vergi Numarası / TC Kimlik No: her iki branşta gösterilir (belgede koşul yok).
-- Sayfa 3/6 — İçerik kaynak belgelerde yok: içerik ve gösterim koşulu bilinmiyor (C-Q01).
-- Sayfa 4/6 — İçerik kaynak belgelerde yok: içerik ve gösterim koşulu bilinmiyor (C-Q01).
-- Sayfa 5/6 — İstisna Belgesi: gösterim koşulu bilinmiyor (C-Q03); koşulu uydurma, yapılandırılabilir bırak.
-- Sayfa 6/6 — Vergi Bilgileri - Vergi Dairesi: her iki branşta gösterilir (belgede koşul yok).
+Canlı formdaki (DOC-D) "yanıta göre bölüme git" ayarları ve bölüm sonu yönlendirmeleri. "Şirket/Belge Türü" sorusu Sayfa 1/6 sayfasının son sorusudur ve sonraki sayfaları belirler:
+
+- "Limited / Anonim Şirketi", "Şahıs Firması": Sayfa 1/6 → Sayfa 2/6 — Vergi Bilgileri - Vergi Numarası / TC Kimlik No → Sayfa 4/6 — Vergi Bilgileri - Vergi Dairesi → Gönder
+- "İstisna Belgesi": Sayfa 1/6 → Sayfa 5/6 — İstisna Belgesi → Sayfa 3/6 — TC Kimlik No → Gönder
+- "Serbest Meslek Makbuzu", "Gider Pusulası": Sayfa 1/6 → Sayfa 3/6 — TC Kimlik No → Gönder
+
+- Yolda olmayan sayfalar gösterilmez ve o sayfalardaki yanıtlar gönderilmez (kullanıcı geri dönüp seçimini değiştirirse yol yeniden hesaplanır).
+- "İstisna Belgesi" yolunda sayfa sırası 5/6 → 3/6'dır; sayfa numarası değil yol sırası esas alınır.
+- Yönlendirme fatura yönünden bağımsızdır; iki branşta da aynıdır (fark olup olmayacağı açık soru: C-Q05).
+- Bölüm sonu yönlendirmeleri, Google Forms'un bu bilgiyi bir sonraki bölüm başlığında saklama kuralına göre okunmuştur (C-042, güven: güçlü çıkarım).
+- Sayfa 6/6 — "Submit" (boş teknik bölüm) (C-045): yalnızca yönlendirme için var; kullanıcıya gösterilmez ve yeni uygulamada gerekmez.
 
 ### 7.3 Davranışı belgelenmemiş durumlar
 
-- "Cari Türü" şu değerlerden biri iken: "Yurtdışı Satıcı (Ajans)", "Yurtdışı Müşteri": Yurtdışı kategorisi seçildi: Türkiye'ye özgü zorunlu alanların (Vergi No/TCKN, Vergi Dairesi, IBAN (TRY), Posta Kodu) nasıl davranacağı belgelerde yok. → Ek alan veya kural ekleme; C-Q04 cevaplanana kadar belgedeki davranışı koru.
+- "Cari Türü" şu değerlerden biri iken: "Yurtdışı Satıcı (Ajans)", "Yurtdışı Müşteri": Yurtdışı kategorisi seçildi: canlı formda ülkeye göre hiçbir alan değişmiyor (Vergi No/TCKN, Vergi Dairesi, IBAN (TRY), Posta Kodu herkese zorunlu). Yurtdışı cariler için böyle kalıp kalmayacağı belgelenmemiş. → Ek alan veya kural ekleme; C-Q04 cevaplanana kadar belgedeki davranışı koru.
 - "Cari Türü" = "Talent / Influencer" iken: "Talent / Influencer" ile ayrı Yeni Talent Formu arasındaki ilişki belgelenmemiş. → Ek alan veya kural ekleme; S-003 cevaplanana kadar belgedeki davranışı koru.
-- "Ülke" = "Diğer ülke (prototip yer tutucusu — liste belgede yok)" iken: Türkiye dışı ülke seçildi: ülke listesi ve Türkiye'ye özgü alanların davranışı belgelerde yok. → Ek alan veya kural ekleme; C-Q04 cevaplanana kadar belgedeki davranışı koru.
+- "Ülke" şu değerlerden biri iken: "Amerika Birleşik Devletleri", "Birleşik Krallık", "Çin", "Diğer": Türkiye dışı ülke seçildi: canlı formda ülkeye göre hiçbir alan değişmiyor. Yurtdışı cariler için Türkiye'ye özgü alanların zorunlu kalıp kalmayacağı belgelenmemiş. → Ek alan veya kural ekleme; C-Q04 cevaplanana kadar belgedeki davranışı koru.
 - Branş "Bana fatura kesilecek" iken: "Bana fatura kesilecek" (müşteri) branşında IBAN (TRY) alanının zorunlu kalıp kalmayacağı belgelerde belirtilmemiş. → Ek alan veya kural ekleme; C-Q05 cevaplanana kadar belgedeki davranışı koru.
+- Branş "Bana fatura kesilecek" iken: Canlı formda bu seçenekler ve sayfa yönlendirmesi fatura yönünden bağımsız. "Bana fatura kesilecek" yönünde aynı kalıp kalmayacağı belgelenmemiş. → Ek alan veya kural ekleme; C-Q05 cevaplanana kadar belgedeki davranışı koru.
 
 ## 8. Doğrulama ve hata yönetimi
 
@@ -477,8 +531,10 @@ Gösterim koşulu: BİLİNMİYOR (C-Q03). Bu sayfanın hangi yanıtta gösterild
 - Yalnızca boşluk karakterlerinden oluşan yanıt boş sayılır — OPSİYONEL ÖNERİ (C-P08, onaylanmadı; uygulamadan önce onay iste).
 - Tek seçimli/açılır liste alanlarında yalnızca tanımlı seçenekler kabul edilir.
 - "İstisna Belgesi": 10 MB üzeri dosya reddedilir: "Dosya en fazla 10 MB olmalıdır."; en fazla 1 dosya.
-- Onaylı format doğrulaması yok. Belgelerde alan formatı (e-posta biçimi, posta kodu (5 hane), telefon biçimi, vergi no (10 hane) / tckn (11 hane), ıban biçimi (mod-97)) tanımlanmamıştır; onay olmadan format kısıtı ekleme.
-- Onay bekleyen format önerileri: C-P01, C-P02, C-P03, C-P04, C-P05 (Bölüm 3.2). Prototipte yalnızca engellemeyen uyarı olarak test edildi. Son üründe onay almadan uygulama.
+- "Vergi Numarası / TC Kimlik No": en fazla 15 karakter (canlı form, DOC-D); aşılırsa ilerleme engellenir. Hata metni belgede yok; prototipteki metin "Bu alana en fazla 15 karakter girilebilir.".
+- "TC Kimlik No": en fazla 11 karakter (canlı form, DOC-D); aşılırsa ilerleme engellenir. Hata metni belgede yok; prototipteki metin "Bu alana en fazla 11 karakter girilebilir.".
+- Onaylı format doğrulaması yok. Belgelerde alan formatı (e-posta biçimi, posta kodu (5 hane), tc kimlik no (11 hane), telefon biçimi, vergi no (10 hane) / tckn (11 hane), ıban biçimi (mod-97)) tanımlanmamıştır; onay olmadan format kısıtı ekleme.
+- Onay bekleyen format önerileri: C-P01, C-P02, C-P03, C-P04, C-P05, C-P10 (Bölüm 3.2). Prototipte yalnızca engellemeyen uyarı olarak test edildi. Son üründe onay almadan uygulama.
 - Hata sunumu: alan altında kırmızı mesaj + form/sayfa üstünde hata özeti (her hata ilgili alana bağlantı) + ilk hatalı alana odak — OPSİYONEL ÖNERİ (C-P09, onaylanmadı; uygulamadan önce onay iste).
 - İstemci tarafı doğrulamalar, gerçek gönderim uygulanırsa sunucu tarafında da tekrarlanmalıdır.
 
@@ -486,13 +542,14 @@ Gösterim koşulu: BİLİNMİYOR (C-Q03). Bu sayfanın hangi yanıtta gösterild
 
 Aşağıdaki akış prototipte test edilen deneyimdir. Kullanıcı henüz final onayı vermedi; "OPSİYONEL ÖNERİ" işaretli adımlar onay bekler.
 
-1. Üst bilgi bloğu: form başlığı, giriş metni, "Fatura Süreçleri Hakkında Önemli Bilgilendirme" maddeleri, gizlilik metni ve "* Zorunlu soruyu belirtir". Her adımda formun üstünde görünür.
+1. Üst bilgi bloğu: form başlığı, giriş metni, "Fatura Süreçleri Hakkında Önemli Bilgilendirme" maddeleri, gizlilik metni ve "* Zorunlu soruyu belirtir". İlk adımda tam gösterilir; sonraki adımlarda yalnızca form başlığı görünür (mevcut Google Forms davranışıyla aynı).
 2. Adım 0 — Fatura yönü: soru ve iki büyük seçim kartı ("Fatura keseceğim" / "Bana fatura kesilecek"). Bu adım tamamlanmadan diğer adımlar kilitlidir. Seçim yapıldıktan sonraki her adımda seçili yön bir etiketle gösterilir ve "Değiştir" ile Adım 0'a dönülebilir.
-3. Form sayfaları sırasıyla: Sayfa 1/6 — Temel bilgiler → Sayfa 2/6 — Vergi Bilgileri - Vergi Numarası / TC Kimlik No → Sayfa 3/6 (içerik bilinmiyor — C-Q01) → Sayfa 4/6 (içerik bilinmiyor — C-Q01) → Sayfa 5/6 — İstisna Belgesi (koşul bilinmiyor — C-Q03) → Sayfa 6/6 — Vergi Bilgileri - Vergi Dairesi. Prototip, içeriği bilinmeyen sayfaları atlar; son üründe bunlar için yer tutucu/TODO bırak.
-4. Her sayfada üstte adım/ilerleme göstergesi (adım adları ve "Adım X / N"), altta "Geri" ve "Sonraki". "Sonraki" yalnızca o sayfanın doğrulaması geçerse ilerler; "Geri" doğrulama yapmadan döner ve girilen değerler korunur. Daha önce ulaşılmış adımlara ilerleme göstergesinden dönülebilir.
+3. Form sayfaları "Şirket/Belge Türü" yanıtına göre (Bölüm 7.2): "Limited / Anonim Şirketi", "Şahıs Firması" → Sayfa 1/6 → Sayfa 2/6 — Vergi Bilgileri - Vergi Numarası / TC Kimlik No → Sayfa 4/6 — Vergi Bilgileri - Vergi Dairesi → Gönder · "İstisna Belgesi" → Sayfa 1/6 → Sayfa 5/6 — İstisna Belgesi → Sayfa 3/6 — TC Kimlik No → Gönder · "Serbest Meslek Makbuzu", "Gider Pusulası" → Sayfa 1/6 → Sayfa 3/6 — TC Kimlik No → Gönder. Bu soru yanıtlanana kadar ilerleme göstergesinde "Sonraki sayfalar … yanıtına göre belirlenir" yer tutucusu görünür.
+4. Her sayfada üstte adım/ilerleme göstergesi (izlenen yoldaki adım adları ve "Adım X / N"), altta "Geri" ve "Sonraki". "Sonraki" yalnızca o sayfanın doğrulaması geçerse ilerler; "Geri" doğrulama yapmadan döner ve girilen değerler korunur. Daha önce ulaşılmış adımlara ilerleme göstergesinden dönülebilir.
 5. "Gözden geçir" adımı: gönderimden önce tüm yanıtlar bölüm bölüm özetlenir; her bölümde "Düzenle" ile ilgili adıma dönülür, "Gönder" bu adımdadır — OPSİYONEL ÖNERİ (C-P07, onaylanmadı; uygulamadan önce onay iste).
 6. "Formu temizle": tüm yanıtları siler (belgelenmiş eylem). Onay penceresi gösterilmesi belgede yok; prototip onay sorar.
-7. Gönderim: gönderim hedefi bilinmiyor (C-Q09, engelleyici). Gerçek kayıt/iletim uygulama; gönderim katmanını tek bir arayüz arkasında yer tutucu olarak bırak. Prototip başarı ekranında "gönderim simüle edildi" mesajı gösterir.
+7. Gönderim: gönderim hedefi bilinmiyor (C-Q09, engelleyici). Gerçek kayıt/iletim uygulama; gönderim katmanını tek bir arayüz arkasında yer tutucu olarak bırak.
+8. Gönderim sonrası ekran: onay mesajı "Teşekkürler. Cari Talebiniz Alınmıştır." (C-044).
 
 ## 10. UX ve erişilebilirlik beklentileri
 
@@ -526,52 +583,45 @@ Aşağıdakiler kaynak belgelerden değil, genel kalite beklentilerinden gelir; 
 
 Bu sorular cevaplanmadan ilgili kısmı uygulama. Yapılandırılabilir yer tutucu veya TODO bırak, soruyu teslim raporunda tekrar sor.
 
-- [C-Q01] Form 6 sayfadan oluşuyor ancak 3/6 ve 4/6 sayfaları kaynak belgelerde yok. Bu sayfalarda hangi alanlar var ve hangi durumda gösteriliyor?
-  Engellenen karar/uygulama: Bu sayfalar tanımlanmadan formun tam alan envanteri çıkarılamaz. Prototipte yer tutucu olarak gösterilir.
-  Kaynak: DOC-A — DOC-A sayfa göstergeleri (1/6, 2/6, 5/6, 6/6)
-- [C-Q02] "Şirket/Belge Türü" açılır listesinin tam seçenek listesi nedir? Belgede yalnızca "Limited / Anonim Şirketi" görünüyor.
-  Engellenen karar/uygulama: Seçenek listesi olmadan alan doğru uygulanamaz; büyük olasılıkla sayfa yönlendirmesini de belirliyor (C-Q03).
-  Kaynak: DOC-A — DOC-A Sayfa 1/6 "Şirket/Belge Türü"
-- [C-Q03] Sayfalar arası yönlendirme kuralları nelerdir? Özellikle "İstisna Belgesi" (5/6, zorunlu yükleme) hangi yanıtta istenir? Google Forms'taki "yanıta göre bölüme git" ayarları belgelerde görünmüyor.
-  Engellenen karar/uygulama: Koşul bilinmeden İstisna Belgesi sayfası herkese zorunlu tutulursa yanlış kullanıcılar engellenebilir. Prototipte test anahtarıyla simüle edilir.
-  Kaynak: DOC-A — DOC-A Sayfa 2/6 → 5/6 → 6/6 akışı
-- [C-Q04] Olası çelişki: DOCX "Yurtdışı Satıcı (Ajans)" ve "Yurtdışı Müşteri" kategorilerini ekliyor; mevcut formda ise Türkiye'ye özgü alanlar (Vergi Numarası / TC Kimlik No, Vergi Dairesi, IBAN (TRY), Posta Kodu, İl ve İlçe) zorunlu ve Ülke listesinde yalnızca "Türkiye" görünüyor. Yurtdışı cariler için bu alanlar nasıl davranmalı? Ülke listesi nedir?
-  Engellenen karar/uygulama: Kural uydurulmamalı. Karar verilene kadar alanlar belgede olduğu gibi kalır ve belirsizlik işaretlenir.
-  Kaynak: DOC-C, DOC-A — DOC-C P008, P012 (Yurtdışı kategorileri) ↔ DOC-A Sayfa 1/6, 2/6, 6/6 (Türkiye'ye özgü zorunlu alanlar)
 - [C-Q09] Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve yüklenen dosyalar nereye kaydedilir/iletilir (tablo, e-posta, muhasebe yazılımı)? Kime bildirim gider? Google Forms'ta mı kalınacak, özel bir uygulama mı yapılacak?
-  Engellenen karar/uygulama: Bu bilinmeden gerçek gönderim, depolama veya entegrasyon uygulanamaz.
-  Kaynak: DOC-A — DOC-A Sayfa 6/6 "Gönder" (gönderim sonrası belgelenmemiş)
+  Engellenen karar/uygulama: Bu bilinmeden gerçek gönderim, depolama veya entegrasyon uygulanamaz. Kullanıcıya gösterilecek onay mesajı biliniyor (C-044).
+  Kaynak: DOC-A, DOC-D — DOC-A Sayfa 6/6 "Gönder"; DOC-D (gönderim hedefi tanımda görünmüyor)
 
 ### 12.2 Diğer açık sorular
 
 Cevap uydurma. Aşağıdaki "Geçici davranış" satırı, karar verilene kadar korunacak belgelenmiş davranıştır.
 
-- [C-Q05] İki branş arasında kategori listesi dışında başka fark var mı? Özellikle: (a) "Bana fatura kesilecek" branşında IBAN (TRY) zorunlu mu? (b) PO Numarası ve Fatura Gönderimi bilgilendirmesi bu branşta gösterilmeli mi? (c) İstisna Belgesi ve PDF yükleme hangi branşlarda geçerli?
-  Geçici davranış: Karar verilene kadar iki branş, kategori listesi dışında aynı alanları kullanır; farklar uydurulmaz.
+- [C-Q04] Yurtdışı cariler için alanlar nasıl davranmalı? DOCX "Yurtdışı Satıcı (Ajans)" ve "Yurtdışı Müşteri" kategorilerini ekliyor. Canlı formda ülke listesi Türkiye, Amerika Birleşik Devletleri, Birleşik Krallık, Çin, Diğer; ancak ülke seçimi hiçbir alanı değiştirmiyor (İl ve İlçe, Posta Kodu, IBAN (TRY), Vergi Numarası / TC Kimlik No veya TC Kimlik No, Vergi Dairesi herkese zorunlu).
+  Geçici davranış: Karar verilene kadar canlı formdaki davranış korunur: tüm ülkeler için aynı alanlar ve zorunluluklar. Kural uydurulmamalı.
+  Ayrıntı: Yurtdışı carilerde hangi alanlar zorunlu/opsiyonel/gizli olmalı? Ülke listesi genişletilecek mi?
+- [C-Q05] İki branş arasında kategori listesi dışında başka fark var mı? Özellikle: (a) "Bana fatura kesilecek" branşında IBAN (TRY) zorunlu mu? (b) PO Numarası ve Fatura Gönderimi bilgilendirmesi bu branşta gösterilmeli mi? (c) PDF yükleme önerisi hangi branşlarda geçerli? (d) Şirket/Belge Türü seçenekleri ve sayfa yönlendirmesi (İstisna Belgesi, Serbest Meslek Makbuzu, Gider Pusulası dahil) "Bana fatura kesilecek" branşında aynı mı kalacak?
+  Geçici davranış: Karar verilene kadar iki branş, kategori listesi dışında aynı alanları ve aynı yönlendirmeyi kullanır; farklar uydurulmaz.
 - [C-Q06] Belge çelişkisi: Formu kim dolduruyor? Giriş metni ve DOCX kategori notları karşı tarafa (tedarikçi/müşteri) hitap ediyor; "Talebi Gönderen Personel — Şirket mailiniz" ise DOME personelinin doldurduğunu düşündürüyor.
   Geçici davranış: İlk sorunun bakış açısı ("Fatura keseceğim" kimin ağzından), metinlerin hitabı ve kimlik doğrulama ihtiyacı buna bağlı. Prototip DOCX notlarının hitabını (karşı taraf) esas alır.
   Ayrıntı: Form dış tarafa mı gönderiliyor, yoksa personel karşı taraf adına mı dolduruyor?
-- [C-Q07] Gizlilik politikası bağlantısının doğru adresi nedir? (Mevcut bağlantı boş sayfa açıyor.)
-  Geçici davranış: Adres bilinene kadar yapılandırılabilir yer tutucu kullanılmalı.
+- [C-Q07] Gizlilik politikası bağlantısı nasıl düzeltilecek? Canlı formdaki adres https://dome.istanbul/privacy-policy; DOCX'e göre bu bağlantı boş sayfa açıyor. Doğru adres başka mı, yoksa bu adresteki sayfa mı düzeltilecek?
+  Geçici davranış: Karar verilene kadar adres yapılandırılabilir olmalı; mevcut adres varsayılan değer olarak kullanılabilir ama doğrulanmış sayılmaz.
 - [C-Q08] Mevcut form Google Forms'ta, DOME alanında ve oturum açmış Google hesabıyla çalışıyor ("Dosyaları yükleyip bu formu gönderdiğinizde Google hesabınızla ilişkilendirilen ad, e-posta adresi ve fotoğraf kaydedilir"). Yeni uygulamada kimlik doğrulama gerekecek mi?
   Geçici davranış: C-Q06 ile bağlantılı. Karar verilmeden kimlik doğrulama eklenmemeli/kaldırılmamalı.
 - [C-Q10] DOCX'te "Vergi Numarası / TC Kimlik No" (Sayfa 2/6) ve "Vergi Dairesi" (Sayfa 6/6) ekran görüntüleri not olmadan yer alıyor. Bir değişiklik mi isteniyor (ör. iki vergi alanının aynı sayfada birleştirilmesi)?
-  Geçici davranış: Değişiklik varsayılmaz; mevcut sayfa yapısı korunur.
+  Geçici davranış: Değişiklik varsayılmaz; mevcut sayfa yapısı korunur. DOC-D'ye göre bu iki sayfa Limited / Anonim Şirketi ve Şahıs Firması yolunda art arda gelir.
 - [C-Q11] Fatura yönüne göre değişen kategori sorusu (Cari Türü) zorunlu mu olacak? Mevcut formda zorunlu değil.
   Geçici davranış: Karar verilene kadar belgedeki gibi isteğe bağlı kalır.
 - [C-Q12] "İstisna Belgesi" için desteklenen dosya türleri nelerdir? Belgede "Desteklenen 1 dosya" deniyor ancak türler listelenmiyor.
-  Geçici davranış: Karar verilene kadar tür kısıtı uygulanmaz; yalnızca 1 dosya ve 10 MB sınırı uygulanır.
-- [S-002] "İstisna Belgesi" iki formda da geçiyor: Cari Hesap Açılış Talep Formu'nda zorunlu dosya yükleme sayfası olarak; Yeni Talent Formu'nda "Belge Tipi" seçeneği olarak. İki kullanım arasındaki ilişki (ör. Talent formunda bu seçenek seçilince belge yüklemesi istenmesi) belgelenmemiş.
-  Geçici davranış: Karar verilene kadar iki form birbirinden bağımsız davranır; ek yükleme alanı veya formlar arası kural eklenmez.
+  Geçici davranış: Karar verilene kadar tür kısıtı uygulanmaz; yalnızca 1 dosya ve 10 MB sınırı uygulanır. Not: Google Forms'ta tür kısıtı varsa açıklamada türler listelenir (Talent formundaki "image" gibi); burada liste olmaması kısıt olmadığına işaret ediyor.
+- [C-Q13] Belge çelişkisi (sürüm farkı): DOC-A ekran görüntülerinde "Vergi Bilgileri - Vergi Dairesi" sayfası "Sayfa 6/6", canlı formda (DOC-D) ise 4. bölüm; 6. bölüm boş "Submit" bölümü. Form, ekran görüntüleri alındıktan sonra değiştirilmiş görünüyor. Güncel yapı DOC-D mi?
+  Geçici davranış: Prototip ve prompt daha yeni olan DOC-D yapısını kullanır; sayfa numaraları yeni uygulamada zaten değişecektir.
+- [S-002] "İstisna Belgesi", "Serbest Meslek Makbuzu" ve "Gider Pusulası" iki formda da belge türü seçeneği olarak geçiyor. Cari Hesap Açılış Talep Formu'nda "İstisna Belgesi" seçimi ayrıca zorunlu bir belge yükleme sayfası açıyor; Yeni Talent Formu'nda bu seçeneklere bağlı bir davranış yok. İki form arasındaki ilişki (ör. aynı kavram mı, Talent formunda da belge istenmeli mi) belgelenmemiş.
+  Geçici davranış: Bu formda bu türler "Şirket/Belge Türü" seçenekleridir ve sayfa yönlendirmesini belirler (C-041). Yeni Talent Formu ile otomatik bağlantı kurma.
 - [S-003] Cari formundaki "Talent / Influencer" kategorisi ile ayrı Yeni Talent Formu arasındaki ilişki belgelenmemiş (ör. bu kategori seçildiğinde Yeni Talent Formu'nun da doldurulması gerekir mi?).
   Geçici davranış: Karar verilene kadar formlar arası yönlendirme veya bağımlılık eklenmez.
 
 ### 12.3 Belge çelişkileri
 
-- [C-Q04] Olası çelişki: DOCX "Yurtdışı Satıcı (Ajans)" ve "Yurtdışı Müşteri" kategorilerini ekliyor; mevcut formda ise Türkiye'ye özgü alanlar (Vergi Numarası / TC Kimlik No, Vergi Dairesi, IBAN (TRY), Posta Kodu, İl ve İlçe) zorunlu ve Ülke listesinde yalnızca "Türkiye" görünüyor. Yurtdışı cariler için bu alanlar nasıl davranmalı? Ülke listesi nedir?
-  Referanslar: DOC-C P008, P012 (Yurtdışı kategorileri) ↔ DOC-A Sayfa 1/6, 2/6, 6/6 (Türkiye'ye özgü zorunlu alanlar) · Durum: Açık soru — kendi başına çözme
 - [C-Q06] Belge çelişkisi: Formu kim dolduruyor? Giriş metni ve DOCX kategori notları karşı tarafa (tedarikçi/müşteri) hitap ediyor; "Talebi Gönderen Personel — Şirket mailiniz" ise DOME personelinin doldurduğunu düşündürüyor.
   Referanslar: DOC-A giriş metni ("Sistemimize … eklenmeniz") ↔ DOC-A "Talebi Gönderen Personel – Şirket mailiniz" · Durum: Açık soru — kendi başına çözme
+- [C-Q13] Belge çelişkisi (sürüm farkı): DOC-A ekran görüntülerinde "Vergi Bilgileri - Vergi Dairesi" sayfası "Sayfa 6/6", canlı formda (DOC-D) ise 4. bölüm; 6. bölüm boş "Submit" bölümü. Form, ekran görüntüleri alındıktan sonra değiştirilmiş görünüyor. Güncel yapı DOC-D mi?
+  Referanslar: DOC-A PDF s.5 ("Vergi Dairesi" — Sayfa 6/6) ↔ DOC-D (Vergi Dairesi Bölüm 4, Bölüm 6 boş "Submit") · Durum: Açık soru — kendi başına çözme
 
 ### 12.4 Henüz onaylanmamış açık geri bildirimler
 
@@ -595,6 +645,7 @@ Bunlar test sırasında alınan notlardır, onaylı gereksinim değildir. Uygula
 - Kimlik doğrulama: BELİRLENMEDİ (C-Q08). Kimlik doğrulama ekleme veya kaldırma; soruyu raporla.
 - Form tanımını (bölümler, alanlar, seçenekler, metinler, koşullar) mümkünse tek bir yapılandırma/şema kaynağında tut. Açık sorular cevaplandığında değişiklik tek yerden yapılabilsin.
 - Belgede tanımlı dosya kısıtlarını (adet, boyut, tür) gerçek yüklemede de uygula.
+- [C-045] Canlı formun 6. bölümü "Submit" başlıklı ve soru içermeyen teknik bir bölümdür; "İstisna Belgesi" sayfasından sonra "TC Kimlik No" sayfasına gitmeyi sağlar ve hiçbir yoldan ulaşılmaz.
 - Kodda gerçek kişisel, banka veya vergi verisi bulunmamalı; test verisi açıkça "örnek" olarak işaretlenmeli.
 
 ## 14. Kabul kriterleri
@@ -603,12 +654,18 @@ Bunlar test sırasında alınan notlardır, onaylı gereksinim değildir. Uygula
 2. "Fatura keseceğim" seçildiğinde "Cari Türü" tam olarak şu seçenekleri bu sırayla sunar: "Genel Tedarikçi", "Satıcı (Ajans)", "Yurtdışı Satıcı (Ajans)", "Talent / Influencer".
 3. "Bana fatura kesilecek" seçildiğinde "Cari Türü" tam olarak şu seçenekleri bu sırayla sunar: "Müşteri", "Yurtdışı Müşteri".
 4. Yön değiştirildiğinde kategori listesi anında yeni branşınkine döner; önceki branşın seçenekleri görünmez.
-5. Zorunlu alanlar (her iki branşta aynı): "Talebi Gönderen Personel", "Cari Hesap Adı", "Nickname", "Ülke", "İl ve İlçe", "Adres", "Posta Kodu", "Yetkili Adı Soyadı", "Yetkili Telefon No", "Yetkili Mail", "Finans Mail", "Finans Telefon No", "IBAN (TRY)", "Şirket/Belge Türü", "Vergi Numarası / TC Kimlik No", "İstisna Belgesi" (yalnızca sayfa gösterildiğinde; koşul bilinmiyor — C-Q03), "Vergi Dairesi" — boşken ilgili adım geçilemez/gönderilemez ve her birinin altında "Bu, yanıtlanması zorunlu bir sorudur" görünür.
+5. Zorunlu alanlar (her iki branşta aynı): "Talebi Gönderen Personel", "Cari Hesap Adı", "Nickname", "Ülke", "İl ve İlçe", "Adres", "Posta Kodu", "Yetkili Adı Soyadı", "Yetkili Telefon No", "Yetkili Mail", "Finans Mail", "Finans Telefon No", "IBAN (TRY)", "Şirket/Belge Türü", "Vergi Numarası / TC Kimlik No" (yalnızca "Şirket/Belge Türü" = "Limited / Anonim Şirketi" / "Şahıs Firması" iken), "TC Kimlik No" (yalnızca "Şirket/Belge Türü" = "İstisna Belgesi" / "Serbest Meslek Makbuzu" / "Gider Pusulası" iken), "Vergi Dairesi" (yalnızca "Şirket/Belge Türü" = "Limited / Anonim Şirketi" / "Şahıs Firması" iken), "İstisna Belgesi" (yalnızca "Şirket/Belge Türü" = "İstisna Belgesi" iken) — boşken ilgili adım geçilemez/gönderilemez ve her birinin altında "Bu, yanıtlanması zorunlu bir sorudur" görünür.
 6. İsteğe bağlı alanlar ("Cari Türü", "IBAN (USD)") boş bırakıldığında gönderim engellenmez.
 7. "İstisna Belgesi" en fazla 1 dosya kabul eder; 10 MB üzeri dosya reddedilir.
-8. Bölüm 5'teki tüm metinler birebir (Türkçe karakterler dahil) görünür.
-9. Alanlar Bölüm 4'teki sırayla gösterilir; seçenek listeleri belgedeki sırayı korur.
-10. Bölüm 12'deki açık sorular için hiçbir davranış uydurulmamış; her biri yer tutucu/TODO ile işaretlenmiş ve teslim raporunda listelenmiştir.
+8. "Vergi Numarası / TC Kimlik No" alanına 16 veya daha fazla karakter girildiğinde ilerleme engellenir ve alanın altında hata gösterilir.
+9. "TC Kimlik No" alanına 12 veya daha fazla karakter girildiğinde ilerleme engellenir ve alanın altında hata gösterilir.
+10. "Şirket/Belge Türü" = "Limited / Anonim Şirketi" veya "Şahıs Firması" seçildiğinde sayfalar tam olarak şu sırayla gelir: Sayfa 1/6 → Sayfa 2/6 — Vergi Bilgileri - Vergi Numarası / TC Kimlik No → Sayfa 4/6 — Vergi Bilgileri - Vergi Dairesi → Gönder; diğer sayfalar gösterilmez ve yanıtları gönderilmez.
+11. "Şirket/Belge Türü" = "İstisna Belgesi" seçildiğinde sayfalar tam olarak şu sırayla gelir: Sayfa 1/6 → Sayfa 5/6 — İstisna Belgesi → Sayfa 3/6 — TC Kimlik No → Gönder; diğer sayfalar gösterilmez ve yanıtları gönderilmez.
+12. "Şirket/Belge Türü" = "Serbest Meslek Makbuzu" veya "Gider Pusulası" seçildiğinde sayfalar tam olarak şu sırayla gelir: Sayfa 1/6 → Sayfa 3/6 — TC Kimlik No → Gönder; diğer sayfalar gösterilmez ve yanıtları gönderilmez.
+13. Başarılı gönderimden sonra "Teşekkürler. Cari Talebiniz Alınmıştır." mesajı gösterilir.
+14. Bölüm 5'teki tüm metinler birebir (Türkçe karakterler dahil) görünür.
+15. Alanlar Bölüm 4'teki sırayla gösterilir; seçenek listeleri belgedeki sırayı korur.
+16. Bölüm 12'deki açık sorular için hiçbir davranış uydurulmamış; her biri yer tutucu/TODO ile işaretlenmiş ve teslim raporunda listelenmiştir.
 
 ## 15. Test senaryoları
 
@@ -620,7 +677,10 @@ P1. "Fatura keseceğim" → kategori "Genel Tedarikçi" → tüm görünen zorun
 P2. "Bana fatura kesilecek" → kategori "Müşteri" → tüm görünen zorunlu alanlar geçerli örnek verilerle dolu → gönderim başarılı (gönderim hedefi belirlenmediyse simüle).
 P3. "Fatura keseceğim" branşında her kategori seçeneği ("Genel Tedarikçi", "Satıcı (Ajans)", "Yurtdışı Satıcı (Ajans)", "Talent / Influencer") ayrı ayrı seçilip form tamamlanabilir.
 P4. "Bana fatura kesilecek" branşında her kategori seçeneği ("Müşteri", "Yurtdışı Müşteri") ayrı ayrı seçilip form tamamlanabilir.
-P5. Tüm isteğe bağlı alanlar boşken gönderim başarılı.
+P5. "Şirket/Belge Türü" = "Limited / Anonim Şirketi" / "Şahıs Firması" (her biri ayrı test): Sayfa 1/6 → Sayfa 2/6 — Vergi Bilgileri - Vergi Numarası / TC Kimlik No → Sayfa 4/6 — Vergi Bilgileri - Vergi Dairesi → Gönder; yoldaki zorunlu alanlar dolu → gönderim başarılı ve "Teşekkürler. Cari Talebiniz Alınmıştır." gösterilir.
+P6. "Şirket/Belge Türü" = "İstisna Belgesi": Sayfa 1/6 → Sayfa 5/6 — İstisna Belgesi → Sayfa 3/6 — TC Kimlik No → Gönder; yoldaki zorunlu alanlar dolu → gönderim başarılı ve "Teşekkürler. Cari Talebiniz Alınmıştır." gösterilir.
+P7. "Şirket/Belge Türü" = "Serbest Meslek Makbuzu" / "Gider Pusulası" (her biri ayrı test): Sayfa 1/6 → Sayfa 3/6 — TC Kimlik No → Gönder; yoldaki zorunlu alanlar dolu → gönderim başarılı ve "Teşekkürler. Cari Talebiniz Alınmıştır." gösterilir.
+P8. Tüm isteğe bağlı alanlar boşken gönderim başarılı.
 
 ### 15.2 Negatif
 
@@ -639,10 +699,13 @@ N12. "Finans Mail" boş bırakılır → "Bu, yanıtlanması zorunlu bir sorudur
 N13. "Finans Telefon No" boş bırakılır → "Bu, yanıtlanması zorunlu bir sorudur", ilerleme/gönderim engellenir.
 N14. "IBAN (TRY)" boş bırakılır → "Bu, yanıtlanması zorunlu bir sorudur", ilerleme/gönderim engellenir.
 N15. "Şirket/Belge Türü" boş bırakılır → "Bu, yanıtlanması zorunlu bir sorudur", ilerleme/gönderim engellenir.
-N16. "Vergi Numarası / TC Kimlik No" boş bırakılır → "Bu, yanıtlanması zorunlu bir sorudur", ilerleme/gönderim engellenir.
-N17. "İstisna Belgesi" (yalnızca sayfa gösterildiğinde; koşul bilinmiyor — C-Q03) boş bırakılır → "Bu, yanıtlanması zorunlu bir sorudur", ilerleme/gönderim engellenir.
-N18. "Vergi Dairesi" boş bırakılır → "Bu, yanıtlanması zorunlu bir sorudur", ilerleme/gönderim engellenir.
-N19. "İstisna Belgesi" alanına 10 MB'tan büyük dosya yüklenir → reddedilir.
+N16. "Vergi Numarası / TC Kimlik No" (yalnızca "Şirket/Belge Türü" = "Limited / Anonim Şirketi" / "Şahıs Firması" iken) boş bırakılır → "Bu, yanıtlanması zorunlu bir sorudur", ilerleme/gönderim engellenir.
+N17. "TC Kimlik No" (yalnızca "Şirket/Belge Türü" = "İstisna Belgesi" / "Serbest Meslek Makbuzu" / "Gider Pusulası" iken) boş bırakılır → "Bu, yanıtlanması zorunlu bir sorudur", ilerleme/gönderim engellenir.
+N18. "Vergi Dairesi" (yalnızca "Şirket/Belge Türü" = "Limited / Anonim Şirketi" / "Şahıs Firması" iken) boş bırakılır → "Bu, yanıtlanması zorunlu bir sorudur", ilerleme/gönderim engellenir.
+N19. "İstisna Belgesi" (yalnızca "Şirket/Belge Türü" = "İstisna Belgesi" iken) boş bırakılır → "Bu, yanıtlanması zorunlu bir sorudur", ilerleme/gönderim engellenir.
+N20. "İstisna Belgesi" alanına 10 MB'tan büyük dosya yüklenir → reddedilir.
+N21. "Vergi Numarası / TC Kimlik No" (yalnızca "Şirket/Belge Türü" = "Limited / Anonim Şirketi" / "Şahıs Firması" iken) alanına 16 karakter girilir → uzunluk hatası, ilerleme engellenir.
+N22. "TC Kimlik No" (yalnızca "Şirket/Belge Türü" = "İstisna Belgesi" / "Serbest Meslek Makbuzu" / "Gider Pusulası" iken) alanına 12 karakter girilir → uzunluk hatası, ilerleme engellenir.
 
 ## 16. Uç durumlar ve regresyon testleri
 
@@ -650,14 +713,15 @@ N19. "İstisna Belgesi" alanına 10 MB'tan büyük dosya yüklenir → reddedili
 
 E1. "Fatura keseceğim" ile kategori seçilip alanlar doldurulduktan sonra yön "Bana fatura kesilecek" olarak değiştirilir → diğer yanıtlar korunur; geçersiz kalan kategori seçiminin nasıl ele alınacağı C-P06 onayına bağlıdır, onay yoksa davranışı sor.
 E2. Yön değiştirilip eski yöne geri dönülür → ortak alanlardaki yanıtlar kaybolmaz.
-E3. Gösterim koşulu bilinmeyen sayfalar (Bölüm 7.2) için yer tutucu davranışı tutarlıdır ve kullanıcıyı kilitlemez.
-E4. Metin alanlarına Türkçe karakterler (İSTANBUL, ığüşöç, KAĞITHANE) girilir → değiştirilmeden saklanır ve gösterilir.
-E5. Yalnızca boşluk içeren zorunlu yanıtın boş sayılıp sayılmayacağı C-P08 onayına bağlıdır; onay yoksa davranışı sor.
-E6. Çok uzun metin (ör. 1000+ karakter) → arayüz bozulmaz; belgede uzunluk sınırı yoktur, sınır ekleme.
-E7. Geri/ileri gezinmede yanıtlar korunur.
-E8. "Gönder" düğmesine art arda tıklanır → tek gönderim oluşur.
-E9. Dosya seçilip kaldırılır ve yeniden seçilir → yalnızca son dosya geçerlidir; zorunlu dosya kaldırılınca hata geri gelir.
-E10. Mobil genişlikte (≈360 px) tüm adımlar yatay kaydırma olmadan tamamlanır.
+E3. "Şirket/Belge Türü" = "Limited / Anonim Şirketi" ile sonraki sayfa doldurulduktan sonra geri dönülüp "Serbest Meslek Makbuzu" seçilir → yol yeniden hesaplanır; önceki yolun sayfaları gösterilmez ve yanıtları gönderilmez.
+E4. "Şirket/Belge Türü" = "İstisna Belgesi" yolunda sayfalar form sırasının tersine ilerler (Sayfa 1/6 → Sayfa 5/6 — İstisna Belgesi → Sayfa 3/6 — TC Kimlik No → Gönder); "Geri" düğmesi de bu yolu izler.
+E5. Metin alanlarına Türkçe karakterler (İSTANBUL, ığüşöç, KAĞITHANE) girilir → değiştirilmeden saklanır ve gösterilir.
+E6. Yalnızca boşluk içeren zorunlu yanıtın boş sayılıp sayılmayacağı C-P08 onayına bağlıdır; onay yoksa davranışı sor.
+E7. Uzunluk sınırı tanımlı olmayan metin alanlarına çok uzun metin (ör. 1000+ karakter) girilir → arayüz bozulmaz; bu alanlara sınır ekleme.
+E8. Geri/ileri gezinmede yanıtlar korunur.
+E9. "Gönder" düğmesine art arda tıklanır → tek gönderim oluşur.
+E10. Dosya seçilip kaldırılır ve yeniden seçilir → yalnızca son dosya geçerlidir; zorunlu dosya kaldırılınca hata geri gelir.
+E11. Mobil genişlikte (≈360 px) tüm adımlar yatay kaydırma olmadan tamamlanır.
 
 ### 16.2 Regresyon
 

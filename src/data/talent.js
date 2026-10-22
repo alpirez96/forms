@@ -464,7 +464,7 @@ export default {
       source: ['DOC-B'],
       ref: '"Gönder" (gönderim sonrası belgelenmemiş)',
       description:
-        'Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve fotoğraf nereye kaydedilir/iletilir? Kime bildirim gider? Google Forms\'ta mı kalınacak, özel bir uygulama mı yapılacak?',
+        'Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve fotoğraf nereye kaydedilir/iletilir? Kime bildirim gider? Kullanıcıya hangi onay mesajı gösterilir? Google Forms\'ta mı kalınacak, özel bir uygulama mı yapılacak?',
       type: 'technical',
       confidence: 'unclear',
       implications: 'Bu bilinmeden gerçek gönderim, depolama veya entegrasyon uygulanamaz.',

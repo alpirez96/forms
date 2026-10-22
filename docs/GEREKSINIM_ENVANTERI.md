@@ -8,7 +8,8 @@ Durumlar başlangıç (inceleme öncesi) durumlarıdır. Testte verdiğiniz kara
 
 | Kimlik | Belge | Dosya | İçerik |
 |---|---|---|---|
-| DOC-A | Cari Hesap Açılış Talep Formu – birleştirilmiş ekran görüntüleri (PDF) | CARI__AC_ILIS__FORMU_MERGED.pdf | Google Forms üzerindeki mevcut "Cari Hesap Açılış Talep Formu"nun 5 PDF sayfalık ekran görüntüsü. PDF sayfa 1–2 = form sayfası 1/6, PDF sayfa 3 = 2/6, PDF sayfa 4 = 5/6, PDF sayfa 5 = 6/6. Form sayfaları 3/6 ve 4/6 belgede yer almıyor. Alanlara test amaçlı değerler girilmiş; bu değerler gereksinim değildir. |
+| DOC-A | Cari Hesap Açılış Talep Formu – birleştirilmiş ekran görüntüleri (PDF) | CARI__AC_ILIS__FORMU_MERGED.pdf | Google Forms üzerindeki mevcut "Cari Hesap Açılış Talep Formu"nun 5 PDF sayfalık ekran görüntüsü. PDF sayfa 1–2 = form sayfası 1/6, PDF sayfa 3 = 2/6, PDF sayfa 4 = 5/6, PDF sayfa 5 = 6/6. Form sayfaları 3/6 ve 4/6 belgede yer almıyor (DOC-D ile tamamlandı). Alanlara test amaçlı değerler girilmiş; bu değerler gereksinim değildir. |
+| DOC-D | Cari Hesap Açılış Talep Formu – canlı formun kaydedilmiş sayfası (HTML, 2026-10-22) | Cari_Hesap_Ac__l_s__Talep_Formu.html | Google Forms görüntüleme sayfasının tarayıcıdan kaydedilmiş hâli. Ekranda yalnızca ilk sayfa görünür; ancak sayfaya gömülü form tanımı (FB_PUBLIC_LOAD_DATA_) tüm 6 bölümü, soruları, seçenekleri, zorunlulukları, uzunluk doğrulamalarını, yanıta göre bölüm yönlendirmelerini, gönderim sonrası onay mesajını ve açıklamadaki bağlantı adreslerini içerir. Dosya yükleme ayarları (tür/boyut) tanımda yer almaz. Dosyada kullanıcının kayıtlı taslak yanıtları bulunduğu için depoya eklenmedi ve bu yanıtlar okunmadı. |
 | DOC-B | Yeni Talent Formu – ekran görüntüsü ve seçenek notları (PDF) | Yeni_Talent_Formu_MERGED.pdf | Google Forms üzerindeki "Yeni Talent Formu"nun tek sayfalık ekran görüntüsü. Sağ tarafta kırmızı oklarla "Kategori – Seçenekler" ve "Belge Tipi – Seçenekler" açılır listeleri gösterilmiş. |
 | DOC-C | Cari Açılış Formu – Örnek Şablon (DOCX, değişiklik notları) | CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx | Cari formunun 5 ekran görüntüsü ve aralarında kırmızı-kalın yazılmış değişiklik notları (P002, P004–P012, P014). Word yorumu veya izlenen değişiklik içermez. Notlar muhasebe ekibinin form tasarımına yönelik değişiklik talepleridir. |
 | BRIEF | Proje brifi (kullanıcı talimatı) | — | Bu prototipi isteyen proje brifi. Cari Form için ilk sorunun "Fatura mı keseceğim, bana fatura mı kesilecek?" olmasını ve iki seçeneğin "Fatura keseceğim" / "Bana fatura kesilecek" olmasını zorunlu kılar. |
@@ -16,28 +17,28 @@ Durumlar başlangıç (inceleme öncesi) durumlarıdır. Testte verdiğiniz kara
 
 Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **Güçlü çıkarım** (belgeden doğrudan çıkarılır ama ifade kesin değil) · **Belirsiz** (belge yanıt vermiyor).
 
-## Cari Form (52 madde)
+## Cari Form (59 madde)
 
 | Kimlik | Tür | Güven | Başlangıç durumu | Kaynak | Özet |
 |---|---|---|---|---|---|
 | C-001 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | BRIEF | Zorunlu ilk soru "Fatura mı keseceğim, bana fatura mı kesilecek?" diğer tüm alanlardan önce gösterilir. Seçenekler: "Fatura keseceğim" ve… |
-| C-002 | İş kuralı | Güçlü çıkarım | Kaynakla doğrulandı | DOC-C, DOC-A | "Cari Türü" alanındaki "Marka" ve "Ajans" seçenekleri yerine fatura yönüne göre kategori kırılımı kullanılır. Fatura keseceğim → Genel Te… |
+| C-002 | İş kuralı | Güçlü çıkarım | Kaynakla doğrulandı | DOC-C, DOC-A, DOC-D | "Cari Türü" alanındaki "Marka" ve "Ajans" seçenekleri yerine fatura yönüne göre kategori kırılımı kullanılır. Fatura keseceğim → Genel Te… |
 | C-003 | İş kuralı | Güçlü çıkarım | Kaynakla doğrulandı | DOC-C, BRIEF | Branş eşleşmesi: DOCX'teki "Fatura kesecekseniz…" listesi "Fatura keseceğim" branşına; "Size fatura keseceksek…" listesi "Bana fatura kes… |
-| C-004 | İçerik | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C | Form başlığı: "Cari Hesap Açılış Talep Formu". |
-| C-005 | İçerik | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C | Giriş metni birebir gösterilir: "Sistemimize tedarikçi veya müşteri olarak eklenmeniz ve faturalarınızın zamanında işleme alınabilmesi iç… |
-| C-006 | İş kuralı | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C | Bilgilendirme "PO Numarası Zorunluluğu" birebir gösterilir: "Tüm tedarikçi faturalarında "E" harfi ile başlayan geçerli bir Satın Alma Si… |
-| C-007 | İçerik | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C | Bilgilendirme "Fatura Gönderimi" birebir gösterilir: "E-arşiv ve kağıt faturalarınızı lütfen PDF formatında ilgili e-posta adreslerimize … |
-| C-008 | İçerik | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C | Gizlilik onay metni gösterilir: "Bu formu doldurarak bu linkten ulaşabileceğiniz gizlilik politikamızı kabul etmiş sayılırsınız." İkinci … |
-| C-009 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-C | Mevcut formda gizlilik politikası bağlantısı boş sayfa açıyor; bağlantı çalışan bir gizlilik politikası sayfasına yönlenmelidir. |
+| C-004 | İçerik | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C, DOC-D | Form başlığı: "Cari Hesap Açılış Talep Formu". |
+| C-005 | İçerik | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C, DOC-D | Giriş metni birebir gösterilir: "Sistemimize tedarikçi veya müşteri olarak eklenmeniz ve faturalarınızın zamanında işleme alınabilmesi iç… |
+| C-006 | İş kuralı | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C, DOC-D | Bilgilendirme "PO Numarası Zorunluluğu" birebir gösterilir: "Tüm tedarikçi faturalarında "E" harfi ile başlayan geçerli bir Satın Alma Si… |
+| C-007 | İçerik | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C, DOC-D | Bilgilendirme "Fatura Gönderimi" birebir gösterilir: "E-arşiv ve kağıt faturalarınızı lütfen PDF formatında ilgili e-posta adreslerimize … |
+| C-008 | İçerik | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C, DOC-D | Gizlilik onay metni gösterilir: "Bu formu doldurarak bu linkten ulaşabileceğiniz gizlilik politikamızı kabul etmiş sayılırsınız." İkinci … |
+| C-009 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-C, DOC-D | Mevcut formda gizlilik politikası bağlantısı (https://dome.istanbul/privacy-policy) boş sayfa açıyor; bağlantı çalışan bir gizlilik polit… |
 | C-010 | Kullanıcı deneyimi | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A | Zorunlu alanlar etiket sonunda kırmızı "*" ile işaretlenir; form başında "* Zorunlu soruyu belirtir" açıklaması bulunur. |
-| C-011 | Kullanıcı deneyimi | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A | Çok sayfalı akış: ilk sayfada "Sonraki"; ara sayfalarda "Geri" ve "Sonraki"; son sayfada "Geri" ve "Gönder". İlerleme göstergesi "Sayfa X… |
-| C-020 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A | "Talebi Gönderen Personel" — zorunlu kısa metin; açıklama "Şirket mailiniz". |
-| C-021 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C | "Cari Türü" — tek seçimli (radyo) soru; mevcut formda zorunlu değil (yıldız yok) ve "Seçimi temizle" eylemi var. Mevcut seçenekler: Talen… |
+| C-011 | Kullanıcı deneyimi | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-D | Çok sayfalı akış: ilk sayfada "Sonraki"; ara sayfalarda "Geri" ve "Sonraki"; yolun son sayfasında "Geri" ve "Gönder". İlerleme göstergesi… |
+| C-020 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-D | "Talebi Gönderen Personel" — zorunlu kısa metin; açıklama "Şirket mailiniz". |
+| C-021 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C, DOC-D | "Cari Türü" — tek seçimli (radyo) soru; mevcut formda zorunlu değil (yıldız yok) ve "Seçimi temizle" eylemi var. Mevcut seçenekler: Talen… |
 | C-022 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A | "Cari Hesap Adı" — zorunlu kısa metin; açıklama "Örnek: DOME MEDYA VE İLETİŞİM ANONİM ŞİRKETİ". |
 | C-023 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A | "Nickname" — zorunlu kısa metin; açıklama "Örnek: Dome İstanbul". |
-| C-024 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A | "Ülke" — zorunlu açılır liste; ekran görüntüsünde yalnızca "Türkiye" değeri görünüyor. |
-| C-025 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A | "İl ve İlçe" — zorunlu kısa metin (tek alan). |
-| C-026 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A | "Adres" — zorunlu kısa metin. |
+| C-024 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-D, DOC-A | "Ülke" — zorunlu açılır liste. Seçenekler (bu sırayla): Türkiye, Amerika Birleşik Devletleri, Birleşik Krallık, Çin, Diğer. |
+| C-025 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-D, DOC-A | "İl ve İlçe" — zorunlu uzun metin (paragraf) sorusu; tek alan. |
+| C-026 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-D, DOC-A | "Adres" — zorunlu uzun metin (paragraf) sorusu. |
 | C-027 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A | "Posta Kodu" — zorunlu kısa metin. |
 | C-028 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A | "Yetkili Adı Soyadı" — zorunlu kısa metin. |
 | C-029 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A | "Yetkili Telefon No" — zorunlu kısa metin. |
@@ -46,23 +47,29 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 | C-032 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A | "Finans Telefon No" — zorunlu kısa metin. |
 | C-033 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C | "IBAN (TRY)" — zorunlu kısa metin. |
 | C-034 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C | "IBAN (USD)" — isteğe bağlı kısa metin (yıldız yok). |
-| C-035 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A | "Şirket/Belge Türü" — zorunlu açılır liste; ekran görüntüsünde yalnızca seçili değer "Limited / Anonim Şirketi" görünüyor. |
-| C-036 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C | Sayfa 2/6 "Vergi Bilgileri - Vergi Numarası / TC Kimlik No": "Vergi Numarası / TC Kimlik No" — zorunlu kısa metin. |
-| C-037 | Doğrulama | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A | Sayfa 5/6 "İstisna Belgesi": "İstisna Belgesi" — zorunlu dosya yükleme; açıklama "Desteklenen 1 dosya yükleyebilirsiniz. En fazla 10 MB o… |
-| C-038 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C | Sayfa 6/6 "Vergi Bilgileri - Vergi Dairesi": "Vergi Dairesi" — zorunlu kısa metin. Bu sayfada "Gönder" düğmesi bulunur. |
+| C-035 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-D, DOC-A | "Şirket/Belge Türü" — zorunlu açılır liste. Seçenekler (bu sırayla): Limited / Anonim Şirketi, Şahıs Firması, İstisna Belgesi, Serbest Me… |
+| C-036 | Doğrulama | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C, DOC-D | Sayfa 2/6 "Vergi Bilgileri - Vergi Numarası / TC Kimlik No": "Vergi Numarası / TC Kimlik No" — zorunlu kısa metin; en fazla 15 karakter. |
+| C-037 | Doğrulama | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-D | Sayfa 5/6 "İstisna Belgesi": "İstisna Belgesi" — zorunlu dosya yükleme; açıklama "Desteklenen 1 dosya yükleyebilirsiniz. En fazla 10 MB o… |
+| C-038 | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-A, DOC-C, DOC-D | "Vergi Bilgileri - Vergi Dairesi" sayfası: "Vergi Dairesi" — zorunlu kısa metin. Canlı formda bu sayfa 4/6'dır (DOC-A'da 6/6) ve ardından… |
 | C-040 | İşlevsel | Güçlü çıkarım | Önerilen iyileştirme | DOC-C | IBAN alanlarının yanına bir PDF yükleme alanı eklenmesi önerisi: vergi levhası ve firmanın banka bilgisinin imzalı şekilde yüklenmesi için. |
-| C-Q01 ⛔ | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A | Form 6 sayfadan oluşuyor ancak 3/6 ve 4/6 sayfaları kaynak belgelerde yok. Bu sayfalarda hangi alanlar var ve hangi durumda gösteriliyor? |
-| C-Q02 ⛔ | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A | "Şirket/Belge Türü" açılır listesinin tam seçenek listesi nedir? Belgede yalnızca "Limited / Anonim Şirketi" görünüyor. |
-| C-Q03 ⛔ | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A | Sayfalar arası yönlendirme kuralları nelerdir? Özellikle "İstisna Belgesi" (5/6, zorunlu yükleme) hangi yanıtta istenir? Google Forms'tak… |
-| C-Q04 ⛔ | Çözümsüz / açık | Belirsiz | Açık soru | DOC-C, DOC-A | Olası çelişki: DOCX "Yurtdışı Satıcı (Ajans)" ve "Yurtdışı Müşteri" kategorilerini ekliyor; mevcut formda ise Türkiye'ye özgü alanlar (Ve… |
-| C-Q05 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-C, DOC-A | İki branş arasında kategori listesi dışında başka fark var mı? Özellikle: (a) "Bana fatura kesilecek" branşında IBAN (TRY) zorunlu mu? (b… |
+| C-041 | İş kuralı | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-D | Yanıta göre yönlendirme: Limited / Anonim Şirketi → Sayfa 2/6 "Vergi Bilgileri - Vergi Numarası / TC Kimlik No"; Şahıs Firması → Sayfa 2/… |
+| C-042 | İş kuralı | Güçlü çıkarım | Kaynakla doğrulandı | DOC-D | Tam yollar: (1) Limited / Anonim Şirketi, Şahıs Firması: Sayfa 1/6 → 2/6 Vergi Numarası / TC Kimlik No → 4/6 Vergi Dairesi → Gönder (3/6 … |
+| C-043 | Doğrulama | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-D | Sayfa 3/6 "TC Kimlik No": "TC Kimlik No" — zorunlu kısa metin; en fazla 11 karakter. |
+| C-044 | İçerik | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-D | Gönderimden sonra gösterilen onay mesajı: "Teşekkürler. Cari Talebiniz Alınmıştır." |
+| C-045 | Teknik | Güçlü çıkarım | Kaynakla doğrulandı | DOC-D | Canlı formun 6. bölümü "Submit" başlıklı ve soru içermeyen teknik bir bölümdür; "İstisna Belgesi" sayfasından sonra "TC Kimlik No" sayfas… |
+| C-Q01 ⛔ | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-D, DOC-A | Cevaplandı (DOC-D): DOC-A'da görünmeyen sayfalar canlı formda Sayfa 3/6 "TC Kimlik No" ve Sayfa 4/6 "Vergi Bilgileri - Vergi Dairesi"dir;… |
+| C-Q02 ⛔ | İşlevsel | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-D, DOC-A | Cevaplandı (DOC-D): "Şirket/Belge Türü" seçenekleri Limited / Anonim Şirketi, Şahıs Firması, İstisna Belgesi, Serbest Meslek Makbuzu, Gid… |
+| C-Q03 ⛔ | İşlevsel | Güçlü çıkarım | Kaynakla doğrulandı | DOC-D | Cevaplandı (DOC-D): "İstisna Belgesi" sayfası yalnızca Şirket/Belge Türü = İstisna Belgesi seçildiğinde açılır ve ardından "TC Kimlik No"… |
+| C-Q04 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-C, DOC-D | Yurtdışı cariler için alanlar nasıl davranmalı? DOCX "Yurtdışı Satıcı (Ajans)" ve "Yurtdışı Müşteri" kategorilerini ekliyor. Canlı formda… |
+| C-Q05 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-C, DOC-A, DOC-D | İki branş arasında kategori listesi dışında başka fark var mı? Özellikle: (a) "Bana fatura kesilecek" branşında IBAN (TRY) zorunlu mu? (b… |
 | C-Q06 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A, DOC-C | Belge çelişkisi: Formu kim dolduruyor? Giriş metni ve DOCX kategori notları karşı tarafa (tedarikçi/müşteri) hitap ediyor; "Talebi Gönder… |
-| C-Q07 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-C, DOC-A | Gizlilik politikası bağlantısının doğru adresi nedir? (Mevcut bağlantı boş sayfa açıyor.) |
-| C-Q08 | Teknik | Belirsiz | Açık soru | DOC-A | Mevcut form Google Forms'ta, DOME alanında ve oturum açmış Google hesabıyla çalışıyor ("Dosyaları yükleyip bu formu gönderdiğinizde Googl… |
-| C-Q09 ⛔ | Teknik | Belirsiz | Açık soru | DOC-A | Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve yüklenen dosyalar nereye kaydedilir/iletilir (tablo, e-… |
+| C-Q07 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-C, DOC-D | Gizlilik politikası bağlantısı nasıl düzeltilecek? Canlı formdaki adres https://dome.istanbul/privacy-policy; DOCX'e göre bu bağlantı boş… |
+| C-Q08 | Teknik | Belirsiz | Açık soru | DOC-A, DOC-D | Mevcut form Google Forms'ta, DOME alanında ve oturum açmış Google hesabıyla çalışıyor ("Dosyaları yükleyip bu formu gönderdiğinizde Googl… |
+| C-Q09 ⛔ | Teknik | Belirsiz | Açık soru | DOC-A, DOC-D | Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve yüklenen dosyalar nereye kaydedilir/iletilir (tablo, e-… |
 | C-Q10 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-C | DOCX'te "Vergi Numarası / TC Kimlik No" (Sayfa 2/6) ve "Vergi Dairesi" (Sayfa 6/6) ekran görüntüleri not olmadan yer alıyor. Bir değişikl… |
-| C-Q11 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A, DOC-C | Fatura yönüne göre değişen kategori sorusu (Cari Türü) zorunlu mu olacak? Mevcut formda zorunlu değil. |
-| C-Q12 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A | "İstisna Belgesi" için desteklenen dosya türleri nelerdir? Belgede "Desteklenen 1 dosya" deniyor ancak türler listelenmiyor. |
+| C-Q11 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A, DOC-C, DOC-D | Fatura yönüne göre değişen kategori sorusu (Cari Türü) zorunlu mu olacak? Mevcut formda zorunlu değil. |
+| C-Q12 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A, DOC-D | "İstisna Belgesi" için desteklenen dosya türleri nelerdir? Belgede "Desteklenen 1 dosya" deniyor ancak türler listelenmiyor. |
+| C-Q13 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A, DOC-D | Belge çelişkisi (sürüm farkı): DOC-A ekran görüntülerinde "Vergi Bilgileri - Vergi Dairesi" sayfası "Sayfa 6/6", canlı formda (DOC-D) ise… |
 | C-P01 | Doğrulama | Belirsiz | Önerilen iyileştirme | ANALIZ | E-posta format doğrulaması: Talebi Gönderen Personel, Yetkili Mail, Finans Mail alanları geçerli e-posta biçiminde olmalı. |
 | C-P02 | Doğrulama | Belirsiz | Önerilen iyileştirme | ANALIZ | Telefon format doğrulaması: yalnızca rakam, boşluk, "+", parantez ve tire; 10–15 rakam. |
 | C-P03 | Doğrulama | Belirsiz | Önerilen iyileştirme | ANALIZ | Vergi Numarası / TC Kimlik No: yalnızca rakam; 10 hane (Vergi Kimlik No) veya 11 hane (TC Kimlik No). |
@@ -72,6 +79,7 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 | C-P07 | Kullanıcı deneyimi | Belirsiz | Önerilen iyileştirme | ANALIZ | Gönderimden önce tüm yanıtların bölüm bölüm özetlendiği ve düzenlenebildiği bir "Gözden geçir" adımı. |
 | C-P08 | Doğrulama | Belirsiz | Önerilen iyileştirme | ANALIZ | Yalnızca boşluk karakterlerinden oluşan yanıtlar boş sayılır (zorunlu alan kontrolünde). |
 | C-P09 | Kullanıcı deneyimi | Belirsiz | Önerilen iyileştirme | ANALIZ | Prototip sunumu: "Sayfa 1/6" alanları belgedeki sırayla, görsel alt başlıklar altında gösterilir (Talep ve cari bilgileri · Adres bilgile… |
+| C-P10 | Doğrulama | Belirsiz | Önerilen iyileştirme | ANALIZ | TC Kimlik No: tam 11 hane, yalnızca rakam. |
 
 ### Ayrıntılar
 
@@ -90,14 +98,14 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 
 #### C-002
 
-- **Kaynak belge:** DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-C P004–P012; mevcut seçenekler DOC-A Sayfa 1/6
+- **Kaynak belge:** DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-C P004–P012; mevcut seçenekler DOC-A Sayfa 1/6 ve DOC-D
 - **Açıklama:** "Cari Türü" alanındaki "Marka" ve "Ajans" seçenekleri yerine fatura yönüne göre kategori kırılımı kullanılır. Fatura keseceğim → Genel Tedarikçi, Satıcı (Ajans), Yurtdışı Satıcı (Ajans), Talent / Influencer. Bana fatura kesilecek → Müşteri, Yurtdışı Müşteri.
 - **Etkilenen form:** Cari Form
 - **Tür:** İş kuralı
 - **Güven:** Güçlü çıkarım
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** Cari Türü seçenekleri branşa göre değişir; "Marka" ve "Ajans" kaldırılır. Branş değiştiğinde geçersiz kalan seçim temizlenmelidir (bkz. C-P06).
+- **Uygulama etkisi:** Cari Türü seçenekleri branşa göre değişir; "Marka" ve "Ajans" kaldırılır. Branş değiştiğinde geçersiz kalan seçim temizlenmelidir (bkz. C-P06). Canlı form (DOC-D) hâlâ eski seçenekleri (Talent / Influencer, Marka, Ajans) kullanıyor; değişiklik henüz uygulanmamış.
 - **Açık sorular:** DOCX notu "kırılımlar olabilir" diyor; listenin nihai olduğu ve alan etiketinin "Cari Türü" olarak kalacağı teyit edilmeli.
 - **İlgili alanlar:** `cariTuru`
 
@@ -116,20 +124,20 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 
 #### C-004
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6 başlık; DOC-C görsel 1
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6 başlık; DOC-C görsel 1; DOC-D form başlığı
 - **Açıklama:** Form başlığı: "Cari Hesap Açılış Talep Formu".
 - **Etkilenen form:** Cari Form
 - **Tür:** İçerik
 - **Güven:** Açıkça belgelenmiş
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** —
+- **Uygulama etkisi:** Canlı formun dosya adı "Cari Açılış Talep Formu"dur; kullanıcıya görünen başlık "Cari Hesap Açılış Talep Formu".
 - **Açık sorular:** —
 
 #### C-005
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6 başlık altı; DOC-C görsel 1
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6 başlık altı; DOC-C görsel 1; DOC-D form açıklaması
 - **Açıklama:** Giriş metni birebir gösterilir: "Sistemimize tedarikçi veya müşteri olarak eklenmeniz ve faturalarınızın zamanında işleme alınabilmesi için bu formda gereken tüm bilgileri doğru şekilde doldurmanızı rica ederiz."
 - **Etkilenen form:** Cari Form
 - **Tür:** İçerik
@@ -140,8 +148,8 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 
 #### C-006
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6 "Fatura Süreçleri Hakkında Önemli Bilgilendirme"
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6 "Fatura Süreçleri Hakkında Önemli Bilgilendirme"; DOC-D form açıklaması
 - **Açıklama:** Bilgilendirme "PO Numarası Zorunluluğu" birebir gösterilir: "Tüm tedarikçi faturalarında "E" harfi ile başlayan geçerli bir Satın Alma Sipariş (PO) numarası bulunmalıdır. PO numarası içermeyen faturalar kabul edilmeyecek ve ödeme süreci başlatılmadan iade edilecektir."
 - **Etkilenen form:** Cari Form
 - **Tür:** İş kuralı
@@ -152,38 +160,38 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 
 #### C-007
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6 "Fatura Süreçleri Hakkında Önemli Bilgilendirme"
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6 "Fatura Süreçleri Hakkında Önemli Bilgilendirme"; DOC-D form açıklaması
 - **Açıklama:** Bilgilendirme "Fatura Gönderimi" birebir gösterilir: "E-arşiv ve kağıt faturalarınızı lütfen PDF formatında ilgili e-posta adreslerimize iletiniz:" ve e-posta adresi finans@dome.istanbul (mailto bağlantısı).
 - **Etkilenen form:** Cari Form
 - **Tür:** İçerik
 - **Güven:** Açıkça belgelenmiş
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** Form e-posta göndermez; yalnızca bilgilendirir.
+- **Uygulama etkisi:** Form e-posta göndermez; yalnızca bilgilendirir. Canlı formda adres "mailto:finans@dome.istanbul" bağlantısıdır (DOC-D).
 - **Açık sorular:** "Bana fatura kesilecek" branşında gösterilip gösterilmeyeceği: C-Q05.
 
 #### C-008
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6 başlık altı; DOC-C görsel 1
-- **Açıklama:** Gizlilik onay metni gösterilir: "Bu formu doldurarak bu linkten ulaşabileceğiniz gizlilik politikamızı kabul etmiş sayılırsınız." İkinci kısım gizlilik politikasına bağlantıdır.
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6 başlık altı; DOC-C görsel 1; DOC-D form açıklamasının zengin metni
+- **Açıklama:** Gizlilik onay metni gösterilir: "Bu formu doldurarak bu linkten ulaşabileceğiniz gizlilik politikamızı kabul etmiş sayılırsınız." İkinci kısım gizlilik politikasına bağlantıdır; canlı formdaki adres https://dome.istanbul/privacy-policy.
 - **Etkilenen form:** Cari Form
 - **Tür:** İçerik
 - **Güven:** Açıkça belgelenmiş
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** Bağlantı adresi belgelerde yok (C-Q07). Ayrı bir onay kutusu belgede yok; metin bilgilendirme olarak gösterilir.
+- **Uygulama etkisi:** Ayrı bir onay kutusu belgede yok; metin bilgilendirme olarak gösterilir. Bağlantının çalışmadığı bildirildi (C-009, C-Q07).
 - **Açık sorular:** —
 
 #### C-009
 
-- **Kaynak belge:** DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`)
-- **Kaynak bölüm/referans:** DOC-C P002
-- **Açıklama:** Mevcut formda gizlilik politikası bağlantısı boş sayfa açıyor; bağlantı çalışan bir gizlilik politikası sayfasına yönlenmelidir.
+- **Kaynak belge:** DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-C P002; adres DOC-D
+- **Açıklama:** Mevcut formda gizlilik politikası bağlantısı (https://dome.istanbul/privacy-policy) boş sayfa açıyor; bağlantı çalışan bir gizlilik politikası sayfasına yönlenmelidir.
 - **Etkilenen form:** Cari Form
 - **Tür:** İşlevsel
 - **Güven:** Açıkça belgelenmiş
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** Doğru adres bilinmiyor (C-Q07); adres yapılandırılabilir olmalı ve bilinmeden uydurulmamalı.
+- **Uygulama etkisi:** Doğru adres veya sayfanın düzeltilmesi C-Q07'ye bağlı. Adres yapılandırılabilir olmalı ve bilinmeden uydurulmamalı.
 - **Açık sorular:** Not virgülle bitiyor; devamında başka bir istek olup olmadığı belirsiz.
 
 #### C-010
@@ -200,39 +208,39 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 
 #### C-011
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6, 2/6, 5/6, 6/6 alt kısım
-- **Açıklama:** Çok sayfalı akış: ilk sayfada "Sonraki"; ara sayfalarda "Geri" ve "Sonraki"; son sayfada "Geri" ve "Gönder". İlerleme göstergesi "Sayfa X / 6". Her sayfada "Formu temizle" eylemi.
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6, 2/6, 5/6, 6/6 alt kısım; DOC-D 6 bölüm
+- **Açıklama:** Çok sayfalı akış: ilk sayfada "Sonraki"; ara sayfalarda "Geri" ve "Sonraki"; yolun son sayfasında "Geri" ve "Gönder". İlerleme göstergesi "Sayfa X / 6" (form 6 bölümdür; kullanıcı yalnızca kendi yolundaki sayfaları görür). Her sayfada "Formu temizle" eylemi.
 - **Etkilenen form:** Cari Form
 - **Tür:** Kullanıcı deneyimi
 - **Güven:** Açıkça belgelenmiş
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** Yeni yapıda sayfa sayısı ilk soru ve eksik sayfalara göre değişebilir. Geri dönüldüğünde girilen değerlerin korunması beklenir (platform davranışı).
+- **Uygulama etkisi:** Yeni yapıda sayfa sayısı ilk soru ve yönlendirmeye göre değişir. Geri dönüldüğünde girilen değerlerin korunması beklenir (platform davranışı).
 - **Açık sorular:** —
 
 #### C-020
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6; doğrulama ayarı DOC-D
 - **Açıklama:** "Talebi Gönderen Personel" — zorunlu kısa metin; açıklama "Şirket mailiniz".
 - **Etkilenen form:** Cari Form
 - **Tür:** İşlevsel
 - **Güven:** Açıkça belgelenmiş
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** E-posta formatı belgede doğrulanmıyor (öneri: C-P01). "Personel" ifadesi formu doldurana dair belirsizlik yaratıyor (C-Q06).
+- **Uygulama etkisi:** Canlı formda bu alana "metin içerir" türünde bir yanıt doğrulaması eklenmiş ama değeri boş; fiilen hiçbir girişi engellemiyor ve e-posta biçimi denetlenmiyor (öneri: C-P01). "Personel" ifadesi formu doldurana dair belirsizlik yaratıyor (C-Q06).
 - **Açık sorular:** —
 - **İlgili alanlar:** `talepEden`
 
 #### C-021
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6; DOC-C görsel 2
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6; DOC-C görsel 2; DOC-D Bölüm 1
 - **Açıklama:** "Cari Türü" — tek seçimli (radyo) soru; mevcut formda zorunlu değil (yıldız yok) ve "Seçimi temizle" eylemi var. Mevcut seçenekler: Talent / Influencer, Marka, Ajans (C-002 ile değişir).
 - **Etkilenen form:** Cari Form
 - **Tür:** İşlevsel
 - **Güven:** Açıkça belgelenmiş
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** Seçenekler C-002'ye göre branşa bağlıdır. Zorunluluk: C-Q11.
+- **Uygulama etkisi:** Seçenekler C-002'ye göre branşa bağlıdır. Canlı formda bu soru sayfa yönlendirmesi yapmaz. Zorunluluk: C-Q11.
 - **Açık sorular:** —
 - **İlgili alanlar:** `cariTuru`
 
@@ -264,40 +272,40 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 
 #### C-024
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6
-- **Açıklama:** "Ülke" — zorunlu açılır liste; ekran görüntüsünde yalnızca "Türkiye" değeri görünüyor.
+- **Kaynak belge:** DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`), DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
+- **Kaynak bölüm/referans:** DOC-D Bölüm 1 (seçenek listesi); DOC-A Sayfa 1/6
+- **Açıklama:** "Ülke" — zorunlu açılır liste. Seçenekler (bu sırayla): Türkiye, Amerika Birleşik Devletleri, Birleşik Krallık, Çin, Diğer.
 - **Etkilenen form:** Cari Form
 - **Tür:** İşlevsel
 - **Güven:** Açıkça belgelenmiş
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** Tam ülke listesi belgede yok; prototipte "Diğer ülke" yalnızca yer tutucudur (C-Q04).
+- **Uygulama etkisi:** "Diğer" düz bir seçenektir; serbest metin alanı açmaz. Ülke seçimi canlı formda hiçbir alanı veya sayfayı değiştirmez (C-Q04).
 - **Açık sorular:** —
 - **İlgili alanlar:** `ulke`
 
 #### C-025
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6
-- **Açıklama:** "İl ve İlçe" — zorunlu kısa metin (tek alan).
+- **Kaynak belge:** DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`), DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
+- **Kaynak bölüm/referans:** DOC-D Bölüm 1 (soru türü); DOC-A Sayfa 1/6
+- **Açıklama:** "İl ve İlçe" — zorunlu uzun metin (paragraf) sorusu; tek alan.
 - **Etkilenen form:** Cari Form
 - **Tür:** İşlevsel
 - **Güven:** Açıkça belgelenmiş
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** —
+- **Uygulama etkisi:** DOC-A ekran görüntüsünde tek satır gibi görünür; DOC-D soru türünün "paragraf" olduğunu gösterir.
 - **Açık sorular:** —
 - **İlgili alanlar:** `ilIlce`
 
 #### C-026
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6
-- **Açıklama:** "Adres" — zorunlu kısa metin.
+- **Kaynak belge:** DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`), DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
+- **Kaynak bölüm/referans:** DOC-D Bölüm 1 (soru türü); DOC-A Sayfa 1/6
+- **Açıklama:** "Adres" — zorunlu uzun metin (paragraf) sorusu.
 - **Etkilenen form:** Cari Form
 - **Tür:** İşlevsel
 - **Güven:** Açıkça belgelenmiş
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** —
+- **Uygulama etkisi:** DOC-A ekran görüntüsünde tek satır gibi görünür; DOC-D soru türünün "paragraf" olduğunu gösterir.
 - **Açık sorular:** —
 - **İlgili alanlar:** `adres`
 
@@ -407,53 +415,53 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 
 #### C-035
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6
-- **Açıklama:** "Şirket/Belge Türü" — zorunlu açılır liste; ekran görüntüsünde yalnızca seçili değer "Limited / Anonim Şirketi" görünüyor.
+- **Kaynak belge:** DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`), DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
+- **Kaynak bölüm/referans:** DOC-D Bölüm 1 (seçenek listesi); DOC-A Sayfa 1/6
+- **Açıklama:** "Şirket/Belge Türü" — zorunlu açılır liste. Seçenekler (bu sırayla): Limited / Anonim Şirketi, Şahıs Firması, İstisna Belgesi, Serbest Meslek Makbuzu, Gider Pusulası.
 - **Etkilenen form:** Cari Form
 - **Tür:** İşlevsel
 - **Güven:** Açıkça belgelenmiş
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** Diğer seçenekler ve bu seçimin sonraki sayfa yönlendirmesine etkisi bilinmiyor (C-Q02, C-Q03).
+- **Uygulama etkisi:** Seçim, Sayfa 1/6'dan sonra hangi sayfaların geleceğini belirler (C-041, C-042).
 - **Açık sorular:** —
 - **İlgili alanlar:** `sirketBelgeTuru`
 
 #### C-036
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 2/6; DOC-C görsel 4
-- **Açıklama:** Sayfa 2/6 "Vergi Bilgileri - Vergi Numarası / TC Kimlik No": "Vergi Numarası / TC Kimlik No" — zorunlu kısa metin.
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A Sayfa 2/6; DOC-C görsel 4; DOC-D Bölüm 2 (uzunluk doğrulaması)
+- **Açıklama:** Sayfa 2/6 "Vergi Bilgileri - Vergi Numarası / TC Kimlik No": "Vergi Numarası / TC Kimlik No" — zorunlu kısa metin; en fazla 15 karakter.
 - **Etkilenen form:** Cari Form
-- **Tür:** İşlevsel
+- **Tür:** Doğrulama
 - **Güven:** Açıkça belgelenmiş
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** Format belgede yok (öneri: C-P03).
+- **Uygulama etkisi:** Uzunluk sınırı canlı formdan gelir; özel hata metni tanımlanmamış (Google varsayılanı). 15 karakter sınırı yabancı vergi numaralarına da yer bırakır. Rakam/hane kuralı yok (öneri: C-P03). Bu sayfa yalnızca Limited / Anonim Şirketi ve Şahıs Firması yolunda gösterilir.
 - **Açık sorular:** —
 - **İlgili alanlar:** `vergiNo`
 
 #### C-037
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 5/6
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A Sayfa 5/6; DOC-D Bölüm 5
 - **Açıklama:** Sayfa 5/6 "İstisna Belgesi": "İstisna Belgesi" — zorunlu dosya yükleme; açıklama "Desteklenen 1 dosya yükleyebilirsiniz. En fazla 10 MB olmalıdır."
 - **Etkilenen form:** Cari Form
 - **Tür:** Doğrulama
 - **Güven:** Açıkça belgelenmiş
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** En fazla 1 dosya, en fazla 10 MB. Desteklenen türler belgede yok (C-Q12). Sayfanın hangi koşulda gösterileceği bilinmiyor (C-Q03).
+- **Uygulama etkisi:** En fazla 1 dosya, en fazla 10 MB. Desteklenen türler belgede yok (C-Q12). Bu sayfa yalnızca Şirket/Belge Türü = İstisna Belgesi yolunda gösterilir; ardından Sayfa 3/6 "TC Kimlik No" gelir (C-042).
 - **Açık sorular:** —
 - **İlgili alanlar:** `istisnaBelgesi`
 
 #### C-038
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 6/6; DOC-C görsel 5
-- **Açıklama:** Sayfa 6/6 "Vergi Bilgileri - Vergi Dairesi": "Vergi Dairesi" — zorunlu kısa metin. Bu sayfada "Gönder" düğmesi bulunur.
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A Sayfa 6/6; DOC-C görsel 5; DOC-D Bölüm 4
+- **Açıklama:** "Vergi Bilgileri - Vergi Dairesi" sayfası: "Vergi Dairesi" — zorunlu kısa metin. Canlı formda bu sayfa 4/6'dır (DOC-A'da 6/6) ve ardından form gönderilir.
 - **Etkilenen form:** Cari Form
 - **Tür:** İşlevsel
 - **Güven:** Açıkça belgelenmiş
 - **Başlangıç durumu:** Kaynakla doğrulandı
-- **Uygulama etkisi:** —
+- **Uygulama etkisi:** Yalnızca Limited / Anonim Şirketi ve Şahıs Firması yolunda, Sayfa 2/6'dan sonra gösterilir. Sayfa numarası farkı: C-Q13.
 - **Açık sorular:** —
 - **İlgili alanlar:** `vergiDairesi`
 
@@ -466,73 +474,137 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 - **Tür:** İşlevsel
 - **Güven:** Güçlü çıkarım
 - **Başlangıç durumu:** Önerilen iyileştirme
-- **Uygulama etkisi:** Not "yapabiliriz" diyor; öneri niteliğinde. Onaylanırsa: dosya türü PDF.
+- **Uygulama etkisi:** Not "yapabiliriz" diyor; öneri niteliğinde. Canlı formda (DOC-D) böyle bir alan yok. Onaylanırsa: dosya türü PDF.
 - **Açık sorular:** Tek dosya mı (vergi levhası + banka bilgisi birlikte) yoksa iki ayrı yükleme mi? Zorunlu mu? Boyut sınırı? Her iki branşta mı? "İmzalı" şartı nasıl kontrol edilecek (yalnızca açıklama mı)?
 - **İlgili alanlar:** `belgeYukleme`
 
+#### C-041
+
+- **Kaynak belge:** DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-D Bölüm 1 — "Şirket/Belge Türü" seçeneklerinin "yanıta göre bölüme git" değerleri
+- **Açıklama:** Yanıta göre yönlendirme: Limited / Anonim Şirketi → Sayfa 2/6 "Vergi Bilgileri - Vergi Numarası / TC Kimlik No"; Şahıs Firması → Sayfa 2/6; İstisna Belgesi → Sayfa 5/6 "İstisna Belgesi"; Serbest Meslek Makbuzu → Sayfa 3/6 "TC Kimlik No"; Gider Pusulası → Sayfa 3/6 "TC Kimlik No".
+- **Etkilenen form:** Cari Form
+- **Tür:** İş kuralı
+- **Güven:** Açıkça belgelenmiş
+- **Başlangıç durumu:** Kaynakla doğrulandı
+- **Uygulama etkisi:** Sayfa 1/6'daki "Sonraki" düğmesi seçilen türe göre farklı sayfaya gider. Yönlendirme fatura yönünden bağımsızdır (C-Q05).
+- **Açık sorular:** —
+- **İlgili alanlar:** `sirketBelgeTuru`
+
+#### C-042
+
+- **Kaynak belge:** DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-D bölüm başlıklarındaki "bölümden sonra" yönlendirmeleri
+- **Açıklama:** Tam yollar: (1) Limited / Anonim Şirketi, Şahıs Firması: Sayfa 1/6 → 2/6 Vergi Numarası / TC Kimlik No → 4/6 Vergi Dairesi → Gönder (3/6 atlanır). (2) Serbest Meslek Makbuzu, Gider Pusulası: Sayfa 1/6 → 3/6 TC Kimlik No → Gönder. (3) İstisna Belgesi: Sayfa 1/6 → 5/6 İstisna Belgesi → 3/6 TC Kimlik No → Gönder.
+- **Etkilenen form:** Cari Form
+- **Tür:** İş kuralı
+- **Güven:** Güçlü çıkarım
+- **Başlangıç durumu:** Kaynakla doğrulandı
+- **Uygulama etkisi:** Google Forms bir bölümden sonra nereye gidileceğini bir sonraki bölüm başlığında saklar ("bu sayfa sonundan önceki sayfayı tamamlayınca"); yollar bu kurala göre okundu. Yol dışında kalan sayfalardaki yanıtlar gönderilmez (platform davranışı). İstisna yolunda sayfa sırası 5/6 → 3/6'dır; ilerleme göstergesi bu nedenle geri sayar.
+- **Açık sorular:** —
+- **İlgili alanlar:** `sirketBelgeTuru`, `vergiNo`, `tcKimlikNo`, `vergiDairesi`, `istisnaBelgesi`
+
+#### C-043
+
+- **Kaynak belge:** DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-D Bölüm 3 "TC Kimlik No"
+- **Açıklama:** Sayfa 3/6 "TC Kimlik No": "TC Kimlik No" — zorunlu kısa metin; en fazla 11 karakter.
+- **Etkilenen form:** Cari Form
+- **Tür:** Doğrulama
+- **Güven:** Açıkça belgelenmiş
+- **Başlangıç durumu:** Kaynakla doğrulandı
+- **Uygulama etkisi:** Yalnızca Serbest Meslek Makbuzu, Gider Pusulası ve İstisna Belgesi yollarında gösterilir; bu sayfadan sonra form gönderilir. Özel hata metni tanımlanmamış (Google varsayılanı). Rakam/hane kuralı yok (öneri: C-P10).
+- **Açık sorular:** —
+- **İlgili alanlar:** `tcKimlikNo`
+
+#### C-044
+
+- **Kaynak belge:** DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-D form ayarları — onay mesajı
+- **Açıklama:** Gönderimden sonra gösterilen onay mesajı: "Teşekkürler. Cari Talebiniz Alınmıştır."
+- **Etkilenen form:** Cari Form
+- **Tür:** İçerik
+- **Güven:** Açıkça belgelenmiş
+- **Başlangıç durumu:** Kaynakla doğrulandı
+- **Uygulama etkisi:** Gönderim sonrası ekran bu metni birebir göstermelidir.
+- **Açık sorular:** —
+
+#### C-045
+
+- **Kaynak belge:** DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-D Bölüm 6 "Submit"
+- **Açıklama:** Canlı formun 6. bölümü "Submit" başlıklı ve soru içermeyen teknik bir bölümdür; "İstisna Belgesi" sayfasından sonra "TC Kimlik No" sayfasına gitmeyi sağlar ve hiçbir yoldan ulaşılmaz.
+- **Etkilenen form:** Cari Form
+- **Tür:** Teknik
+- **Güven:** Güçlü çıkarım
+- **Başlangıç durumu:** Kaynakla doğrulandı
+- **Uygulama etkisi:** Yeni uygulamada bu bölümün karşılığı kullanıcıya gösterilmemelidir; yalnızca yönlendirme (C-042) korunmalıdır.
+- **Açık sorular:** —
+
 #### C-Q01 · ENGELLEYİCİ
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-A sayfa göstergeleri (1/6, 2/6, 5/6, 6/6)
-- **Açıklama:** Form 6 sayfadan oluşuyor ancak 3/6 ve 4/6 sayfaları kaynak belgelerde yok. Bu sayfalarda hangi alanlar var ve hangi durumda gösteriliyor?
+- **Kaynak belge:** DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`), DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
+- **Kaynak bölüm/referans:** DOC-D Bölüm 3 ve 4; DOC-A sayfa göstergeleri (1/6, 2/6, 5/6, 6/6)
+- **Açıklama:** Cevaplandı (DOC-D): DOC-A'da görünmeyen sayfalar canlı formda Sayfa 3/6 "TC Kimlik No" ve Sayfa 4/6 "Vergi Bilgileri - Vergi Dairesi"dir; 6. bölüm boş teknik "Submit" bölümüdür.
 - **Etkilenen form:** Cari Form
-- **Tür:** Çözümsüz / açık
-- **Güven:** Belirsiz
-- **Başlangıç durumu:** Açık soru
-- **Uygulama etkisi:** Bu sayfalar tanımlanmadan formun tam alan envanteri çıkarılamaz. Prototipte yer tutucu olarak gösterilir.
-- **Açık sorular:** Sayfa 3/6 ve 4/6'nın ekran görüntüleri veya alan listesi.
+- **Tür:** İşlevsel
+- **Güven:** Açıkça belgelenmiş
+- **Başlangıç durumu:** Kaynakla doğrulandı
+- **Uygulama etkisi:** Formun tam alan envanteri artık biliniyor (C-042, C-043, C-045). DOC-A ile sayfa numarası farkı: C-Q13.
+- **Açık sorular:** —
+- **İlgili alanlar:** `tcKimlikNo`, `vergiDairesi`
 
 #### C-Q02 · ENGELLEYİCİ
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6 "Şirket/Belge Türü"
-- **Açıklama:** "Şirket/Belge Türü" açılır listesinin tam seçenek listesi nedir? Belgede yalnızca "Limited / Anonim Şirketi" görünüyor.
+- **Kaynak belge:** DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`), DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
+- **Kaynak bölüm/referans:** DOC-D Bölüm 1 "Şirket/Belge Türü"; DOC-A Sayfa 1/6
+- **Açıklama:** Cevaplandı (DOC-D): "Şirket/Belge Türü" seçenekleri Limited / Anonim Şirketi, Şahıs Firması, İstisna Belgesi, Serbest Meslek Makbuzu, Gider Pusulası'dır (DOC-A'da yalnızca seçili değer görünüyordu).
 - **Etkilenen form:** Cari Form
-- **Tür:** Çözümsüz / açık
-- **Güven:** Belirsiz
-- **Başlangıç durumu:** Açık soru
-- **Uygulama etkisi:** Seçenek listesi olmadan alan doğru uygulanamaz; büyük olasılıkla sayfa yönlendirmesini de belirliyor (C-Q03).
-- **Açık sorular:** Tam seçenek listesi ve her seçeneğin anlamı.
+- **Tür:** İşlevsel
+- **Güven:** Açıkça belgelenmiş
+- **Başlangıç durumu:** Kaynakla doğrulandı
+- **Uygulama etkisi:** Bkz. C-035 ve yönlendirme C-041.
+- **Açık sorular:** —
 - **İlgili alanlar:** `sirketBelgeTuru`
 
 #### C-Q03 · ENGELLEYİCİ
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 2/6 → 5/6 → 6/6 akışı
-- **Açıklama:** Sayfalar arası yönlendirme kuralları nelerdir? Özellikle "İstisna Belgesi" (5/6, zorunlu yükleme) hangi yanıtta istenir? Google Forms'taki "yanıta göre bölüme git" ayarları belgelerde görünmüyor.
+- **Kaynak belge:** DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-D seçenek ve bölüm yönlendirmeleri
+- **Açıklama:** Cevaplandı (DOC-D): "İstisna Belgesi" sayfası yalnızca Şirket/Belge Türü = İstisna Belgesi seçildiğinde açılır ve ardından "TC Kimlik No" sayfası gelir. Tüm yollar C-042'dedir.
 - **Etkilenen form:** Cari Form
-- **Tür:** Çözümsüz / açık
-- **Güven:** Belirsiz
-- **Başlangıç durumu:** Açık soru
-- **Uygulama etkisi:** Koşul bilinmeden İstisna Belgesi sayfası herkese zorunlu tutulursa yanlış kullanıcılar engellenebilir. Prototipte test anahtarıyla simüle edilir.
-- **Açık sorular:** Hangi Şirket/Belge Türü (veya başka yanıt) hangi sayfaya yönlendiriyor?
+- **Tür:** İşlevsel
+- **Güven:** Güçlü çıkarım
+- **Başlangıç durumu:** Kaynakla doğrulandı
+- **Uygulama etkisi:** Bölüm sonu yönlendirmeleri Google Forms'un saklama kuralına göre okundu (C-042).
+- **Açık sorular:** —
 - **İlgili alanlar:** `istisnaBelgesi`, `sirketBelgeTuru`
 
-#### C-Q04 · ENGELLEYİCİ · BELGE ÇELİŞKİSİ
+#### C-Q04
 
-- **Kaynak belge:** DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-C P008, P012 (Yurtdışı kategorileri) ↔ DOC-A Sayfa 1/6, 2/6, 6/6 (Türkiye'ye özgü zorunlu alanlar)
-- **Açıklama:** Olası çelişki: DOCX "Yurtdışı Satıcı (Ajans)" ve "Yurtdışı Müşteri" kategorilerini ekliyor; mevcut formda ise Türkiye'ye özgü alanlar (Vergi Numarası / TC Kimlik No, Vergi Dairesi, IBAN (TRY), Posta Kodu, İl ve İlçe) zorunlu ve Ülke listesinde yalnızca "Türkiye" görünüyor. Yurtdışı cariler için bu alanlar nasıl davranmalı? Ülke listesi nedir?
+- **Kaynak belge:** DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-C P008, P012 (Yurtdışı kategorileri) ↔ DOC-D (ülke listesi ve ülkeden bağımsız zorunlu alanlar)
+- **Açıklama:** Yurtdışı cariler için alanlar nasıl davranmalı? DOCX "Yurtdışı Satıcı (Ajans)" ve "Yurtdışı Müşteri" kategorilerini ekliyor. Canlı formda ülke listesi Türkiye, Amerika Birleşik Devletleri, Birleşik Krallık, Çin, Diğer; ancak ülke seçimi hiçbir alanı değiştirmiyor (İl ve İlçe, Posta Kodu, IBAN (TRY), Vergi Numarası / TC Kimlik No veya TC Kimlik No, Vergi Dairesi herkese zorunlu).
 - **Etkilenen form:** Cari Form
 - **Tür:** Çözümsüz / açık
 - **Güven:** Belirsiz
 - **Başlangıç durumu:** Açık soru
-- **Uygulama etkisi:** Kural uydurulmamalı. Karar verilene kadar alanlar belgede olduğu gibi kalır ve belirsizlik işaretlenir.
-- **Açık sorular:** Yurtdışı carilerde hangi alanlar zorunlu/opsiyonel/gizli? Yabancı vergi numarası nasıl alınır? Ülke listesinin kaynağı?
+- **Uygulama etkisi:** Karar verilene kadar canlı formdaki davranış korunur: tüm ülkeler için aynı alanlar ve zorunluluklar. Kural uydurulmamalı.
+- **Açık sorular:** Yurtdışı carilerde hangi alanlar zorunlu/opsiyonel/gizli olmalı? Ülke listesi genişletilecek mi?
 - **İlgili alanlar:** `ulke`, `cariTuru`, `vergiNo`, `vergiDairesi`, `ibanTry`, `postaKodu`, `ilIlce`
 
 #### C-Q05
 
-- **Kaynak belge:** DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-C P004–P012 yalnızca kategori listesini ayırıyor; DOC-A bilgilendirme ve IBAN alanları
-- **Açıklama:** İki branş arasında kategori listesi dışında başka fark var mı? Özellikle: (a) "Bana fatura kesilecek" branşında IBAN (TRY) zorunlu mu? (b) PO Numarası ve Fatura Gönderimi bilgilendirmesi bu branşta gösterilmeli mi? (c) İstisna Belgesi ve PDF yükleme hangi branşlarda geçerli?
+- **Kaynak belge:** DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-C P004–P012 yalnızca kategori listesini ayırıyor; DOC-A/DOC-D bilgilendirme, IBAN ve Şirket/Belge Türü yönlendirmesi
+- **Açıklama:** İki branş arasında kategori listesi dışında başka fark var mı? Özellikle: (a) "Bana fatura kesilecek" branşında IBAN (TRY) zorunlu mu? (b) PO Numarası ve Fatura Gönderimi bilgilendirmesi bu branşta gösterilmeli mi? (c) PDF yükleme önerisi hangi branşlarda geçerli? (d) Şirket/Belge Türü seçenekleri ve sayfa yönlendirmesi (İstisna Belgesi, Serbest Meslek Makbuzu, Gider Pusulası dahil) "Bana fatura kesilecek" branşında aynı mı kalacak?
 - **Etkilenen form:** Cari Form
 - **Tür:** Çözümsüz / açık
 - **Güven:** Belirsiz
 - **Başlangıç durumu:** Açık soru
-- **Uygulama etkisi:** Karar verilene kadar iki branş, kategori listesi dışında aynı alanları kullanır; farklar uydurulmaz.
+- **Uygulama etkisi:** Karar verilene kadar iki branş, kategori listesi dışında aynı alanları ve aynı yönlendirmeyi kullanır; farklar uydurulmaz.
 - **Açık sorular:** —
-- **İlgili alanlar:** `ibanTry`, `istisnaBelgesi`, `belgeYukleme`
+- **İlgili alanlar:** `ibanTry`, `belgeYukleme`, `sirketBelgeTuru`
 
 #### C-Q06 · BELGE ÇELİŞKİSİ
 
@@ -549,20 +621,20 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 
 #### C-Q07
 
-- **Kaynak belge:** DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-C P002; DOC-A Sayfa 1/6
-- **Açıklama:** Gizlilik politikası bağlantısının doğru adresi nedir? (Mevcut bağlantı boş sayfa açıyor.)
+- **Kaynak belge:** DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-C P002; adres DOC-D
+- **Açıklama:** Gizlilik politikası bağlantısı nasıl düzeltilecek? Canlı formdaki adres https://dome.istanbul/privacy-policy; DOCX'e göre bu bağlantı boş sayfa açıyor. Doğru adres başka mı, yoksa bu adresteki sayfa mı düzeltilecek?
 - **Etkilenen form:** Cari Form
 - **Tür:** Çözümsüz / açık
 - **Güven:** Belirsiz
 - **Başlangıç durumu:** Açık soru
-- **Uygulama etkisi:** Adres bilinene kadar yapılandırılabilir yer tutucu kullanılmalı.
+- **Uygulama etkisi:** Karar verilene kadar adres yapılandırılabilir olmalı; mevcut adres varsayılan değer olarak kullanılabilir ama doğrulanmış sayılmaz.
 - **Açık sorular:** —
 
 #### C-Q08
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-A tüm sayfalar (oturum açık hesap, "Bu form DOME alanında oluşturuldu")
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A tüm sayfalar (oturum açık hesap, "Bu form DOME alanında oluşturuldu"); DOC-D alan bilgisi "DOME"
 - **Açıklama:** Mevcut form Google Forms'ta, DOME alanında ve oturum açmış Google hesabıyla çalışıyor ("Dosyaları yükleyip bu formu gönderdiğinizde Google hesabınızla ilişkilendirilen ad, e-posta adresi ve fotoğraf kaydedilir"). Yeni uygulamada kimlik doğrulama gerekecek mi?
 - **Etkilenen form:** Cari Form
 - **Tür:** Teknik
@@ -573,14 +645,14 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 
 #### C-Q09 · ENGELLEYİCİ
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 6/6 "Gönder" (gönderim sonrası belgelenmemiş)
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A Sayfa 6/6 "Gönder"; DOC-D (gönderim hedefi tanımda görünmüyor)
 - **Açıklama:** Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve yüklenen dosyalar nereye kaydedilir/iletilir (tablo, e-posta, muhasebe yazılımı)? Kime bildirim gider? Google Forms'ta mı kalınacak, özel bir uygulama mı yapılacak?
 - **Etkilenen form:** Cari Form
 - **Tür:** Teknik
 - **Güven:** Belirsiz
 - **Başlangıç durumu:** Açık soru
-- **Uygulama etkisi:** Bu bilinmeden gerçek gönderim, depolama veya entegrasyon uygulanamaz.
+- **Uygulama etkisi:** Bu bilinmeden gerçek gönderim, depolama veya entegrasyon uygulanamaz. Kullanıcıya gösterilecek onay mesajı biliniyor (C-044).
 - **Açık sorular:** —
 
 #### C-Q10
@@ -592,14 +664,14 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 - **Tür:** Çözümsüz / açık
 - **Güven:** Belirsiz
 - **Başlangıç durumu:** Açık soru
-- **Uygulama etkisi:** Değişiklik varsayılmaz; mevcut sayfa yapısı korunur.
+- **Uygulama etkisi:** Değişiklik varsayılmaz; mevcut sayfa yapısı korunur. DOC-D'ye göre bu iki sayfa Limited / Anonim Şirketi ve Şahıs Firması yolunda art arda gelir.
 - **Açık sorular:** —
 - **İlgili alanlar:** `vergiNo`, `vergiDairesi`
 
 #### C-Q11
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6 "Cari Türü" (yıldız yok); DOC-C P005/P010 ("…birini seçin lütfen")
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-C (`CARI__AC_ILIS__FORMU-_O_RNEK_S_ABLON.docx`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A Sayfa 1/6 "Cari Türü" (yıldız yok); DOC-D (zorunlu değil); DOC-C P005/P010 ("…birini seçin lütfen")
 - **Açıklama:** Fatura yönüne göre değişen kategori sorusu (Cari Türü) zorunlu mu olacak? Mevcut formda zorunlu değil.
 - **Etkilenen form:** Cari Form
 - **Tür:** Çözümsüz / açık
@@ -611,16 +683,29 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 
 #### C-Q12
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 5/6
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A Sayfa 5/6; DOC-D (dosya ayarları tanımda yok)
 - **Açıklama:** "İstisna Belgesi" için desteklenen dosya türleri nelerdir? Belgede "Desteklenen 1 dosya" deniyor ancak türler listelenmiyor.
 - **Etkilenen form:** Cari Form
 - **Tür:** Çözümsüz / açık
 - **Güven:** Belirsiz
 - **Başlangıç durumu:** Açık soru
-- **Uygulama etkisi:** Karar verilene kadar tür kısıtı uygulanmaz; yalnızca 1 dosya ve 10 MB sınırı uygulanır.
+- **Uygulama etkisi:** Karar verilene kadar tür kısıtı uygulanmaz; yalnızca 1 dosya ve 10 MB sınırı uygulanır. Not: Google Forms'ta tür kısıtı varsa açıklamada türler listelenir (Talent formundaki "image" gibi); burada liste olmaması kısıt olmadığına işaret ediyor.
 - **Açık sorular:** —
 - **İlgili alanlar:** `istisnaBelgesi`
+
+#### C-Q13 · BELGE ÇELİŞKİSİ
+
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`)
+- **Kaynak bölüm/referans:** DOC-A PDF s.5 ("Vergi Dairesi" — Sayfa 6/6) ↔ DOC-D (Vergi Dairesi Bölüm 4, Bölüm 6 boş "Submit")
+- **Açıklama:** Belge çelişkisi (sürüm farkı): DOC-A ekran görüntülerinde "Vergi Bilgileri - Vergi Dairesi" sayfası "Sayfa 6/6", canlı formda (DOC-D) ise 4. bölüm; 6. bölüm boş "Submit" bölümü. Form, ekran görüntüleri alındıktan sonra değiştirilmiş görünüyor. Güncel yapı DOC-D mi?
+- **Etkilenen form:** Cari Form
+- **Tür:** Çözümsüz / açık
+- **Güven:** Belirsiz
+- **Başlangıç durumu:** Açık soru
+- **Uygulama etkisi:** Prototip ve prompt daha yeni olan DOC-D yapısını kullanır; sayfa numaraları yeni uygulamada zaten değişecektir.
+- **Açık sorular:** —
+- **İlgili alanlar:** `vergiDairesi`
 
 #### C-P01
 
@@ -631,7 +716,7 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 - **Tür:** Doğrulama
 - **Güven:** Belirsiz
 - **Başlangıç durumu:** Önerilen iyileştirme
-- **Uygulama etkisi:** Öneri durumundayken prototipte yalnızca uyarı (engellemez). Onaylanırsa hata olur.
+- **Uygulama etkisi:** Öneri durumundayken prototipte yalnızca uyarı (engellemez). Onaylanırsa hata olur. Canlı formdaki "metin içerir (boş)" kuralı bunu sağlamıyor (C-020).
 - **Açık sorular:** Talebi Gönderen Personel için şirket alan adı (ör. @dome.istanbul) zorunlu mu?
 - **İlgili alanlar:** `talepEden`, `yetkiliMail`, `finansMail`
 
@@ -657,8 +742,8 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 - **Tür:** Doğrulama
 - **Güven:** Belirsiz
 - **Başlangıç durumu:** Önerilen iyileştirme
-- **Uygulama etkisi:** Öneri durumundayken yalnızca uyarı. Algoritmik sağlama (checksum) önerilmiyor. Yurtdışı cariler için geçersiz olabilir (C-Q04).
-- **Açık sorular:** —
+- **Uygulama etkisi:** Öneri durumundayken yalnızca uyarı. Canlı formda bu alan için yalnızca "en fazla 15 karakter" kuralı var (C-036); 10/11 hane kuralı yabancı vergi numaralarını reddeder (C-Q04). Algoritmik sağlama (checksum) önerilmiyor.
+- **Açık sorular:** Kural yalnızca Ülke = Türkiye iken mi uygulanmalı?
 - **İlgili alanlar:** `vergiNo`
 
 #### C-P04
@@ -735,6 +820,19 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 - **Başlangıç durumu:** Önerilen iyileştirme
 - **Uygulama etkisi:** Alan sırası ve metinler değişmez; yalnızca görsel gruplama ve hata sunumu eklenir.
 - **Açık sorular:** —
+
+#### C-P10
+
+- **Kaynak belge:** ANALIZ (Analist önerisi (kaynak belgelerde yok))
+- **Kaynak bölüm/referans:** Belgede yok — alan etiketinden çıkarım
+- **Açıklama:** TC Kimlik No: tam 11 hane, yalnızca rakam.
+- **Etkilenen form:** Cari Form
+- **Tür:** Doğrulama
+- **Güven:** Belirsiz
+- **Başlangıç durumu:** Önerilen iyileştirme
+- **Uygulama etkisi:** Öneri durumundayken yalnızca uyarı. Canlı formda yalnızca "en fazla 11 karakter" kuralı var (C-043). Algoritmik sağlama (checksum) önerilmiyor.
+- **Açık sorular:** —
+- **İlgili alanlar:** `tcKimlikNo`
 
 ## Yeni Talent Form (24 madde)
 
@@ -989,7 +1087,7 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 
 - **Kaynak belge:** DOC-B (`Yeni_Talent_Formu_MERGED.pdf`)
 - **Kaynak bölüm/referans:** "Gönder" (gönderim sonrası belgelenmemiş)
-- **Açıklama:** Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve fotoğraf nereye kaydedilir/iletilir? Kime bildirim gider? Google Forms'ta mı kalınacak, özel bir uygulama mı yapılacak?
+- **Açıklama:** Gönderim sonrası ne olur ve uygulama hangi platformda geliştirilecek? Yanıtlar ve fotoğraf nereye kaydedilir/iletilir? Kime bildirim gider? Kullanıcıya hangi onay mesajı gösterilir? Google Forms'ta mı kalınacak, özel bir uygulama mı yapılacak?
 - **Etkilenen form:** Yeni Talent Form
 - **Tür:** Teknik
 - **Güven:** Belirsiz
@@ -1077,7 +1175,7 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 | Kimlik | Tür | Güven | Başlangıç durumu | Kaynak | Özet |
 |---|---|---|---|---|---|
 | S-001 | İş kuralı | Açıkça belgelenmiş | Kaynakla doğrulandı | DOC-B | Yeni Talent Formu, talentin carisi sistemde kayıtlı değilse ayrı "Cari Hesap Açılış Talep Formu"nun da doldurulmasını şart koşar ("Eğer c… |
-| S-002 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A, DOC-B | "İstisna Belgesi" iki formda da geçiyor: Cari Hesap Açılış Talep Formu'nda zorunlu dosya yükleme sayfası olarak; Yeni Talent Formu'nda "B… |
+| S-002 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A, DOC-D, DOC-B | "İstisna Belgesi", "Serbest Meslek Makbuzu" ve "Gider Pusulası" iki formda da belge türü seçeneği olarak geçiyor. Cari Hesap Açılış Talep… |
 | S-003 | Çözümsüz / açık | Belirsiz | Açık soru | DOC-A, DOC-C, DOC-B | Cari formundaki "Talent / Influencer" kategorisi ile ayrı Yeni Talent Formu arasındaki ilişki belgelenmemiş (ör. bu kategori seçildiğinde… |
 
 ### Ayrıntılar
@@ -1096,10 +1194,10 @@ Güven düzeyleri: **Açıkça belgelenmiş** (belgede birebir görünür) · **
 
 #### S-002
 
-- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-B (`Yeni_Talent_Formu_MERGED.pdf`)
-- **Kaynak bölüm/referans:** DOC-A Sayfa 5/6 "İstisna Belgesi" (zorunlu yükleme) ↔ DOC-B Alan 8 "Belge Tipi" seçeneği "İstisna Belgesi"
-- **Açıklama:** "İstisna Belgesi" iki formda da geçiyor: Cari Hesap Açılış Talep Formu'nda zorunlu dosya yükleme sayfası olarak; Yeni Talent Formu'nda "Belge Tipi" seçeneği olarak. İki kullanım arasındaki ilişki (ör. Talent formunda bu seçenek seçilince belge yüklemesi istenmesi) belgelenmemiş.
-- **Etkilenen form:** Her iki form — Cari etkisi: Karar verilene kadar iki form birbirinden bağımsız davranır; ek yükleme alanı veya formlar arası kural eklenmez. / Talent etkisi: Karar verilene kadar iki form birbirinden bağımsız davranır; ek yükleme alanı veya formlar arası kural eklenmez.
+- **Kaynak belge:** DOC-A (`CARI__AC_ILIS__FORMU_MERGED.pdf`), DOC-D (`Cari_Hesap_Ac__l_s__Talep_Formu.html`), DOC-B (`Yeni_Talent_Formu_MERGED.pdf`)
+- **Kaynak bölüm/referans:** DOC-A/DOC-D Cari formu belge türü seçenekleri ve "İstisna Belgesi" yükleme sayfası ↔ DOC-B Alan 8 "Belge Tipi" seçenekleri
+- **Açıklama:** "İstisna Belgesi", "Serbest Meslek Makbuzu" ve "Gider Pusulası" iki formda da belge türü seçeneği olarak geçiyor. Cari Hesap Açılış Talep Formu'nda "İstisna Belgesi" seçimi ayrıca zorunlu bir belge yükleme sayfası açıyor; Yeni Talent Formu'nda bu seçeneklere bağlı bir davranış yok. İki form arasındaki ilişki (ör. aynı kavram mı, Talent formunda da belge istenmeli mi) belgelenmemiş.
+- **Etkilenen form:** Her iki form — Cari etkisi: Bu formda bu türler "Şirket/Belge Türü" seçenekleridir ve sayfa yönlendirmesini belirler (C-041). Yeni Talent Formu ile otomatik bağlantı kurma. / Talent etkisi: Bu formda bu türler "Belge Tipi" seçenekleridir ve koşullu davranış yoktur. Karar verilene kadar ek yükleme alanı veya formlar arası kural eklenmez.
 - **Tür:** Çözümsüz / açık
 - **Güven:** Belirsiz
 - **Başlangıç durumu:** Açık soru

@@ -3,7 +3,7 @@
 import { SOURCES, AUDIENCES, FORM_LABELS } from '../data/enums.js';
 import { h, badge } from './dom.js';
 
-const AUDIENCE_TONE = { doldurana: 'green', 'ekip-notu': 'purple', 'belge-notu': 'purple', platform: 'gray', brif: 'blue', 'test-verisi': 'amber' };
+const AUDIENCE_TONE = { doldurana: 'green', 'ekip-notu': 'purple', 'belge-notu': 'purple', 'canli-form': 'teal', platform: 'gray', brif: 'blue', 'test-verisi': 'amber' };
 
 export function renderInstructionsView(app, main) {
   const { form, formId } = app;

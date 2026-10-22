@@ -8,8 +8,20 @@ export const SOURCES = {
     summary:
       'Google Forms üzerindeki mevcut "Cari Hesap Açılış Talep Formu"nun 5 PDF sayfalık ekran görüntüsü. ' +
       'PDF sayfa 1–2 = form sayfası 1/6, PDF sayfa 3 = 2/6, PDF sayfa 4 = 5/6, PDF sayfa 5 = 6/6. ' +
-      'Form sayfaları 3/6 ve 4/6 belgede yer almıyor. Alanlara test amaçlı değerler girilmiş; bu değerler gereksinim değildir.',
+      'Form sayfaları 3/6 ve 4/6 belgede yer almıyor (DOC-D ile tamamlandı). Alanlara test amaçlı değerler girilmiş; bu değerler gereksinim değildir.',
     shortSummary: 'Ayrı "Cari Hesap Açılış Talep Formu"nun ekran görüntüleri.',
+    forms: ['cari'],
+  },
+  'DOC-D': {
+    id: 'DOC-D',
+    file: 'Cari_Hesap_Ac__l_s__Talep_Formu.html',
+    title: 'Cari Hesap Açılış Talep Formu – canlı formun kaydedilmiş sayfası (HTML, 2026-10-22)',
+    summary:
+      'Google Forms görüntüleme sayfasının tarayıcıdan kaydedilmiş hâli. Ekranda yalnızca ilk sayfa görünür; ancak sayfaya gömülü form tanımı ' +
+      '(FB_PUBLIC_LOAD_DATA_) tüm 6 bölümü, soruları, seçenekleri, zorunlulukları, uzunluk doğrulamalarını, yanıta göre bölüm yönlendirmelerini, ' +
+      'gönderim sonrası onay mesajını ve açıklamadaki bağlantı adreslerini içerir. Dosya yükleme ayarları (tür/boyut) tanımda yer almaz. ' +
+      'Dosyada kullanıcının kayıtlı taslak yanıtları bulunduğu için depoya eklenmedi ve bu yanıtlar okunmadı.',
+    shortSummary: 'Ayrı "Cari Hesap Açılış Talep Formu"nun canlı form tanımı.',
     forms: ['cari'],
   },
   'DOC-B': {
@@ -138,6 +150,7 @@ export const AUDIENCES = {
   doldurana: 'Formu dolduran kişiye yönelik metin',
   'ekip-notu': 'Muhasebe ekibinin değişiklik notu (tasarım/geliştirme)',
   'belge-notu': 'Belgeyi hazırlayanın açıklama notu (seçenekleri gösterir)',
+  'canli-form': 'Canlı formun mantığı ve ayarları (form tanımından)',
   platform: 'Google Forms platform metni',
   brif: 'Proje brifi',
   'test-verisi': 'Ekran görüntüsündeki test verisi (gereksinim değil)',

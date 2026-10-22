@@ -2,8 +2,9 @@ import { FORMS, FORM_IDS } from './data/registry.js';
 import { loadState, saveState, defaultState } from './core/state.js';
 import { buildExport, validateImport, applyImport } from './core/importExport.js';
 import { readiness } from './core/readiness.js';
+import { routeAnswersFor, sectionTitle } from './core/schema.js';
 import { h, clear, button, toast, openDialog, downloadText } from './ui/dom.js';
-import { renderTestView, stepForField } from './ui/testView.js';
+import { renderTestView, stepForField, stepsFor } from './ui/testView.js';
 import { renderInstructionsView } from './ui/instructionsView.js';
 import { renderFeedbackView } from './ui/feedbackView.js';
 import { renderRequirementsView } from './ui/requirementsView.js';
@@ -90,16 +91,29 @@ export const app = {
   },
 
   goToField(formId, fieldId) {
+    const form = FORMS[formId];
+    const fs = this.state.forms[formId];
     const step = stepForField(formId, this.state, fieldId);
+    const onPath = Boolean(step) && stepsFor(formId, this.state).some((s) => s.id === step);
+    let hint = null;
+    let target = fieldId;
+    if (step && step !== 'yon' && form.hasBranches && !fs.answers.branch) {
+      hint = 'Bu alanı görmek için önce fatura yönünü seçin.';
+    } else if (step && !onPath && form.routing) {
+      // Alan, mevcut yanıtlarla izlenmeyen bir sayfada: yönlendirme sorusunu göster.
+      const page = sectionTitle(form.sections.find((s) => s.id === step));
+      hint = `Bu alan şu anki yanıtlarla gösterilmeyen bir sayfada (${page}). Görmek için "Şirket/Belge Türü" olarak şunlardan birini seçin: ${(routeAnswersFor(form, step) || []).join(', ')}.`;
+      target = form.routing.fieldId;
+    }
+    const targetStep = target === fieldId ? step : stepForField(formId, this.state, target);
     this.commit((s) => {
       s.activeForm = formId;
       s.forms[formId].activeTab = 'test';
-      if (step) s.forms[formId].ui.step = step;
+      if (targetStep && (onPath || target !== fieldId)) s.forms[formId].ui.step = targetStep;
     }, { render: false });
-    this.transient.highlight = fieldId;
+    this.transient.highlight = target;
     this.render();
-    const el = document.getElementById(`fld-${fieldId}`);
-    if (el) el.scrollIntoView({ block: 'center' });
+    if (hint) toast(hint, 'warn');
   },
 
   goToRequirement(reqId, formId = this.formId) {

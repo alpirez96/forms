@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Muhasebe Formları Prototipi</title>
+    <meta name="description" content="Cari Form ve Yeni Talent Form için gereksinim doğrulama prototipi ve geliştirme promptu üretici" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">İçeriğe geç</a>
+    <div id="app" class="app"></div>
+    <noscript>Bu prototip JavaScript gerektirir.</noscript>
+    <script>
+      // Dosyaya çift tıklanarak (file://) açıldığında ES modülleri yüklenmez; kullanıcıyı bilgilendir.
+      if (location.protocol === 'file:') {
+        document.getElementById('app').innerHTML =
+          '<div class="banner banner-warn" role="alert" style="margin-top:24px">' +
+          '<strong>Prototip bu şekilde açılamaz.</strong> Lütfen proje klasöründe <code>npm start</code> komutunu çalıştırıp ' +
+          'tarayıcıda <code>http://127.0.0.1:8080</code> adresini açın (ayrıntılar README.md dosyasında).</div>';
+      }
+    </script>
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>

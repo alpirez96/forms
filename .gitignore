@@ -1,0 +1,10 @@
+node_modules/
+# Kaynak belgeler kişisel veri içerebilecek test değerleri barındırdığı için depoya eklenmez.
+kaynak-belgeler/
+*.pdf
+*.docx
+# Dışa aktarılan inceleme dosyaları ve üretilen promptlar (yerel çalışma kopyaları)
+form-inceleme-*.json
+*-gelistirme-promptu.txt
+!docs/baslangic-promptlari/*.taslak.txt
+.DS_Store
